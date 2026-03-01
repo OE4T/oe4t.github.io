@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-a6a57592.js";
+            window.path_to_searchindex_js = "searchindex-8d8436e1.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-7882de0e.js"></script>
+        <script src="toc-972c587e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,11 +181,11 @@ L4T <code>extlinux.conf</code> support in your builds.</p>
 <p>In the <code>kirkstone</code> and later branches based on the L4T R35.x and later series of releases, set <code>UBOOT_EXTLINUX = "1"</code> to configure the build to use an <code>extlinux.conf</code> file.  (As of 14 Apr 2024, <code>"1"</code> is now the default setting in the <code>master</code> branch.)</p>
 <p>See the comments in <a href="https://github.com/OE4T/meta-tegra/blob/master/classes-recipe/l4t-extlinux-config.bbclass">l4t-extlinux-config.bbclass</a> for additional configuration settings you can use.</p>
 <h2 id="uboot_extlinux_fdt"><a class="header" href="#uboot_extlinux_fdt">UBOOT_EXTLINUX_FDT</a></h2>
-<p>The <code>UBOOT_EXTLINUX_FDT</code> setting can be set to exactly <code>UBOOT_EXTLINUX_FDT = "/boot/${DTBFILE}"</code> before https://github.com/OE4T/meta-tegra/pull/1968 or to any dtb file without full path (like <code>UBOOT_EXTLINUX_FDT = "${DTBFILE}"</code>) after https://github.com/OE4T/meta-tegra/pull/1968 and backports.</p>
+<p>The <code>UBOOT_EXTLINUX_FDT</code> setting can be set to exactly <code>UBOOT_EXTLINUX_FDT = "/boot/${DTBFILE}"</code> before <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> or to any dtb file without full path (like <code>UBOOT_EXTLINUX_FDT = "${DTBFILE}"</code>) after <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> and backports.</p>
 <p>When set, this adds a devicetree entry in the extlinux.conf file.  This setting is useful for easy testing of devicetree changes in the kernel and to support devicetree transitions on slot switch without capsule update.  Note that when <code>UBOOT_EXTLINUX</code> or <code>UBOOT_EXTLINUX_FDT</code> is not set, the <code>kernel-dtb</code> partitions defined in the root filesystem are ignored and the devicetree for the kernel is taken from the devicetree which is appended to the uefi image, therefore only updated when the uefi image is changed via tegraflash or capsule update.</p>
 <p><code>efivar -p --name 781e084c-a330-417c-b678-38e696380cb9-L4TDefaultBootMode</code> should return a value of <code>1</code> when using this feature. For additional context see <a href="https://matrix.to/#/!YBfWVpJwNVtkmqVCPS:gitter.im/$x-m4h9rIYnwtMOaYtEkHg0a5HFzM4-mcpjoALOGkP4Y?via=gitter.im&amp;via=matrix.org&amp;via=3dvisionlabs.com">this thread</a> in element.</p>
 <h2 id="uboot_extlinux_fdtoverlays"><a class="header" href="#uboot_extlinux_fdtoverlays">UBOOT_EXTLINUX_FDTOVERLAYS</a></h2>
-<p>The PR at https://github.com/OE4T/meta-tegra/pull/1968 adds support for specifying a list of overlays in your extlinux.conf file.  These overlays are also stored on the rootfs and applied to the kernel DTB at boot time after root slot selection.</p>
+<p>The PR at <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> adds support for specifying a list of overlays in your extlinux.conf file.  These overlays are also stored on the rootfs and applied to the kernel DTB at boot time after root slot selection.</p>
 <p>This feature is only supported when <code>UBOOT_EXTLINUX_FDT</code> is specified.</p>
 <p>To use, specify</p>
 <pre><code>UBOOT_EXTLINUX_FDT = "${DTBFILE}"
@@ -264,7 +264,7 @@ cboot from source to get the required patches (this is the default).</p>
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="OE4T-Contributor-Guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="Documentation-Workflow.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -278,7 +278,7 @@ cboot from source to get the required patches (this is the default).</p>
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="OE4T-Contributor-Guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="Documentation-Workflow.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

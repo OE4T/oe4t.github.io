@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Redundant Rootfs A B Partition Support - OE4T Meta Tegra</title>
+        <title>CONTRIBUTING - OE4T Meta Tegra</title>
 
 
         <!-- Custom HTML head -->
@@ -175,41 +175,66 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>As of 08 Dec 2023, this feature is supported in the kirkstone, mickledore, nanbield, and master branches.</p>
-<p>As of the latest Jetpack 5 r35.x releases, NVIDIA provides partition layouts which support <a href="https://docs.nvidia.com/jetson/archives/r35.4.1/DeveloperGuide/text/SD/RootFileSystem.html#root-file-system-redundancy">Root File System Redundancy</a>, whereby bootloader slots and rootfs slots are paired together to support automatically selecting the associated root filesystem partition at boot to match the selected bootloader slot.  The selected bootloader slot, a or b, will select the corresponding rootfs slot a or b.</p>
-<p>When paired with the UEFI <a href="https://github.com/OE4T/meta-tegra/pull/1285">capsule update</a> feature, a redundant root filesystem supports switching the root filesystem, kernel, and kernel dtb to match the updated bootloader slot.  When paired with an update tool which can update kernel, dtb and rootfs partitions (swupdate, rauc, mender, or others) the process of performing capsule update can also switch to an updated rootfs through the redundant rootfs feature.</p>
-<p>If you have the available root filesystem space to support redundant rootfs, using a redundant partition layout at the outset of your project might give you the option to support updates later without a repartition (or tegraflash) of the device.</p>
-<h1 id="selecting-redundant-root-filesystem-partition-layout"><a class="header" href="#selecting-redundant-root-filesystem-partition-layout">Selecting Redundant Root Filesystem Partition Layout</a></h1>
-<p>By default, both the stock NVIDIA provided Jetpack image as well as OE4T images use the non redundant partition layouts.</p>
-<p>To use NVIDIA provided redundant partition layouts and automatically apply the necessary <a href="todo">dtb changes performed by NVIDIA’s flash.sh script</a>, on branches which include <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a>, you simply need to set <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT = "1"</code> in your distro configuration, custom MACHINE configuration, (or local.conf).  This is currently supported for most targets.  See the notes below for limitations.</p>
-<p>This configuration is set as the default for all supported targets when building with <a href="https://github.com/OE4T/tegra-demo-distro">tegra-demo-distro</a>.</p>
-<h1 id="testing-root-filesystem-ab-slot-switching"><a class="header" href="#testing-root-filesystem-ab-slot-switching">Testing Root Filesystem A/B Slot Switching</a></h1>
-<p>See the sequence in <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a> to validate root slot and boot slot switching.</p>
-<h1 id="setting-up-a-custom-machine"><a class="header" href="#setting-up-a-custom-machine">Setting Up a Custom MACHINE</a></h1>
-<p>Use these variables to setup a MACHINE or distro with support for redundant flash layouts:</p>
+                        <p>Thank you for contributing to the OE4T project!  Your contributions are greatly
+appreciated!</p>
+<h2 id="submitting-code-changes"><a class="header" href="#submitting-code-changes">Submitting Code Changes</a></h2>
+<p>The OE4T project repositories follow the <a href="https://www.openembedded.org/wiki/Commit_Patch_Message_Guidelines#Patch_Headers_and_Commit_Messages">OpenEmbedded
+Guidelines</a>.
+Please review these when proposing your Pull Request.  A few highlights and
+additional requirements:</p>
 <ul>
-<li><code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT</code> - Set to <code>"1"</code> in your distro layer to use redundant flash layouts for any supported MACHINEs.  Set to <code>"0"</code> to use default non-redundant layouts from NVIDIA when using tegra-demo-distro (<code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT</code> is the default for master branch builds of tegra-demo-distro).</li>
-<li><code>ROOTFSPART_SIZE_DEFAULT</code> - Set with the size of the root filesystem partition when using the default (non-redundant) flash layout.  This size will be automatically divided by 2 when <code>USE_REDUNDANT_FLASH_LAYOUT</code> is selected.</li>
-<li><code>PARTITION_LAYOUT_TEMPLATE_DEFAULT</code> - set with the partition layout to use with the default (non, external, non redundant) flash layout, for instance <code>custom_layout.xml</code>.   Either provide a <code>custom_external_layout_rootfs_ab.xml</code> file or define <code>PARTITION_LAYOUT_TEMPLATE_REDUNDANT</code> with your redundant file.</li>
-<li><code>PARTITION_LAYOUT_TEMPLATE_DEFAULT_SUPPORTS_REDUNDANT</code> - Set to <code>"1"</code> if no <code>PARTITION_LAYOUT_TEMPLATE_REDUNDANT</code> is required for this MACHINE (and the same template is used for redundant or non redundant builds).</li>
-<li><code>PARTITION_LAYOUT_EXTERNAL_DEFAULT</code> - Set with the default partition layout when using an external device (sdcard or NVMe) for rootfs partition storage, for instance <code>custom_external_layout.xml</code>. Either provide a <code>custom_external_layout_rootfs_ab.xml</code> file or define <code>PARTITION_LAYOUT_EXTERNAL_REDUNDANT</code> with your redundant file.</li>
-<li><code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL</code> - Set to <code>"0"</code> if your MACHINE does not support a <code>PARTITION_LAYOUT_EXTERNAL_REDUNDANT</code> and therefore does not support <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT</code></li>
+<li>Please submit issues or pull requests through Github.  Only rebase and squash
+commits are used for PRs, so if you have a PR that is outstanding for a long
+time, please keep your branch up to date by rebasing your changes, rather than
+merging.</li>
+<li>Group commits based on their functionality and components changed.  For the
+first line, use something like <code>component: Short Summary</code> to describe your
+change where <code>component</code> refers to a specific software component being changed.</li>
+<li>Please try to make incremental changes with multiple commits, rather than “big
+bang” single commits with changes spread across multiple components.</li>
+<li>Add a <code>Signed-off-by:</code> line to your commit, using <code>git commit -s</code> or a
+pre-commit hook like the one setup with <a href="https://github.com/OE4T/tegra-demo-distro/blob/master/scripts-setup/setup-git-hooks">this script</a>,
+using your real name and e-mail address (no anonymous contributions, please).
+This indicates that you have the right to submit the patch per the
+Developer’s Certificate of Origin in the next section.</li>
+<li>Target the master branch for pull requests unless your change is specific
+to an earlier branch.</li>
 </ul>
-<h2 id="overriding-bsp-layer-changes"><a class="header" href="#overriding-bsp-layer-changes">Overriding BSP Layer Changes</a></h2>
-<p>Use <code>ROOTFSPART_SIZE</code>, <code>PARTITION_LAYOUT_EXTERNAL</code> and <code>PARTITION_LAYOUT_TEMPLATE</code> as done before changes in <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a>, to provide your own implementation outside the BSP layer and ignore the setting of <code>USE_REDUNDANT_FLASH_LAYOUT</code>.</p>
-<h1 id="limitations"><a class="header" href="#limitations">Limitations</a></h1>
-<p>NVIDIA does not provide a redundant flash layout for <code>flash_l4t_external.xml</code>.  Any targets which use <code>flash_l4t_external.xml</code>, which as of   <a href="https://github.com/OE4T/meta-tegra/pull/1295">https://github.com/OE4T/meta-tegra/pull/1295</a> include Orin NX 16 GB in P3509 carrier, Orin NX 16 GB in P3768 carrier, or Orin Nano 4GB in p3768 carrier use <code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL ?= "0"</code> and therefore don’t support the <code>USE_REDUNDANT_FLASH_LAYOUT</code> feature described here.  Alternatively, override <code>USE_REDUNDANT_FLASH_LAYOUT = "1"</code> and set <code>PARTITION_LAYOUT_EXTERNAL_DEFAULT ?= "flash_l4t_nvme.xml"</code> or your custom external layout, but be aware of issue <a href="https://github.com/OE4T/meta-tegra/discussions/1286">https://github.com/OE4T/meta-tegra/discussions/1286</a>.
-`</p>
+<h2 id="developers-certificate-of-origin"><a class="header" href="#developers-certificate-of-origin">Developer’s Certificate of Origin</a></h2>
+<p>By making a contribution to this project, I certify that:</p>
+<ol>
+<li>The contribution was created in whole or in part by me and I have the right
+to submit it under the open source license indicated in the file; or</li>
+<li>The contribution is based upon previous work that, to the best of my
+knowledge, is covered under an appropriate open source license and I have the
+right under that license to submit that work with modifications, whether
+created in whole or in part by me, under the same open source license
+(unless I am permitted to submit under a different license),
+as indicated in the file; or</li>
+<li>The contribution was provided directly to me by some other person who
+certified (1), (2) or (3) and I have not modified it.</li>
+<li>I understand and agree that this project and the contribution are public and
+that a record of the contribution (including all personal information I submit
+with it, including my sign-off) is maintained indefinitely and may be
+redistributed consistent with this project or the open source license(s)
+involved.</li>
+</ol>
+<p>(Adapted from the <a href="https://www.kernel.org/doc/html/latest/process/submitting-patches.html#developer-s-certificate-of-origin-1-1">Linux kernel’s certificate of origin</a>.)</p>
+<h2 id="submitting-documentation-changes"><a class="header" href="#submitting-documentation-changes">Submitting Documentation Changes</a></h2>
+<p>Wikis are enabled on the <a href="https://github.com/OE4T/meta-tegra">meta-tegra</a> and
+<a href="https://github.com/OE4T/tegra-demo-distro">tegra-demo-distro</a> repositories.
+Please feel free to make appropriate changes to pages as needed, adding an edit
+message to describe your change.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="PPS-GPIO-Support-on-Jetson-TX1-TX2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="OE4T-Contributor-Guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="SPI-support.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="Controlling-Jetson-pin-states.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -219,11 +244,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="PPS-GPIO-Support-on-Jetson-TX1-TX2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="OE4T-Contributor-Guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="SPI-support.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="Controlling-Jetson-pin-states.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

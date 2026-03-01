@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-a6a57592.js";
+            window.path_to_searchindex_js = "searchindex-8d8436e1.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-7882de0e.js"></script>
+        <script src="toc-972c587e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -222,20 +222,20 @@ reporting issues.</p>
 <p>We are required to provide an e-mail address, but please use GitHub as
 described above, instead of sending e-mail to oe4t-questions@madison.systems.</p>
 <h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
-<p>Please see <a href="CONTRIBUTING.html">CONTRIBUTING.md</a> for information on submitting
+<p>Please see <a href="#contributing-1">CONTRIBUTING.md</a> for information on submitting
 patches to the maintainers.</p>
 <p>Contributions are welcome!</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="home"><a href="#home" class="header">Home</a></h1>
 <p>Welcome! Here you’ll find some useful pages and notes on using the meta-tegra layer in your project. See the linked pages to have a look around!  You may want to start with <a href="#currently-maintained-branches">this page</a> for information on which branches support which platforms and L4T releases.</p>
 <p>If you are a new to the platform and don’t have a specific set of layers you plan to use with meta-tegra, or if you are just interested in trying meta-tegra for the first time as quickly as possible, we highly recommend checking out <a href="https://github.com/OE4T/tegra-demo-distro">tegra-demo-distro</a> as a starting point.  See the README there for instructions to build one of several demo images which demonstrate the capabilities of meta-tegra and companion layers.</p>
-<p>For real-time communication, the OE4T project uses https://gitter.im/OE4T/community</p>
+<p>For real-time communication, the OE4T project uses <a href="https://gitter.im/OE4T/community">https://gitter.im/OE4T/community</a></p>
 <ul>
-<li>See apps at https://gitter.im/#apps</li>
-<li>Also available over IRC - see https://gitlab.com/gitterHQ/irc-bridge/-/wikis/Client-configuration for client configuration details</li>
+<li>See apps at <a href="https://gitter.im/#apps">https://gitter.im/#apps</a></li>
+<li>Also available over IRC - see <a href="https://gitlab.com/gitterHQ/irc-bridge/-/wikis/Client-configuration">https://gitlab.com/gitterHQ/irc-bridge/-/wikis/Client-configuration</a> for client configuration details</li>
 </ul>
 <p>Ignore any historical references to slack as this repository is no longer available.</p>
-<p>See the thread at https://github.com/OE4T/meta-tegra/discussions/515 for monthly meeting schedules.</p>
+<p>See the thread at <a href="https://github.com/OE4T/meta-tegra/discussions/515">https://github.com/OE4T/meta-tegra/discussions/515</a> for monthly meeting schedules.</p>
 <p>Finally, see <a href="#oe4t-contributor-guide">this page</a> for information about contributing to the project as well as information about testing and test coverage.  This project is built and supported by volunteers and we greatly appreciate your participation.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="currently-maintained-branches"><a class="header" href="#currently-maintained-branches">Currently maintained branches</a></h1>
@@ -1452,16 +1452,74 @@ result in the same TNSPEC as would be present after using L4T’s <code>flash.sh
 <p>Only minimal testing has been performed so far, but core-image-sato images build, and most functionality tested appears to work OK.</p>
 <p>Note that with R28.1, the Jetson TX1 boot sequence has been changed to include <strong>cboot</strong> in the chain of bootloaders, similar to the Jetson TX2.  <strong>cboot</strong> loads U-Boot from the LNX partition in the eMMC.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="instructions-for-r35"><a class="header" href="#instructions-for-r35">Instructions for r35</a></h1>
-<p>See https://github.com/OE4T/tegra-demo-distro/discussions/310#discussioncomment-10534547</p>
+<h1 id="oe4t-contributor-guide"><a href="#oe4t-contributor-guide" class="header">OE4T Contributor Guide</a></h1>
+<p>See the <a href="#contributing-1">CONTRIBUTING.md</a> file for details about contributing to this repository.</p>
+<p>In addition to code and documentation contributions we greatly appreciate help in the form of testing.</p>
+<p>Please see the <a href="https://docs.google.com/spreadsheets/d/1EWG5QZvtWdk74gz48D4xCbegK-bsqMFJ8XOsyGdUUeI/edit#gid=1125662453">Release and Validation</a>
+sheet for a list of current test coverage and test cases.  Request edit on this sheet if you’d like to help contribute.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="contributing-1"><a href="#contributing-1" class="header">CONTRIBUTING</a></h1>
+<p>Thank you for contributing to the OE4T project!  Your contributions are greatly
+appreciated!</p>
+<h2 id="submitting-code-changes"><a class="header" href="#submitting-code-changes">Submitting Code Changes</a></h2>
+<p>The OE4T project repositories follow the <a href="https://www.openembedded.org/wiki/Commit_Patch_Message_Guidelines#Patch_Headers_and_Commit_Messages">OpenEmbedded
+Guidelines</a>.
+Please review these when proposing your Pull Request.  A few highlights and
+additional requirements:</p>
+<ul>
+<li>Please submit issues or pull requests through Github.  Only rebase and squash
+commits are used for PRs, so if you have a PR that is outstanding for a long
+time, please keep your branch up to date by rebasing your changes, rather than
+merging.</li>
+<li>Group commits based on their functionality and components changed.  For the
+first line, use something like <code>component: Short Summary</code> to describe your
+change where <code>component</code> refers to a specific software component being changed.</li>
+<li>Please try to make incremental changes with multiple commits, rather than “big
+bang” single commits with changes spread across multiple components.</li>
+<li>Add a <code>Signed-off-by:</code> line to your commit, using <code>git commit -s</code> or a
+pre-commit hook like the one setup with <a href="https://github.com/OE4T/tegra-demo-distro/blob/master/scripts-setup/setup-git-hooks">this script</a>,
+using your real name and e-mail address (no anonymous contributions, please).
+This indicates that you have the right to submit the patch per the
+Developer’s Certificate of Origin in the next section.</li>
+<li>Target the master branch for pull requests unless your change is specific
+to an earlier branch.</li>
+</ul>
+<h2 id="developers-certificate-of-origin"><a class="header" href="#developers-certificate-of-origin">Developer’s Certificate of Origin</a></h2>
+<p>By making a contribution to this project, I certify that:</p>
 <ol>
-<li>Grab the pinmux spreadsheet and configure the pins the way you need then generate the new files https://developer.nvidia.com/downloads/jetson-orin-nx-and-orin-nano-series-pinmux-config-template.</li>
+<li>The contribution was created in whole or in part by me and I have the right
+to submit it under the open source license indicated in the file; or</li>
+<li>The contribution is based upon previous work that, to the best of my
+knowledge, is covered under an appropriate open source license and I have the
+right under that license to submit that work with modifications, whether
+created in whole or in part by me, under the same open source license
+(unless I am permitted to submit under a different license),
+as indicated in the file; or</li>
+<li>The contribution was provided directly to me by some other person who
+certified (1), (2) or (3) and I have not modified it.</li>
+<li>I understand and agree that this project and the contribution are public and
+that a record of the contribution (including all personal information I submit
+with it, including my sign-off) is maintained indefinitely and may be
+redistributed consistent with this project or the open source license(s)
+involved.</li>
+</ol>
+<p>(Adapted from the <a href="https://www.kernel.org/doc/html/latest/process/submitting-patches.html#developer-s-certificate-of-origin-1-1">Linux kernel’s certificate of origin</a>.)</p>
+<h2 id="submitting-documentation-changes"><a class="header" href="#submitting-documentation-changes">Submitting Documentation Changes</a></h2>
+<p>Wikis are enabled on the <a href="https://github.com/OE4T/meta-tegra">meta-tegra</a> and
+<a href="https://github.com/OE4T/tegra-demo-distro">tegra-demo-distro</a> repositories.
+Please feel free to make appropriate changes to pages as needed, adding an edit
+message to describe your change.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="instructions-for-r35"><a class="header" href="#instructions-for-r35">Instructions for r35</a></h1>
+<p>See <a href="https://github.com/OE4T/tegra-demo-distro/discussions/310#discussioncomment-10534547">https://github.com/OE4T/tegra-demo-distro/discussions/310#discussioncomment-10534547</a></p>
+<ol>
+<li>Grab the pinmux spreadsheet and configure the pins the way you need then generate the new files <a href="https://developer.nvidia.com/downloads/jetson-orin-nx-and-orin-nano-series-pinmux-config-template">https://developer.nvidia.com/downloads/jetson-orin-nx-and-orin-nano-series-pinmux-config-template</a>.</li>
 <li>This will give you three new dtsi files. You need to match up what these are with your machine and meld them to get the changes you need from the machine. The relevant recipe is <code>tegra-bootfiles</code></li>
 <li>Build in these recipes <code>libgpiod libgpiod-tools libgpiod-dev</code></li>
 <li>Back at the command line run <code>gpioinfo</code> and grep on your gpio you want. For my case I wanted <code>GGPIO3_PCC.00</code></li>
 <li>Take the controller name (0 or 1 for me) and the line and you should now be able to <code>gpioset -c 1 12=1</code> to set. where the c is the controller number and 12 is the line number.</li>
 </ol>
-<p>Good reference https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/text/HR/JetsonModuleAdaptationAndBringUp/JetsonOrinNxNanoSeries.html#generating-the-pinmux-dtsi-files</p>
+<p>Good reference <a href="https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/text/HR/JetsonModuleAdaptationAndBringUp/JetsonOrinNxNanoSeries.html#generating-the-pinmux-dtsi-files">https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/text/HR/JetsonModuleAdaptationAndBringUp/JetsonOrinNxNanoSeries.html#generating-the-pinmux-dtsi-files</a></p>
 <h1 id="jetpack-4-instructions-for-controlling-the-pin-states-on-the-jetson-tx2-som"><a class="header" href="#jetpack-4-instructions-for-controlling-the-pin-states-on-the-jetson-tx2-som">Jetpack 4 instructions for Controlling the pin states on the Jetson TX2 SoM</a></h1>
 <p>There’s two ways:</p>
 <ul>
@@ -1510,8 +1568,8 @@ If it throws errors, it might be <a href="https://forums.developer.nvidia.com/t/
 <p>You can control/read the pin value from the virtual /sys filesystem <a href="https://forums.developer.nvidia.com/t/how-to-configure-gpio-to-input-pullup-from-userspace/191759/5">but not the pull up/down state</a>.</p>
 <p>Software-wise, the GPIOs have other names than on the schematic. Nvidia doesn’t make it easy to go from schematic name (like <code>A9</code>) to the /sys name (like <code>gpio488</code>). The following user contributed posts explain it better than anything Nvidia has come up with so far:</p>
 <ul>
-<li>https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/14</li>
-<li>https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/2</li>
+<li><a href="https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/14">https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/14</a></li>
+<li><a href="https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/2">https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/2</a></li>
 <li><a href="https://forums.developer.nvidia.com/t/what-is-the-gpio-number-is-g8-and-f7-pin-at-tx2/82220/3">This post</a> contains the equations in the links above solved for all possible input values.</li>
 </ul>
 <p>Having found out the /sys name for your pin, you can take following snippets as an example:</p>
@@ -1562,7 +1620,7 @@ do_install:append:${machine}() {
 <p>The specifics of the configuration files and variables required may vary from version to version of the L4T BSP, so be sure to review any changes when upgrading.</p>
 <h1 id="jetson-agx-xavier"><a class="header" href="#jetson-agx-xavier">Jetson AGX Xavier</a></h1>
 <p>Jetson AGX Xavier systems are similar to Jetson-TX2, but (as of this writing) have only two version-dependent boot-time files - the BPMP device tree and the PMIC configuration.  Consult the NVIDIA documentation for customization steps, and see the Jetson-TX2 section above for information on how to integrate your custom files into the build.</p>
-<p>Note that AGX Xavier targets handle UEFI variables differently than other platforms.  If you plan to use with Jetpack 5 branches, please read https://github.com/OE4T/meta-tegra/pull/1865 and note that you likely will want to define <code>TNSPEC_COMPAT_MACHINE</code>.</p>
+<p>Note that AGX Xavier targets handle UEFI variables differently than other platforms.  If you plan to use with Jetpack 5 branches, please read <a href="https://github.com/OE4T/meta-tegra/pull/1865">https://github.com/OE4T/meta-tegra/pull/1865</a> and note that you likely will want to define <code>TNSPEC_COMPAT_MACHINE</code>.</p>
 <h1 id="jetson-xavier-nx"><a class="header" href="#jetson-xavier-nx">Jetson Xavier NX</a></h1>
 <p>Jetson Xavier NX systems are similar to Jetson AGX Xavier, but (as of this writing) have no version-dependent
 boot-time files.  Consult the NVIDIA documentation for customization steps, and see the Jetson-TX2 section above
@@ -1941,7 +1999,7 @@ to <a href="https://github.com/OE4T/tegra-demo-distro/tree/dunfell-l4t-r32.4.3">
                 status = "okay";
         };
 </code></pre>
-<p>This only added PPS support to the device tree, however the 3.10 kernel doesn’t support PPS GPIO clients on the device tree, so that support needed to be added by manually applying this patch to the source (I applied it in the tmp/work-shared kernel source git repo and created a patch I used in my linux-tegra bbappend):  https://github.com/beagleboard/meta-beagleboard/blob/master/common-bsp/recipes-kernel/linux/linux-mainline-3.8/pps/0003-pps-gpio-add-device-tree-binding-and-support.patch</p>
+<p>This only added PPS support to the device tree, however the 3.10 kernel doesn’t support PPS GPIO clients on the device tree, so that support needed to be added by manually applying this patch to the source (I applied it in the tmp/work-shared kernel source git repo and created a patch I used in my linux-tegra bbappend):  <a href="https://github.com/beagleboard/meta-beagleboard/blob/master/common-bsp/recipes-kernel/linux/linux-mainline-3.8/pps/0003-pps-gpio-add-device-tree-binding-and-support.patch">https://github.com/beagleboard/meta-beagleboard/blob/master/common-bsp/recipes-kernel/linux/linux-mainline-3.8/pps/0003-pps-gpio-add-device-tree-binding-and-support.patch</a></p>
 <p>For later releases (it appears as early as R27.1), PPS GPIO support for device trees is present in the linux-tegra kernel, so the only requirement is adding the pps block to the DTS.</p>
 <p>Finally, ensure that CONFIG_PPS and CONFIG_PPS_CLIENT_GPIO are enabled in your kernel configuration (I copied the defconfig, modified it, and added a do_configure_prepend() to my bbappend).</p>
 <pre><code>do_configure_prepend() {
@@ -1956,10 +2014,10 @@ to <a href="https://github.com/OE4T/tegra-demo-distro/tree/dunfell-l4t-r32.4.3">
 <p>If you have the available root filesystem space to support redundant rootfs, using a redundant partition layout at the outset of your project might give you the option to support updates later without a repartition (or tegraflash) of the device.</p>
 <h1 id="selecting-redundant-root-filesystem-partition-layout"><a class="header" href="#selecting-redundant-root-filesystem-partition-layout">Selecting Redundant Root Filesystem Partition Layout</a></h1>
 <p>By default, both the stock NVIDIA provided Jetpack image as well as OE4T images use the non redundant partition layouts.</p>
-<p>To use NVIDIA provided redundant partition layouts and automatically apply the necessary <a href="todo">dtb changes performed by NVIDIA’s flash.sh script</a>, on branches which include https://github.com/OE4T/meta-tegra/pull/1428, you simply need to set <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT = "1"</code> in your distro configuration, custom MACHINE configuration, (or local.conf).  This is currently supported for most targets.  See the notes below for limitations.</p>
+<p>To use NVIDIA provided redundant partition layouts and automatically apply the necessary <a href="todo">dtb changes performed by NVIDIA’s flash.sh script</a>, on branches which include <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a>, you simply need to set <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT = "1"</code> in your distro configuration, custom MACHINE configuration, (or local.conf).  This is currently supported for most targets.  See the notes below for limitations.</p>
 <p>This configuration is set as the default for all supported targets when building with <a href="https://github.com/OE4T/tegra-demo-distro">tegra-demo-distro</a>.</p>
 <h1 id="testing-root-filesystem-ab-slot-switching"><a class="header" href="#testing-root-filesystem-ab-slot-switching">Testing Root Filesystem A/B Slot Switching</a></h1>
-<p>See the sequence in https://github.com/OE4T/meta-tegra/pull/1428 to validate root slot and boot slot switching.</p>
+<p>See the sequence in <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a> to validate root slot and boot slot switching.</p>
 <h1 id="setting-up-a-custom-machine"><a class="header" href="#setting-up-a-custom-machine">Setting Up a Custom MACHINE</a></h1>
 <p>Use these variables to setup a MACHINE or distro with support for redundant flash layouts:</p>
 <ul>
@@ -1971,9 +2029,9 @@ to <a href="https://github.com/OE4T/tegra-demo-distro/tree/dunfell-l4t-r32.4.3">
 <li><code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL</code> - Set to <code>"0"</code> if your MACHINE does not support a <code>PARTITION_LAYOUT_EXTERNAL_REDUNDANT</code> and therefore does not support <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT</code></li>
 </ul>
 <h2 id="overriding-bsp-layer-changes"><a class="header" href="#overriding-bsp-layer-changes">Overriding BSP Layer Changes</a></h2>
-<p>Use <code>ROOTFSPART_SIZE</code>, <code>PARTITION_LAYOUT_EXTERNAL</code> and <code>PARTITION_LAYOUT_TEMPLATE</code> as done before changes in https://github.com/OE4T/meta-tegra/pull/1428, to provide your own implementation outside the BSP layer and ignore the setting of <code>USE_REDUNDANT_FLASH_LAYOUT</code>.</p>
+<p>Use <code>ROOTFSPART_SIZE</code>, <code>PARTITION_LAYOUT_EXTERNAL</code> and <code>PARTITION_LAYOUT_TEMPLATE</code> as done before changes in <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a>, to provide your own implementation outside the BSP layer and ignore the setting of <code>USE_REDUNDANT_FLASH_LAYOUT</code>.</p>
 <h1 id="limitations"><a class="header" href="#limitations">Limitations</a></h1>
-<p>NVIDIA does not provide a redundant flash layout for <code>flash_l4t_external.xml</code>.  Any targets which use <code>flash_l4t_external.xml</code>, which as of   https://github.com/OE4T/meta-tegra/pull/1295 include Orin NX 16 GB in P3509 carrier, Orin NX 16 GB in P3768 carrier, or Orin Nano 4GB in p3768 carrier use <code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL ?= "0"</code> and therefore don’t support the <code>USE_REDUNDANT_FLASH_LAYOUT</code> feature described here.  Alternatively, override <code>USE_REDUNDANT_FLASH_LAYOUT = "1"</code> and set <code>PARTITION_LAYOUT_EXTERNAL_DEFAULT ?= "flash_l4t_nvme.xml"</code> or your custom external layout, but be aware of issue https://github.com/OE4T/meta-tegra/discussions/1286.
+<p>NVIDIA does not provide a redundant flash layout for <code>flash_l4t_external.xml</code>.  Any targets which use <code>flash_l4t_external.xml</code>, which as of   <a href="https://github.com/OE4T/meta-tegra/pull/1295">https://github.com/OE4T/meta-tegra/pull/1295</a> include Orin NX 16 GB in P3509 carrier, Orin NX 16 GB in P3768 carrier, or Orin Nano 4GB in p3768 carrier use <code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL ?= "0"</code> and therefore don’t support the <code>USE_REDUNDANT_FLASH_LAYOUT</code> feature described here.  Alternatively, override <code>USE_REDUNDANT_FLASH_LAYOUT = "1"</code> and set <code>PARTITION_LAYOUT_EXTERNAL_DEFAULT ?= "flash_l4t_nvme.xml"</code> or your custom external layout, but be aware of issue <a href="https://github.com/OE4T/meta-tegra/discussions/1286">https://github.com/OE4T/meta-tegra/discussions/1286</a>.
 `</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="spi-support-on-40-pin-header---jetson-nano-devkit"><a class="header" href="#spi-support-on-40-pin-header---jetson-nano-devkit">SPI support on 40 pin header - Jetson Nano devkit</a></h1>
@@ -2314,7 +2372,7 @@ oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p37
 <pre><code>    TEGRA_PLUGIN_MANAGER_OVERLAYS:append:jetson-orin-nano-devkit = " tegra234-p3767-0000+p3509-a02-hdr40.dtbo"
 </code></pre>
 <h1 id="runtime-application-of-overlays-in-the-rootfs-partition"><a class="header" href="#runtime-application-of-overlays-in-the-rootfs-partition">Runtime application of overlays in the rootfs partition</a></h1>
-<p>With https://github.com/OE4T/meta-tegra/pull/1968 support is available to apply overlays in the rootfs partition using the <code>OVERLAYS</code> extlinux.conf option.  This means you are able to link overlays to a rootfs slot and store/update there instead of in the SPI flash.</p>
+<p>With <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> support is available to apply overlays in the rootfs partition using the <code>OVERLAYS</code> extlinux.conf option.  This means you are able to link overlays to a rootfs slot and store/update there instead of in the SPI flash.</p>
 <p>Only overlays which modify the kernel DTB are supported, since the overlay application happens late in the boot sequence.</p>
 <p>See <a href="#uboot_extlinux_fdtoverlays">this section</a> of the extlinux.conf wiki page for details about configuring <code>OVERLAYS</code> in extlinux.conf.</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -2463,11 +2521,11 @@ L4T <code>extlinux.conf</code> support in your builds.</p>
 <p>In the <code>kirkstone</code> and later branches based on the L4T R35.x and later series of releases, set <code>UBOOT_EXTLINUX = "1"</code> to configure the build to use an <code>extlinux.conf</code> file.  (As of 14 Apr 2024, <code>"1"</code> is now the default setting in the <code>master</code> branch.)</p>
 <p>See the comments in <a href="https://github.com/OE4T/meta-tegra/blob/master/classes-recipe/l4t-extlinux-config.bbclass">l4t-extlinux-config.bbclass</a> for additional configuration settings you can use.</p>
 <h2 id="uboot_extlinux_fdt"><a class="header" href="#uboot_extlinux_fdt">UBOOT_EXTLINUX_FDT</a></h2>
-<p>The <code>UBOOT_EXTLINUX_FDT</code> setting can be set to exactly <code>UBOOT_EXTLINUX_FDT = "/boot/${DTBFILE}"</code> before https://github.com/OE4T/meta-tegra/pull/1968 or to any dtb file without full path (like <code>UBOOT_EXTLINUX_FDT = "${DTBFILE}"</code>) after https://github.com/OE4T/meta-tegra/pull/1968 and backports.</p>
+<p>The <code>UBOOT_EXTLINUX_FDT</code> setting can be set to exactly <code>UBOOT_EXTLINUX_FDT = "/boot/${DTBFILE}"</code> before <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> or to any dtb file without full path (like <code>UBOOT_EXTLINUX_FDT = "${DTBFILE}"</code>) after <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> and backports.</p>
 <p>When set, this adds a devicetree entry in the extlinux.conf file.  This setting is useful for easy testing of devicetree changes in the kernel and to support devicetree transitions on slot switch without capsule update.  Note that when <code>UBOOT_EXTLINUX</code> or <code>UBOOT_EXTLINUX_FDT</code> is not set, the <code>kernel-dtb</code> partitions defined in the root filesystem are ignored and the devicetree for the kernel is taken from the devicetree which is appended to the uefi image, therefore only updated when the uefi image is changed via tegraflash or capsule update.</p>
 <p><code>efivar -p --name 781e084c-a330-417c-b678-38e696380cb9-L4TDefaultBootMode</code> should return a value of <code>1</code> when using this feature. For additional context see <a href="https://matrix.to/#/!YBfWVpJwNVtkmqVCPS:gitter.im/$x-m4h9rIYnwtMOaYtEkHg0a5HFzM4-mcpjoALOGkP4Y?via=gitter.im&amp;via=matrix.org&amp;via=3dvisionlabs.com">this thread</a> in element.</p>
 <h2 id="uboot_extlinux_fdtoverlays"><a class="header" href="#uboot_extlinux_fdtoverlays">UBOOT_EXTLINUX_FDTOVERLAYS</a></h2>
-<p>The PR at https://github.com/OE4T/meta-tegra/pull/1968 adds support for specifying a list of overlays in your extlinux.conf file.  These overlays are also stored on the rootfs and applied to the kernel DTB at boot time after root slot selection.</p>
+<p>The PR at <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> adds support for specifying a list of overlays in your extlinux.conf file.  These overlays are also stored on the rootfs and applied to the kernel DTB at boot time after root slot selection.</p>
 <p>This feature is only supported when <code>UBOOT_EXTLINUX_FDT</code> is specified.</p>
 <p>To use, specify</p>
 <pre><code>UBOOT_EXTLINUX_FDT = "${DTBFILE}"
@@ -2537,12 +2595,6 @@ synchronized with the corresponding rootfs partition GUIDs.</p>
 cboot’s ext4 implementation have been patched to make this work. Other filesystem types
 are unlikely to work.  Also, you should use the <code>cboot-t19x</code> recipe that builds
 cboot from source to get the required patches (this is the default).</p>
-<div style="break-before: page; page-break-before: always;"></div>
-<h1 id="oe4t-contributor-guide"><a href="#oe4t-contributor-guide" class="header">OE4T Contributor Guide</a></h1>
-<p>See the <a href="https://github.com/OE4T/meta-tegra/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> file for details.</p>
-<p>In addition to code and documentation contributions we greatly appreciate help in the form of testing.</p>
-<p>Please see the <a href="https://docs.google.com/spreadsheets/d/1EWG5QZvtWdk74gz48D4xCbegK-bsqMFJ8XOsyGdUUeI/edit#gid=1125662453">Release and Validation</a>
-sheet for a list of current test coverage and test cases.  Request edit on this sheet if you’d like to help contribute.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="documentation-workflow"><a class="header" href="#documentation-workflow">Documentation Workflow</a></h1>
 <p>This project uses <a href="https://rust-lang.github.io/mdBook/">mdBook</a> to generate
