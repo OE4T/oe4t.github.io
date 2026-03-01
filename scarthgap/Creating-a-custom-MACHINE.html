@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-14846d74.js";
+            window.path_to_searchindex_js = "searchindex-3bdc3c99.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e914ec9b.js"></script>
+        <script src="toc-972c587e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -207,7 +207,7 @@ do_install:append:${machine}() {
 <p>The specifics of the configuration files and variables required may vary from version to version of the L4T BSP, so be sure to review any changes when upgrading.</p>
 <h1 id="jetson-agx-xavier"><a class="header" href="#jetson-agx-xavier">Jetson AGX Xavier</a></h1>
 <p>Jetson AGX Xavier systems are similar to Jetson-TX2, but (as of this writing) have only two version-dependent boot-time files - the BPMP device tree and the PMIC configuration.  Consult the NVIDIA documentation for customization steps, and see the Jetson-TX2 section above for information on how to integrate your custom files into the build.</p>
-<p>Note that AGX Xavier targets handle UEFI variables differently than other platforms.  If you plan to use with Jetpack 5 branches, please read https://github.com/OE4T/meta-tegra/pull/1865 and note that you likely will want to define <code>TNSPEC_COMPAT_MACHINE</code>.</p>
+<p>Note that AGX Xavier targets handle UEFI variables differently than other platforms.  If you plan to use with Jetpack 5 branches, please read <a href="https://github.com/OE4T/meta-tegra/pull/1865">https://github.com/OE4T/meta-tegra/pull/1865</a> and note that you likely will want to define <code>TNSPEC_COMPAT_MACHINE</code>.</p>
 <h1 id="jetson-xavier-nx"><a class="header" href="#jetson-xavier-nx">Jetson Xavier NX</a></h1>
 <p>Jetson Xavier NX systems are similar to Jetson AGX Xavier, but (as of this writing) have no version-dependent
 boot-time files.  Consult the NVIDIA documentation for customization steps, and see the Jetson-TX2 section above

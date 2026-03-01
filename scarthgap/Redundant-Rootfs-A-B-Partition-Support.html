@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-14846d74.js";
+            window.path_to_searchindex_js = "searchindex-3bdc3c99.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e914ec9b.js"></script>
+        <script src="toc-972c587e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,10 +181,10 @@
 <p>If you have the available root filesystem space to support redundant rootfs, using a redundant partition layout at the outset of your project might give you the option to support updates later without a repartition (or tegraflash) of the device.</p>
 <h1 id="selecting-redundant-root-filesystem-partition-layout"><a class="header" href="#selecting-redundant-root-filesystem-partition-layout">Selecting Redundant Root Filesystem Partition Layout</a></h1>
 <p>By default, both the stock NVIDIA provided Jetpack image as well as OE4T images use the non redundant partition layouts.</p>
-<p>To use NVIDIA provided redundant partition layouts and automatically apply the necessary <a href="todo">dtb changes performed by NVIDIA’s flash.sh script</a>, on branches which include https://github.com/OE4T/meta-tegra/pull/1428, you simply need to set <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT = "1"</code> in your distro configuration, custom MACHINE configuration, (or local.conf).  This is currently supported for most targets.  See the notes below for limitations.</p>
+<p>To use NVIDIA provided redundant partition layouts and automatically apply the necessary <a href="todo">dtb changes performed by NVIDIA’s flash.sh script</a>, on branches which include <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a>, you simply need to set <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT = "1"</code> in your distro configuration, custom MACHINE configuration, (or local.conf).  This is currently supported for most targets.  See the notes below for limitations.</p>
 <p>This configuration is set as the default for all supported targets when building with <a href="https://github.com/OE4T/tegra-demo-distro">tegra-demo-distro</a>.</p>
 <h1 id="testing-root-filesystem-ab-slot-switching"><a class="header" href="#testing-root-filesystem-ab-slot-switching">Testing Root Filesystem A/B Slot Switching</a></h1>
-<p>See the sequence in https://github.com/OE4T/meta-tegra/pull/1428 to validate root slot and boot slot switching.</p>
+<p>See the sequence in <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a> to validate root slot and boot slot switching.</p>
 <h1 id="setting-up-a-custom-machine"><a class="header" href="#setting-up-a-custom-machine">Setting Up a Custom MACHINE</a></h1>
 <p>Use these variables to setup a MACHINE or distro with support for redundant flash layouts:</p>
 <ul>
@@ -196,9 +196,9 @@
 <li><code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL</code> - Set to <code>"0"</code> if your MACHINE does not support a <code>PARTITION_LAYOUT_EXTERNAL_REDUNDANT</code> and therefore does not support <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT</code></li>
 </ul>
 <h2 id="overriding-bsp-layer-changes"><a class="header" href="#overriding-bsp-layer-changes">Overriding BSP Layer Changes</a></h2>
-<p>Use <code>ROOTFSPART_SIZE</code>, <code>PARTITION_LAYOUT_EXTERNAL</code> and <code>PARTITION_LAYOUT_TEMPLATE</code> as done before changes in https://github.com/OE4T/meta-tegra/pull/1428, to provide your own implementation outside the BSP layer and ignore the setting of <code>USE_REDUNDANT_FLASH_LAYOUT</code>.</p>
+<p>Use <code>ROOTFSPART_SIZE</code>, <code>PARTITION_LAYOUT_EXTERNAL</code> and <code>PARTITION_LAYOUT_TEMPLATE</code> as done before changes in <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a>, to provide your own implementation outside the BSP layer and ignore the setting of <code>USE_REDUNDANT_FLASH_LAYOUT</code>.</p>
 <h1 id="limitations"><a class="header" href="#limitations">Limitations</a></h1>
-<p>NVIDIA does not provide a redundant flash layout for <code>flash_l4t_external.xml</code>.  Any targets which use <code>flash_l4t_external.xml</code>, which as of   https://github.com/OE4T/meta-tegra/pull/1295 include Orin NX 16 GB in P3509 carrier, Orin NX 16 GB in P3768 carrier, or Orin Nano 4GB in p3768 carrier use <code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL ?= "0"</code> and therefore don’t support the <code>USE_REDUNDANT_FLASH_LAYOUT</code> feature described here.  Alternatively, override <code>USE_REDUNDANT_FLASH_LAYOUT = "1"</code> and set <code>PARTITION_LAYOUT_EXTERNAL_DEFAULT ?= "flash_l4t_nvme.xml"</code> or your custom external layout, but be aware of issue https://github.com/OE4T/meta-tegra/discussions/1286.
+<p>NVIDIA does not provide a redundant flash layout for <code>flash_l4t_external.xml</code>.  Any targets which use <code>flash_l4t_external.xml</code>, which as of   <a href="https://github.com/OE4T/meta-tegra/pull/1295">https://github.com/OE4T/meta-tegra/pull/1295</a> include Orin NX 16 GB in P3509 carrier, Orin NX 16 GB in P3768 carrier, or Orin Nano 4GB in p3768 carrier use <code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL ?= "0"</code> and therefore don’t support the <code>USE_REDUNDANT_FLASH_LAYOUT</code> feature described here.  Alternatively, override <code>USE_REDUNDANT_FLASH_LAYOUT = "1"</code> and set <code>PARTITION_LAYOUT_EXTERNAL_DEFAULT ?= "flash_l4t_nvme.xml"</code> or your custom external layout, but be aware of issue <a href="https://github.com/OE4T/meta-tegra/discussions/1286">https://github.com/OE4T/meta-tegra/discussions/1286</a>.
 `</p>
 
                     </main>

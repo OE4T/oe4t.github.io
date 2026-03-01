@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-14846d74.js";
+            window.path_to_searchindex_js = "searchindex-3bdc3c99.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e914ec9b.js"></script>
+        <script src="toc-972c587e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -176,15 +176,15 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="instructions-for-r35"><a class="header" href="#instructions-for-r35">Instructions for r35</a></h1>
-<p>See https://github.com/OE4T/tegra-demo-distro/discussions/310#discussioncomment-10534547</p>
+<p>See <a href="https://github.com/OE4T/tegra-demo-distro/discussions/310#discussioncomment-10534547">https://github.com/OE4T/tegra-demo-distro/discussions/310#discussioncomment-10534547</a></p>
 <ol>
-<li>Grab the pinmux spreadsheet and configure the pins the way you need then generate the new files https://developer.nvidia.com/downloads/jetson-orin-nx-and-orin-nano-series-pinmux-config-template.</li>
+<li>Grab the pinmux spreadsheet and configure the pins the way you need then generate the new files <a href="https://developer.nvidia.com/downloads/jetson-orin-nx-and-orin-nano-series-pinmux-config-template">https://developer.nvidia.com/downloads/jetson-orin-nx-and-orin-nano-series-pinmux-config-template</a>.</li>
 <li>This will give you three new dtsi files. You need to match up what these are with your machine and meld them to get the changes you need from the machine. The relevant recipe is <code>tegra-bootfiles</code></li>
 <li>Build in these recipes <code>libgpiod libgpiod-tools libgpiod-dev</code></li>
 <li>Back at the command line run <code>gpioinfo</code> and grep on your gpio you want. For my case I wanted <code>GGPIO3_PCC.00</code></li>
 <li>Take the controller name (0 or 1 for me) and the line and you should now be able to <code>gpioset -c 1 12=1</code> to set. where the c is the controller number and 12 is the line number.</li>
 </ol>
-<p>Good reference https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/text/HR/JetsonModuleAdaptationAndBringUp/JetsonOrinNxNanoSeries.html#generating-the-pinmux-dtsi-files</p>
+<p>Good reference <a href="https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/text/HR/JetsonModuleAdaptationAndBringUp/JetsonOrinNxNanoSeries.html#generating-the-pinmux-dtsi-files">https://docs.nvidia.com/jetson/archives/r35.3.1/DeveloperGuide/text/HR/JetsonModuleAdaptationAndBringUp/JetsonOrinNxNanoSeries.html#generating-the-pinmux-dtsi-files</a></p>
 <h1 id="jetpack-4-instructions-for-controlling-the-pin-states-on-the-jetson-tx2-som"><a class="header" href="#jetpack-4-instructions-for-controlling-the-pin-states-on-the-jetson-tx2-som">Jetpack 4 instructions for Controlling the pin states on the Jetson TX2 SoM</a></h1>
 <p>There’s two ways:</p>
 <ul>
@@ -233,8 +233,8 @@ If it throws errors, it might be <a href="https://forums.developer.nvidia.com/t/
 <p>You can control/read the pin value from the virtual /sys filesystem <a href="https://forums.developer.nvidia.com/t/how-to-configure-gpio-to-input-pullup-from-userspace/191759/5">but not the pull up/down state</a>.</p>
 <p>Software-wise, the GPIOs have other names than on the schematic. Nvidia doesn’t make it easy to go from schematic name (like <code>A9</code>) to the /sys name (like <code>gpio488</code>). The following user contributed posts explain it better than anything Nvidia has come up with so far:</p>
 <ul>
-<li>https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/14</li>
-<li>https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/2</li>
+<li><a href="https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/14">https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/14</a></li>
+<li><a href="https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/2">https://forums.developer.nvidia.com/t/gpio-doesnt-work/49203/2</a></li>
 <li><a href="https://forums.developer.nvidia.com/t/what-is-the-gpio-number-is-g8-and-f7-pin-at-tx2/82220/3">This post</a> contains the equations in the links above solved for all possible input values.</li>
 </ul>
 <p>Having found out the /sys name for your pin, you can take following snippets as an example:</p>
@@ -257,7 +257,7 @@ cat         /sys/class/gpio/gpio$pin/value
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="initrd-flashing-support.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="CONTRIBUTING.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
@@ -271,7 +271,7 @@ cat         /sys/class/gpio/gpio$pin/value
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="initrd-flashing-support.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="CONTRIBUTING.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 

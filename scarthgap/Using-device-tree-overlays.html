@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-14846d74.js";
+            window.path_to_searchindex_js = "searchindex-3bdc3c99.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e914ec9b.js"></script>
+        <script src="toc-972c587e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -209,8 +209,10 @@
 KERNEL_DEVICETREE:jetson-orin-nano-devkit-nvme = "tegra234-p3768-0000+p3767-0005-oe4t.dtb"
 KERNEL_DEVICETREE:jetson-orin-nano-devkit = "tegra234-p3768-0000+p3767-0005-oe4t.dtb"
 </code></pre>
-<p>Where <code>KERNEL_DEVICETREE</code> overrides the setting for your MACHINE, referencing the devicetree filename with <code>*.dtb</code> in the place of <code>*.dts</code>.
-5. Build, flash, and boot the board, and <code>cat /sys/firmware/devicetree/base/compatible</code> to see the compatible string printed as configured in the devicetree. You should see a string which starts with “oe4t”, as shown here for the orin nano</p>
+<p>Where <code>KERNEL_DEVICETREE</code> overrides the setting for your MACHINE, referencing the devicetree filename with <code>*.dtb</code> in the place of <code>*.dts</code>.</p>
+<ol start="5">
+<li>Build, flash, and boot the board, and <code>cat /sys/firmware/devicetree/base/compatible</code> to see the compatible string printed as configured in the devicetree. You should see a string which starts with “oe4t”, as shown here for the orin nano</li>
+</ol>
 <pre><code>root@jetson-orin-nano-devkit-nvme:~# cat /sys/firmware/devicetree/base/compatible
 oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p3767-0005nvidia,tegra234
 </code></pre>
@@ -225,7 +227,7 @@ oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p37
 <pre><code>    TEGRA_PLUGIN_MANAGER_OVERLAYS:append:jetson-orin-nano-devkit = " tegra234-p3767-0000+p3509-a02-hdr40.dtbo"
 </code></pre>
 <h1 id="runtime-application-of-overlays-in-the-rootfs-partition"><a class="header" href="#runtime-application-of-overlays-in-the-rootfs-partition">Runtime application of overlays in the rootfs partition</a></h1>
-<p>With https://github.com/OE4T/meta-tegra/pull/1968 support is available to apply overlays in the rootfs partition using the <code>OVERLAYS</code> extlinux.conf option.  This means you are able to link overlays to a rootfs slot and store/update there instead of in the SPI flash.</p>
+<p>With <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> support is available to apply overlays in the rootfs partition using the <code>OVERLAYS</code> extlinux.conf option.  This means you are able to link overlays to a rootfs slot and store/update there instead of in the SPI flash.</p>
 <p>Only overlays which modify the kernel DTB are supported, since the overlay application happens late in the boot sequence.</p>
 <p>See <a href="extlinux.conf-support.html#uboot_extlinux_fdtoverlays">this section</a> of the extlinux.conf wiki page for details about configuring <code>OVERLAYS</code> in extlinux.conf.</p>
 

@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-14846d74.js";
+            window.path_to_searchindex_js = "searchindex-3bdc3c99.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e914ec9b.js"></script>
+        <script src="toc-972c587e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -186,7 +186,7 @@
                 status = "okay";
         };
 </code></pre>
-<p>This only added PPS support to the device tree, however the 3.10 kernel doesn’t support PPS GPIO clients on the device tree, so that support needed to be added by manually applying this patch to the source (I applied it in the tmp/work-shared kernel source git repo and created a patch I used in my linux-tegra bbappend):  https://github.com/beagleboard/meta-beagleboard/blob/master/common-bsp/recipes-kernel/linux/linux-mainline-3.8/pps/0003-pps-gpio-add-device-tree-binding-and-support.patch</p>
+<p>This only added PPS support to the device tree, however the 3.10 kernel doesn’t support PPS GPIO clients on the device tree, so that support needed to be added by manually applying this patch to the source (I applied it in the tmp/work-shared kernel source git repo and created a patch I used in my linux-tegra bbappend):  <a href="https://github.com/beagleboard/meta-beagleboard/blob/master/common-bsp/recipes-kernel/linux/linux-mainline-3.8/pps/0003-pps-gpio-add-device-tree-binding-and-support.patch">https://github.com/beagleboard/meta-beagleboard/blob/master/common-bsp/recipes-kernel/linux/linux-mainline-3.8/pps/0003-pps-gpio-add-device-tree-binding-and-support.patch</a></p>
 <p>For later releases (it appears as early as R27.1), PPS GPIO support for device trees is present in the linux-tegra kernel, so the only requirement is adding the pps block to the DTS.</p>
 <p>Finally, ensure that CONFIG_PPS and CONFIG_PPS_CLIENT_GPIO are enabled in your kernel configuration (I copied the defconfig, modified it, and added a do_configure_prepend() to my bbappend).</p>
 <pre><code>do_configure_prepend() {
