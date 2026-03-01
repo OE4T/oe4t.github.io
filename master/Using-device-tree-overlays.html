@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-9124eab6.js";
+            window.path_to_searchindex_js = "searchindex-a6a57592.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-88ff208f.js"></script>
+        <script src="toc-7882de0e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -209,8 +209,10 @@
 KERNEL_DEVICETREE:jetson-orin-nano-devkit-nvme = "tegra234-p3768-0000+p3767-0005-oe4t.dtb"
 KERNEL_DEVICETREE:jetson-orin-nano-devkit = "tegra234-p3768-0000+p3767-0005-oe4t.dtb"
 </code></pre>
-<p>Where <code>KERNEL_DEVICETREE</code> overrides the setting for your MACHINE, referencing the devicetree filename with <code>*.dtb</code> in the place of <code>*.dts</code>.
-5. Build, flash, and boot the board, and <code>cat /sys/firmware/devicetree/base/compatible</code> to see the compatible string printed as configured in the devicetree. You should see a string which starts with “oe4t”, as shown here for the orin nano</p>
+<p>Where <code>KERNEL_DEVICETREE</code> overrides the setting for your MACHINE, referencing the devicetree filename with <code>*.dtb</code> in the place of <code>*.dts</code>.</p>
+<ol start="5">
+<li>Build, flash, and boot the board, and <code>cat /sys/firmware/devicetree/base/compatible</code> to see the compatible string printed as configured in the devicetree. You should see a string which starts with “oe4t”, as shown here for the orin nano</li>
+</ol>
 <pre><code>root@jetson-orin-nano-devkit-nvme:~# cat /sys/firmware/devicetree/base/compatible
 oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p3767-0005nvidia,tegra234
 </code></pre>

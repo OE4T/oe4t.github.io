@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-9124eab6.js";
+            window.path_to_searchindex_js = "searchindex-a6a57592.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-88ff208f.js"></script>
+        <script src="toc-7882de0e.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -177,8 +177,8 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="openembeddedyocto-bsp-layer-for-nvidia-jetson-modules"><a class="header" href="#openembeddedyocto-bsp-layer-for-nvidia-jetson-modules">OpenEmbedded/Yocto BSP layer for NVIDIA Jetson Modules</a></h1>
-<p>Jetson Linux release: R36.4.4
-JetPack release:      6.2.1</p>
+<p>Jetson Linux release: R36.5.0
+JetPack release:      6.2.2</p>
 <p>Boards supported:</p>
 <ul>
 <li>Jetson AGX Orin development kit</li>
@@ -193,8 +193,8 @@ branch: master
 LAYERSERIES_COMPAT: whinlatter</p>
 <h2 id="cuda-toolchain-compatibility-note"><a class="header" href="#cuda-toolchain-compatibility-note">CUDA toolchain compatibility note</a></h2>
 <p>CUDA 12.6 supports up through gcc 13.2 only, so recipes are included
-for adding the gcc 10 toolchain to the build for CUDA use, and <code>cuda.bbclass</code>
-has been updated to pass the g++ 10 compiler to nvcc for CUDA code compilation.</p>
+for adding the gcc 13.2 toolchain to the build for CUDA use, and <code>cuda.bbclass</code>
+has been updated to pass the g++ 13 compiler to nvcc for CUDA code compilation.</p>
 <h2 id="getting-help"><a class="header" href="#getting-help">Getting Help</a></h2>
 <p>For general build issues or questions about getting started with your build
 setup please use the
@@ -225,6 +225,84 @@ described above, instead of sending e-mail to oe4t-questions@madison.systems.</p
 <p>Please see <a href="CONTRIBUTING.html">CONTRIBUTING.md</a> for information on submitting
 patches to the maintainers.</p>
 <p>Contributions are welcome!</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="home"><a href="#home" class="header">Home</a></h1>
+<p>Welcome! Here you’ll find some useful pages and notes on using the meta-tegra layer in your project. See the linked pages to have a look around!  You may want to start with <a href="#currently-maintained-branches">this page</a> for information on which branches support which platforms and L4T releases.</p>
+<p>If you are a new to the platform and don’t have a specific set of layers you plan to use with meta-tegra, or if you are just interested in trying meta-tegra for the first time as quickly as possible, we highly recommend checking out <a href="https://github.com/OE4T/tegra-demo-distro">tegra-demo-distro</a> as a starting point.  See the README there for instructions to build one of several demo images which demonstrate the capabilities of meta-tegra and companion layers.</p>
+<p>For real-time communication, the OE4T project uses https://gitter.im/OE4T/community</p>
+<ul>
+<li>See apps at https://gitter.im/#apps</li>
+<li>Also available over IRC - see https://gitlab.com/gitterHQ/irc-bridge/-/wikis/Client-configuration for client configuration details</li>
+</ul>
+<p>Ignore any historical references to slack as this repository is no longer available.</p>
+<p>See the thread at https://github.com/OE4T/meta-tegra/discussions/515 for monthly meeting schedules.</p>
+<p>Finally, see <a href="#oe4t-contributor-guide">this page</a> for information about contributing to the project as well as information about testing and test coverage.  This project is built and supported by volunteers and we greatly appreciate your participation.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="currently-maintained-branches"><a class="header" href="#currently-maintained-branches">Currently maintained branches</a></h1>
+<p>Last update: 28 Feb 2026</p>
+<p>The <a href="https://github.com/OE4T/tegra-demo-distro">OE4T demo distro</a> has corresponding branches to demonstrate full builds for the Jetson platforms supported by this layer.</p>
+<p>Branches are named for the OE-Core branch name each one tracks; see <a href="https://wiki.yoctoproject.org/wiki/Releases">this page</a> for Yocto Project releases and branches.</p>
+<p>For Jetson Linux (L4T) releases:</p>
+<ul>
+<li>our <code>master</code> branch, and other <code>master-</code> prefixed branches, track the latest available Jetson Linux releases and OE-Core master.</li>
+<li>branches corresponding to regular (non-LTS) OE-Core release branches track the latest Jetson Linux release at the time the branch is created</li>
+<li>branches corresponding to long-term support (LTS) OE-Core release branches are kept up-to-date with the Jetson Linux releases. When there is a significant Jetson Linux upgrade, an additional LTS branch is created for the older release series.</li>
+</ul>
+<p>Active branches:</p>
+<ul>
+<li><strong>master</strong> - never stable, <a href="#changes-from-l4t-r3644jetpack-621-1">L4T R36.5.0/JetPack 6.2.2</a> for AGX Orin/Orin NX/Orin Nano</li>
+<li><strong>master-l4t-r38.4.x</strong> - never stable, <a href="#changes-from-l4t-r382xjetpack-70">L4T R38.4.0/JetPack 7.1</a> for AGX Thor</li>
+<li><strong>whinlatter</strong> - <a href="#changes-from-l4t-r3643jetpack-62">L4T R36.4.4/JetPack 6.2.1</a> for AGX Orin/Orin NX/Orin Nano</li>
+<li><strong>scarthgap</strong> - <a href="#changes-from-l4t-r3644jetpack-621-1">L4T R36.5.0/JetPack 6.2.2</a> for AGX Orin/Orin NX/Orin Nano</li>
+<li><strong>scarthgap-l4t-r35.x</strong> - <a href="#changes-from-l4t-r3562jetpack-515">L4T R35.6.4/JetPack 5.1.6</a> for AGX Xavier/Xavier NX/AGX Orin/Orin NX/Orin Nano</li>
+<li><strong>kirkstone</strong> - <a href="#changes-from-l4t-r3562jetpack-515">L4T R35.6.4/JetPack 5.1.6</a> for AGX Xavier/Xavier NX/AGX Orin/Orin NX/Orin Nano</li>
+<li><strong>kirkstone-l4t-r32.7.x</strong> - <a href="#changes-from-l4t-r3275jetpack-465">L4T R32.7.6/JetPack 4.6.6</a> for TX1/TX2/TX2-NX/Xavier/Xavier-NX/Nano/Nano-2GB</li>
+</ul>
+<p>Deprecated branches that receive less attention:</p>
+<ul>
+<li><strong>master-l4t-r38.2.x</strong> - never stable, <a href="#changes-from-l4t-r3644jetpack-621">L4T R38.2.2/JetPack 7.0</a> for AGX Thor</li>
+<li><strong>walnascar</strong> - <a href="#changes-from-l4t-r3640jetpack-61">L4T R36.4.3/JetPack 6.2</a> for AGX Orin/Orin NX/Orin Nano</li>
+</ul>
+<p>Older branches, no longer actively maintained:</p>
+<ul>
+<li><strong>styhead</strong> - <a href="#changes-from-l4t-r3630jetpack-60">L4T R36.4.0/JetPack 6.1</a> for AGX Orin/Orin NX/Orin Nano</li>
+<li><strong>nanbield</strong> - <a href="#changes-from-l4t-r3531jetpack-511-1">L4T R35.4.1/JetPack 5.1.2</a> for AGX Xavier/Xavier NX/AGX Orin/Orin NX/Orin Nano</li>
+<li><strong>mickledore</strong> - <a href="#changes-from-l4t-r3531jetpack-511-1">L4T R35.4.1/JetPack 5.1.2</a> for AGX Xavier/Xavier NX/AGX Orin/Orin NX/Orin Nano</li>
+<li><strong>langdale</strong> - <a href="#changes-from-l4t-r3510jetpack-502">L4T R35.2.1/JetPack 5.1</a> for AGX Xavier/Xavier NX/AGX Orin/Orin NX</li>
+<li><strong>honister</strong> - <a href="#changes-from-l4t-r325xjetpack-45">L4T R32.6.1/JetPack 4.6</a> for TX1/TX2/TX2-NX/Xavier/Xavier-NX/Nano/Nano-2GB</li>
+<li><strong>hardknott</strong> - <a href="#changes-from-l4t-r3251">L4T R32.5.2/JetPack 4.5.1</a> for TX1/TX2/TX2-NX/Xavier/Xavier-NX/Nano/Nano-2GB</li>
+<li><strong>gatesgarth</strong> - <a href="#changes-from-l4t-r3243jetpack-44">L4T R32.4.4/JetPack 4.4.1</a> for TX1/TX2/Xavier/Xavier-NX/Nano/Nano-2GB</li>
+<li><strong>dunfell-l4t-r32.6.1</strong> - <a href="#changes-from-l4t-r325xjetpack-45">L4T R32.6.1/JetPack 4.6</a> for TX1/TX2/TX2-NX/Xavier/Xavier-NX/Nano/Nano-2GB</li>
+<li><strong>dunfell-l4t-r32.5.0</strong> - <a href="#changes-from-l4t-r3251">L4T R32.5.2/JetPack 4.5.1</a> for TX1/TX2/TX2-NX/Xavier/Xavier-NX/Nano/Nano-2GB</li>
+<li><strong>dunfell-l4t-r32.4.3</strong> - <a href="#notable-changes-from-r3231--jetpack-43">L4T R32.4.3/JetPack 4.4</a> for TX1/TX2/Xavier/Xavier-NX/Nano</li>
+<li><strong>dunfell-l4t-r32.4.2</strong> - L4T R32.4.2/JetPack 4.4DP for TX1/TX2/Xavier/Xavier-NX/Nano</li>
+<li><strong>dunfell-l4t-r32.3.1</strong> - <a href="#notable-changes-from-r322x">L4T R32.3.1/JetPack 4.3</a> for TX1/TX2/Xavier/Nano</li>
+<li><strong>dunfell</strong> - <a href="#changes-from-l4t-r3273jetpack-463">L4T R32.7.4/JetPack 4.6.4</a> for TX1/TX2/TX2-NX/Xavier/Xavier-NX/Nano/Nano-2GB</li>
+<li><strong>zeus-l4t-r32.3.1</strong> - L4T R32.3.1/JetPack 4.3 for TX1/TX2/Xavier/Nano</li>
+<li><strong>zeus</strong> - L4T R32.2.3/JetPack 4.2.3 for TX1/TX2/Xavier/Nano</li>
+<li><strong>warrior</strong> - L4T R32.1/JetPack 4.2 for TX1/TX2/Xavier/Nano, L4T R21.7 for TK1</li>
+<li><strong>warrior-l4t-r32.2</strong> - L4T R32.2/JetPack 4.2.1 for TX1/TX2/Xavier/Nano, L4T R21.7 for TK1</li>
+<li><strong>thud</strong> - L4T R28.2.1 for TX1 and TX2, L4T R21.7 for TK1</li>
+<li><strong>thud-l4t-r28.3</strong> - L4T R28.3 for TX1/TX2, L4T R21.7 for TK1</li>
+<li><strong>thud-l4t-r32.1</strong> - L4T R32.1 for TX1/TX2, L4T R21.7 for TK1 (not fully tested)</li>
+<li><strong>thud-l4t-r32.3.1</strong> - L4T R32.3.1/JetPack 4.3 for TX1/TX2/Xavier/Nano (not fully tested)</li>
+<li><strong>sumo</strong> - L4T R28.4.0 for TX1 and TX2, L4T R21.7 for TK1</li>
+<li><strong>rocko</strong> - L4T R28.1 for TX1 and TX2, L4T R21.6 for TK1
+<ul>
+<li><strong>rocko-l4t-r28.2</strong> - updates TX1 and TX2 to L4T R28.2.1, TK1 to L4T R21.7</li>
+</ul>
+</li>
+<li><strong>pyro</strong> - L4T R24.2.1 for TX1, R27.1 for TX2
+<ul>
+<li><strong>pyro-l4t-r24.2.2</strong> - updates TX1 to L4T R24.2.2</li>
+<li><strong>pyro-l4t-r28.1</strong> - updates TX1 and TX2 to L4T R28.1</li>
+</ul>
+</li>
+<li><strong>morty</strong> - L4T R24.2.1 for TX1, R21.5 for TK1, no TX2 support</li>
+<li><strong>krogoth</strong> - L4T R24.1 for TX1</li>
+<li><strong>jethro</strong> - used for initial development, very out of date</li>
+</ul>
+<p>Work-in-progress branches: any branch prefixed with <strong>wip-</strong> is work in progress, and can radically change or be deleted at any time.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>This total-beginner’s guide will walk you through the process of flashing a newly-generated image your Jetson development kit! The instructions
 here are for branches based off L4T R32.4.3 and later. (For earlier releases, click the revisions count, under the title, to go back to an
@@ -576,6 +654,804 @@ systemctl restart polkit
 <h1 id="general-tegraflash-troubleshooting-1"><a class="header" href="#general-tegraflash-troubleshooting-1">General Tegraflash Troubleshooting</a></h1>
 <p>See <a href="#general-troubleshooting-tipssuggestions">Tegraflash-Troubleshooting</a></p>
 <div style="break-before: page; page-break-before: always;"></div>
+<p>As of 23 Feb 2026, the <code>master-l4t-r38.4.x</code> branch supports JetPack 7.1/L4T R38.4.0.</p>
+<h1 id="changes-from-l4t-r382xjetpack-70"><a class="header" href="#changes-from-l4t-r382xjetpack-70">Changes from L4T R38.2.x/JetPack 7.0</a></h1>
+<p>This release introduces support for the Jetson T4000 module. Like R38.2.x, <strong>only</strong> Thor targets are supported. Machine configurations
+for the Orin family remain in the tree, but are <strong>not usable and not supported</strong>.</p>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://docs.nvidia.com/jetson/archives/r38.4/ReleaseNotes/Jetson_Linux_Release_Notes_r38.4.pdf">Jetson Linux R38.4 release notes</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack/downloads">JetPack download page</a> (note that this link is not version-tagged)</li>
+</ul>
+<h2 id="bsp-changes"><a class="header" href="#bsp-changes">BSP changes</a></h2>
+<ul>
+<li>The BSP supports the Jetson T4000, but a machine configuration for it is not yet present in the layer.</li>
+<li>Note that L4T R38.4.x does <strong>not</strong> support Orin hardware. Machine definitions have not been removed from the layer, but they should not be used.</li>
+</ul>
+<h3 id="flashing-process-changes"><a class="header" href="#flashing-process-changes">Flashing process changes</a></h3>
+<p>Flashing in Jetson Linux for Thor targets is performed through a “unified” flashing process that is hidden under the L4T initrd/kernel flashing scripts.</p>
+<p>For meta-tegra builds, after unpacking your tegraflash tarball, use <code>initrd-flash</code> while connected via USB to your Thor device to generate/sign the binary artifacts, stage them to a unified-flash workspace, and run the unified flashing scripts to flash the device. You can use <code>./initrd-flash --external-only</code> to re-flash only the external (rootfs) drive, <code>./initrd-flash -k NAME</code> to re-flash just the named partition, or <code>./initrd-flash --qspi-only</code> to re-flash only the boot firmware in the QSPI flash. The script also takes a <code>--debug</code> option for enabling more verbose logging in the unified flashing tool.</p>
+<p>See NVIDIA release notes and documentation for more information.</p>
+<h3 id="kernel-changes"><a class="header" href="#kernel-changes">Kernel changes</a></h3>
+<p>The Linux kernel is still taken from the Ubuntu “Noble” release, and is based on Linux 6.8.12. The kernel recipe has been changed to use NVIDIA’s GitLab repo directly, instead of the OE4T copy in GitHub.</p>
+<p>Please note that the linux-yocto kernel (or any other kernel than the NVIDIA/Ubuntu one) is still <strong>not supported</strong> on Thor hardware.</p>
+<h2 id="jetpack-changes"><a class="header" href="#jetpack-changes">JetPack changes</a></h2>
+<p>JetPack 7.1 include only minor JetPack upgrades, for the PVA SDK and for VPI.</p>
+<h2 id="deepstream-sdk"><a class="header" href="#deepstream-sdk">DeepStream SDK</a></h2>
+<p>No DeepStream SDK update has been issued, but it is unclear whether the existing DS-8.0 SDK is compatible.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 12 Nov 2025, the <code>master-l4t-r38.2.x</code> branch supports JetPack 7.0/L4T R38.2.2. Note that R38.2.2 only updates some of the components; the rest remain at 38.2.1.</p>
+<h1 id="changes-from-l4t-r3644jetpack-621"><a class="header" href="#changes-from-l4t-r3644jetpack-621">Changes from L4T R36.4.4/JetPack 6.2.1</a></h1>
+<p>This release introduces support for the Jetson AGX Thor development kit, and supports <strong>only</strong> AGX Thor targets. Machine configurations
+for the Orin family remain in the tree, but are <strong>not usable and not supported</strong>.</p>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://docs.nvidia.com/jetson/archives/r38.2/ReleaseNotes/Jetson_Linux_Release_Notes_r38.2.pdf">Jetson Linux R38.2 release notes</a></li>
+<li><a href="https://docs.nvidia.com/jetson/archives/r38.2.1/ReleaseNotes/Jetson_Linux_Release_Notes_r38.2.1.pdf">Jetson Linux R38.2.1 release notes</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack/downloads">JetPack 7.0 download page</a> (note that this link is not version-tagged)</li>
+</ul>
+<p>Note that NVIDIA has not provided release notes for R38.2.2.</p>
+<h2 id="bsp-changes-1"><a class="header" href="#bsp-changes-1">BSP changes</a></h2>
+<ul>
+<li>Many changes are present to support Thor hardware. Note that L4T R38.2.x does <strong>not</strong> support Orin hardware. Machine definitions have not been removed from the layer, but they should not be used.</li>
+</ul>
+<h3 id="flashing-process-changes-1"><a class="header" href="#flashing-process-changes-1">Flashing process changes</a></h3>
+<p>Flashing in Jetson Linux for Thor targets is performed through a “unified” flashing process that is hidden under the L4T initrd/kernel flashing scripts.</p>
+<p>For meta-tegra builds, after unpacking your tegraflash tarball, use <code>initrd-flash</code> while connected via USB to your Thor device to generate/sign the binary artifacts, stage them to a unified-flash workspace, and run the unified flashing scripts to flash the device. You can use <code>./initrd-flash --external-only</code> to re-flash only the external (rootfs) drive, <code>./initrd-flash -k NAME</code> to re-flash just the named partition, or <code>./initrd-flash --qspi-only</code> to re-flash only the boot firmware in the QSPI flash. The script also takes a <code>--debug</code> option for enabling more verbose logging in the unified flashing tool.</p>
+<p>See NVIDIA release notes and documentation for more information.</p>
+<h3 id="kernel-changes-1"><a class="header" href="#kernel-changes-1">Kernel changes</a></h3>
+<p>The Linux kernel is now taken from the Ubuntu “Noble” release, and is based on Linux 6.8.12.</p>
+<h2 id="jetpack-changes-1"><a class="header" href="#jetpack-changes-1">JetPack changes</a></h2>
+<p>JetPack 7.0 upgrades most of the JetPack content. See the NVIDIA documentation for more information.</p>
+<p>CUDA 13, included in JetPack 7.0, supports the use of gcc/g++ 15 as the host toolchain, so the <code>gcc-for-nvcc</code> recipes, which were used for providing an older toolchain for use with <code>nvcc</code>, have been dropped.</p>
+<h2 id="deepstream-sdk-1"><a class="header" href="#deepstream-sdk-1">DeepStream SDK</a></h2>
+<p>DeepStream 8.0 is available. The recipes for DeepStream in the meta-tegra-community layer have been updated.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 28 Feb 2026, the <code>master</code> and <code>scarthgap</code> branches support JetPack 6.2.2/L4T R36.5.0.</p>
+<h1 id="changes-from-l4t-r3644jetpack-621-1"><a class="header" href="#changes-from-l4t-r3644jetpack-621-1">Changes from L4T R36.4.4/JetPack 6.2.1</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r365">Jetson Linux R36.5.0 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-622">JetPack 6.2.2 page</a></li>
+</ul>
+<h2 id="bsp-changes-2"><a class="header" href="#bsp-changes-2">BSP changes</a></h2>
+<p>This release mainly contains bugfixes.</p>
+<p>See NVIDIA release notes for information on other changes/improvements.</p>
+<h3 id="kernel-changes-2"><a class="header" href="#kernel-changes-2">Kernel changes</a></h3>
+<p>The Linux kernel (<code>linux-jammy-nvidia-tegra</code>) was updated to 5.15.185.</p>
+<p>The NVIDIA out-of-tree drivers have been patched so they build with the NVIDIA-provided kernel as well as newer <code>linux-yocto</code> kernels (6.6 for <code>scarthgap</code> and 6.18 for <code>master</code>).</p>
+<h2 id="jetpack-changes-2"><a class="header" href="#jetpack-changes-2">JetPack changes</a></h2>
+<p>No major updates to the JetPack SDK.</p>
+<h2 id="deepstream-sdk-2"><a class="header" href="#deepstream-sdk-2">DeepStream SDK</a></h2>
+<p>No update to the DeepStream SDK. Version 7.1 remains compatible with JetPack 6.2.2.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 10 Aug 2025, the <code>master</code> and <code>scarthgap</code> branches support JetPack 6.2.1/L4T R36.4.4.</p>
+<h1 id="changes-from-l4t-r3643jetpack-62"><a class="header" href="#changes-from-l4t-r3643jetpack-62">Changes from L4T R36.4.3/JetPack 6.2</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3644">Jetson Linux R36.4.4 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-621">JetPack 6.2.1 page</a></li>
+</ul>
+<h2 id="bsp-changes-3"><a class="header" href="#bsp-changes-3">BSP changes</a></h2>
+<p>Support has been added for using a Hardware Security Module (HSM) for signing the boot firmware. In the layer, our <code>tegra-flash-helper</code> script has been updated to support an <code>--hsm</code> option, which gets passed through to the NVIDIA signing scripts for this feature.</p>
+<p>Otherwise, this release mainly contains bugfixes.</p>
+<p>See NVIDIA release notes for information on other changes/improvements.</p>
+<h3 id="kernel-changes-3"><a class="header" href="#kernel-changes-3">Kernel changes</a></h3>
+<p>The Linux kernel remains at 5.15.148.</p>
+<h2 id="jetpack-changes-3"><a class="header" href="#jetpack-changes-3">JetPack changes</a></h2>
+<p>No major updates to the JetPack SDK.</p>
+<h2 id="deepstream-sdk-3"><a class="header" href="#deepstream-sdk-3">DeepStream SDK</a></h2>
+<p>No update to the DeepStream SDK. Version 7.1 remains compatible with JetPack 6.2.1.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 02 May 2025, the <code>master</code>, <code>walnascar</code>, and <code>scarthgap</code> branches support JetPack 6.2/L4T R36.4.3.</p>
+<h1 id="changes-from-l4t-r3640jetpack-61"><a class="header" href="#changes-from-l4t-r3640jetpack-61">Changes from L4T R36.4.0/JetPack 6.1</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3643">Jetson Linux R36.4.3 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-62">JetPack 6.2 page</a></li>
+</ul>
+<h2 id="bsp-changes-4"><a class="header" href="#bsp-changes-4">BSP changes</a></h2>
+<ul>
+<li>The main new feature in this release is the addition of “super” power modes for the P3767 series modules (Orin NX and Orin Nano).</li>
+<li>The <code>JetsonMinimal</code> UEFI build configuration, instead of full UEFI, is now used for RCM booting. (RCM boot is used for initrd-based flashing.)</li>
+</ul>
+<p>See NVIDIA release notes for information on other changes/improvements.</p>
+<h3 id="kernel-changes-4"><a class="header" href="#kernel-changes-4">Kernel changes</a></h3>
+<p>The Linux kernel remains at 5.15.146.</p>
+<h2 id="jetpack-changes-4"><a class="header" href="#jetpack-changes-4">JetPack changes</a></h2>
+<p>No major updates to the JetPack SDK.</p>
+<h2 id="deepstream-sdk-4"><a class="header" href="#deepstream-sdk-4">DeepStream SDK</a></h2>
+<p>No update to the DeepStream SDK. Version 7.1 remains compatible with JetPack 6.2.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 27 Oct 2024, the <code>master</code>, <code>styhead</code>, and <code>scarthgap</code> branches support JetPack 6.1/L4T R36.4.0.</p>
+<h1 id="changes-from-l4t-r3630jetpack-60"><a class="header" href="#changes-from-l4t-r3630jetpack-60">Changes from L4T R36.3.0/JetPack 6.0</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3640">Jetson Linux R36.4.0 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-61">JetPack 6.1 page</a></li>
+</ul>
+<h2 id="bsp-changes-5"><a class="header" href="#bsp-changes-5">BSP changes</a></h2>
+<ul>
+<li>NVIDIA has added an implementation of Firmware Trusted Platform Module (fTPM) as an OP-TEE TA. A recipe for building this has not yet been added to the layer.</li>
+<li>The default kernel arguments no longer set <code>net.ifnames=0</code>, so network interfaces will use the newer kernel naming convention.</li>
+<li>Source code is now provided for the <code>nvipcpipeline</code> and <code>nvunixfd</code> gstreamer plugins. Recipes have been added for these plugins, and they have been removed from the <code>gstreamer1.0-plugins-tegra-binaryonly</code> package.</li>
+<li>A minimal UEFI configuration is now supported on AGX Orin series modules. See <a href="https://docs.nvidia.com/jetson/archives/r36.4/DeveloperGuide/SD/Bootloader/UEFI.html#miniuefi-support">this section</a> in the Jetson Linux Developer Guide for more information. The variable <code>TEGRA_UEFI_MINIMAL</code> can be set to <code>"1"</code> in your build configuration to use this configuration instead of the default.</li>
+</ul>
+<p>See NVIDIA release notes for information on other changes/improvements.</p>
+<h3 id="kernel-changes-5"><a class="header" href="#kernel-changes-5">Kernel changes</a></h3>
+<p>The Linux kernel has been updated to 5.15.146.</p>
+<h2 id="jetpack-changes-5"><a class="header" href="#jetpack-changes-5">JetPack changes</a></h2>
+<p>Several of the JetPack packages have been updated, including CUDA (to 12.6).  See the JetPack release notes for more information.</p>
+<h2 id="deepstream-sdk-5"><a class="header" href="#deepstream-sdk-5">DeepStream SDK</a></h2>
+<p>DeepStream SDK 7.1 is compatible with JetPack 6.1. See the <a href="https://github.com/OE4T/meta-tegra-community/tree/wip-l4t-r36.4.0">meta-tegra-community work-in-progress branch</a> for the updated recipes.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 01 June 2024, the <code>master</code> and <code>scarthgap</code> branches support JetPack 6.0/L4T R36.3.0.</p>
+<h1 id="changes-from-l4t-r3531jetpack-511"><a class="header" href="#changes-from-l4t-r3531jetpack-511">Changes from L4T R35.3.1/JetPack 5.1.1</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r363">Jetson Linux R36.3.0 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-60">JetPack 6.0 page</a></li>
+</ul>
+<h2 id="machine-changes"><a class="header" href="#machine-changes">Machine changes</a></h2>
+<p>L4T R36.x supports <strong>only</strong> Jetson Orin modules and development kits.  Support for Jetson Xavier modules has been removed.</p>
+<h2 id="bsp-changes-6"><a class="header" href="#bsp-changes-6">BSP changes</a></h2>
+<p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and “improvements” to the existing boot firmware and low-level libraries.  This includes new versions of the secure OS (TF-A and OP-TEE) and the UEFI bootloader.</p>
+<h3 id="kernel-changes-6"><a class="header" href="#kernel-changes-6">Kernel changes</a></h3>
+<p>The 5.10+Android-based kernel has been replaced with a 5.15-based kernel from Ubuntu 22.04.  Jetson-specific drivers and device trees have been moved out of the kernel source tree and are now built separately. This change allows for the replacement of the NVIDIA-provided, Ubuntu-derived base kernel with other upstream kernels; see the L4T documentation and release notes for more information.</p>
+<h2 id="jetpack-changes-6"><a class="header" href="#jetpack-changes-6">JetPack changes</a></h2>
+<p>Many of the JetPack packages have been updated, including CUDA (to 12.2).  See the JetPack release notes for more information.</p>
+<h2 id="deepstream-sdk-6"><a class="header" href="#deepstream-sdk-6">DeepStream SDK</a></h2>
+<p>The DeepStream SDK has been updated to version 7.0.</p>
+<h1 id="other-notes"><a class="header" href="#other-notes">Other Notes</a></h1>
+<ul>
+<li>There are several known issues documented in the release notes, which are worth reviewing. In particular, USB connectivity during flashing can sometimes be a problem. Workarounds mentioned in the release notes include swapping cables and/or USB ports on your host PC, and rebooting your host PC if you encounter flashing failures.</li>
+<li>The NVIDIA-specific userland DRM library (<code>libdrm-nvdc</code>) has been removed in this release.</li>
+<li>Vulkan support is present, but you must manually include the <code>tegra-libraries-vulkan</code> package in your image to install the necessary configuration file for the Vulkan dispatcher. While NVIDIA now also supports VulkanSC in Jetson Linux, recipes to install those libraries are not yet available.</li>
+<li>Jetson-specific patches for wayland and weston are no longer needed.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 21 Feb 2026, the <code>kirkstone</code> and <code>scarthgap-l4t-r35.x</code> branches support JetPack 5.1.6/L4T R35.6.6.</p>
+<p>This is a minor update to the L4T BSP only, with no JetPack changes.</p>
+<h1 id="changes-from-l4t-r3562jetpack-515"><a class="header" href="#changes-from-l4t-r3562jetpack-515">Changes from L4T R35.6.2/JetPack 5.1.5</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on changes:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3564">Jetson Linux R35.6.4 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-516">JetPack 5.1.6 page</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 07 Jul 2025, the <code>kirkstone</code> and <code>scarthgap-l4t-r35.x</code> branches support JetPack 5.1.5/L4T R35.6.2.</p>
+<p>This is a minor update to the L4T BSP only, with no JetPack changes.</p>
+<h1 id="changes-from-l4t-r3561jetpack-515"><a class="header" href="#changes-from-l4t-r3561jetpack-515">Changes from L4T R35.6.1/JetPack 5.1.5</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on changes, but essentially has only bug fixes over R35.6.2:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3562">Jetson Linux R35.6.2 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-515">JetPack 5.1.5 page</a> (same JetPack release as for L4T R35.6.1)</li>
+</ul>
+<h3 id="kernel-changes-7"><a class="header" href="#kernel-changes-7">Kernel changes</a></h3>
+<p>No kernel update in this release; the exact same kernel sources are used as for R35.6.1. However, the default <code>KERNEL_ARGS</code> setting for all machines has been changed to remove the <code>nospectre_bhb</code> parameter. If you have a custom machine configuration, you may wish to update your <code>KERNEL_ARGS</code> setting accordingly, to enable Spectre-BHB mitigations in the kernel.</p>
+<h3 id="other-notes-1"><a class="header" href="#other-notes-1">Other notes</a></h3>
+<p>While most of the BSP packages have been updated or re-issued with <code>35.6.2</code> version numbering, the Jetson Multimedia API <code>.deb</code> packages remain at version <code>35.6.1</code> in this release.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 18 May 2025, the <code>kirkstone</code> and <code>scarthgap-l4t-r35.x</code> branches support JetPack 5.1.5/L4T R35.6.1.</p>
+<h1 id="changes-from-l4t-r3560jetpack-514"><a class="header" href="#changes-from-l4t-r3560jetpack-514">Changes from L4T R35.6.0/JetPack 5.1.4</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3561">Jetson Linux R35.6.1 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-515">JetPack 5.1.5 page</a></li>
+</ul>
+<h2 id="machine-changes-1"><a class="header" href="#machine-changes-1">Machine changes</a></h2>
+<p>No new machines in this release. Existing machines for P3767 modules (Orin Nano and NX-based) have been updated to use the new MAXN_SUPER power model configurations, which affect the kernel device tree, BPMP configuration, and NVPMODEL configuration files.</p>
+<h2 id="bsp-changes-7"><a class="header" href="#bsp-changes-7">BSP changes</a></h2>
+<p>Other updates in this release are mainly fixes and improvements to the existing boot firmware and low-level libraries.</p>
+<h3 id="kernel-changes-8"><a class="header" href="#kernel-changes-8">Kernel changes</a></h3>
+<p>The upstream base remains at 5.10.216. Updates include some bug fixes and the device tree updates to support MAXN_SUPER power model configurations.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 11 Oct 2024, the <code>scarthgap-l4t-r35.x</code> and <code>kirkstone</code> branches support JetPack 5.1.4/L4T R35.6.0.</p>
+<h1 id="changes-from-l4t-r3550jetpack-513"><a class="header" href="#changes-from-l4t-r3550jetpack-513">Changes from L4T R35.5.0/JetPack 5.1.3</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3560">Jetson Linux R35.6.0 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-514">JetPack 5.1.4 page</a></li>
+</ul>
+<h2 id="machine-changes-2"><a class="header" href="#machine-changes-2">Machine changes</a></h2>
+<p>No new machines in this release.</p>
+<h2 id="bsp-changes-8"><a class="header" href="#bsp-changes-8">BSP changes</a></h2>
+<p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and improvements to the existing boot firmware and low-level libraries.</p>
+<h3 id="kernel-changes-9"><a class="header" href="#kernel-changes-9">Kernel changes</a></h3>
+<p>The upstream base was updated to 5.10.216.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 01 June 2024, the <code>scarthgap-l4t-r35.x</code> and <code>kirkstone</code> branches support JetPack 5.1.3/L4T R35.5.0.</p>
+<h1 id="changes-from-l4t-r3541jetpack-512"><a class="header" href="#changes-from-l4t-r3541jetpack-512">Changes from L4T R35.4.1/JetPack 5.1.2</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3550">Jetson Linux R35.5.0 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-513">JetPack 5.1.3 page</a></li>
+</ul>
+<h2 id="machine-changes-3"><a class="header" href="#machine-changes-3">Machine changes</a></h2>
+<p>No new machines in this release.</p>
+<h2 id="bsp-changes-9"><a class="header" href="#bsp-changes-9">BSP changes</a></h2>
+<p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and improvements to the existing boot firmware and low-level libraries.</p>
+<p>Storage layouts (the <code>flash_*.xml</code> files) have been updated slightly over R35.4.1. If you have a custom storage layout you have derived from an earlier version of L4T, you should review the differences for any adjustments you may need to make.</p>
+<h3 id="kernel-changes-10"><a class="header" href="#kernel-changes-10">Kernel changes</a></h3>
+<p>The upstream base was updated to 5.10.192.</p>
+<h3 id="uefi-changes"><a class="header" href="#uefi-changes">UEFI changes</a></h3>
+<p>For secured devices, UEFI now authenticates its variables.  <strong>This requires the addition of an authentication key to the EKB,</strong> without which your secured device will not boot.  This also means that an OTA update from an earlier R35.x release will require that your OTA package also update the EKB, so be warned.</p>
+<p>For more information , see <a href="https://forums.developer.nvidia.com/t/jetpack-5-1-3-boot-error-with-all-security-enabled/284400">this thread on the developer forum</a>.</p>
+<h2 id="jetpack-changes-7"><a class="header" href="#jetpack-changes-7">JetPack changes</a></h2>
+<ul>
+<li>VPI updated to version 2.4.8</li>
+</ul>
+<h1 id="other-notes-2"><a class="header" href="#other-notes-2">Other Notes</a></h1>
+<ul>
+<li>While the NVIDIA release notes mention use of the grub loader in place of L4TLauncher for loading the OS from the UEFI bootloader, this has not been implemented or tested in the layer.  Likewise for PXE booting.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 02 Sep 2023, the <code>master</code>, <code>mickledore</code>, and <code>kirkstone</code> branches support JetPack 5.1.2/L4T R35.4.1.</p>
+<h1 id="changes-from-l4t-r3531jetpack-511-1"><a class="header" href="#changes-from-l4t-r3531jetpack-511-1">Changes from L4T R35.3.1/JetPack 5.1.1</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3541">Jetson Linux R35.4.1 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-512">JetPack 5.1.2 page</a></li>
+</ul>
+<h2 id="machine-changes-4"><a class="header" href="#machine-changes-4">Machine changes</a></h2>
+<p>L4T R35.4.1 adds support for the Jetson AGX Orin Industrial module. The machine configuration <code>jetson-agx-orin-devkit-industrial</code> has been added to the layer to build images for the module when installed in an AGX Orin development kit.</p>
+<h2 id="bsp-changes-10"><a class="header" href="#bsp-changes-10">BSP changes</a></h2>
+<p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and improvements to the existing boot firmware and low-level libraries.</p>
+<p>For multimedia support, the deprecated <code>nvbuf_utils</code> library was removed in this release.</p>
+<h3 id="kernel-changes-11"><a class="header" href="#kernel-changes-11">Kernel changes</a></h3>
+<p>No major updates.  The upstream base was updated to 5.10.120.</p>
+<h2 id="jetpack-changes-8"><a class="header" href="#jetpack-changes-8">JetPack changes</a></h2>
+<ul>
+<li>VPI updated to version 2.3.9</li>
+<li>Nsight updated to 2023.2</li>
+</ul>
+<h2 id="deepstream-sdk-7"><a class="header" href="#deepstream-sdk-7">DeepStream SDK</a></h2>
+<p>The DeepStream SDK has been updated to version 6.3-1. The recipe in the <a href="https://github.com/OE4T/meta-tegra-community">meta-tegra-community</a> repo has been updated.</p>
+<h1 id="other-notes-3"><a class="header" href="#other-notes-3">Other Notes</a></h1>
+<ul>
+<li>While the NVIDIA release notes mention use of the grub loader in place of L4TLauncher for loading the OS from the UEFI bootloader, this has not been implemented or tested in the layer.  Likewise for PXE booting.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 16 Apr 2023, the <code>master</code>, <code>mickledore</code>, and <code>kirkstone</code> branches support JetPack 5.1.1/L4T R35.3.1.</p>
+<h1 id="changes-from-l4t-r3521jetpack-510"><a class="header" href="#changes-from-l4t-r3521jetpack-510">Changes from L4T R35.2.1/JetPack 5.1.0</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3531">Jetson Linux R35.3.1 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-511">JetPack 5.1.1 page</a></li>
+</ul>
+<h2 id="machine-changes-5"><a class="header" href="#machine-changes-5">Machine changes</a></h2>
+<p>L4T R35.3.1 adds support for the Jetson Orin Nano developer kit. Machine configurations <code>jetson-orin-nano-devkit</code> and <code>jetson-orin-nano-devkit-nvme</code> have been added to the layer to build images for use of the kit with SDcard and NVMe storage, respectively.  These configurations should also be usable as a starting point for a custom machine based on one of the Orin Nano production modules.</p>
+<h2 id="bsp-changes-11"><a class="header" href="#bsp-changes-11">BSP changes</a></h2>
+<p>Other than the new hardware support, no major changes to the layer for the BSP update.  The secureboot overlay that NVIDIA issued to fix problems with Orin secure boot support (specifically, using SBKPKC signing + encryption) for R35.2.1 is also applied here.</p>
+<h3 id="kernel-changes-12"><a class="header" href="#kernel-changes-12">Kernel changes</a></h3>
+<p>There are no major updates to the kernel, which is still based on 5.10.104.</p>
+<p><strong>NOTE,</strong> however, that if you have a custom machine configuration based on one of the Xavier modules (tegra194), you should update your <code>KERNEL_ARGS</code> setting to add <code>video=efifb:off</code> as a kernel parameter to avoid system crashes at boot time.</p>
+<h2 id="jetpack-changes-9"><a class="header" href="#jetpack-changes-9">JetPack changes</a></h2>
+<ul>
+<li>New versions of VPI and Nsight.</li>
+</ul>
+<h2 id="deepstream-sdk-8"><a class="header" href="#deepstream-sdk-8">DeepStream SDK</a></h2>
+<p>DeepStream SDK updates usually lag new JetPack releases.  Will update if/when a new version is released that supports JetPack 5.1.1.</p>
+<h1 id="other-notes-4"><a class="header" href="#other-notes-4">Other Notes</a></h1>
+<ul>
+<li>The Orin Nano omits the hardware video encoder present in other Jetson models.  Don’t try to use the NVIDIA-specific gstreamer plugins for video encoding on that platform; stick to the software-based plugins.</li>
+</ul>
+<h1 id="known-issues-1"><a class="header" href="#known-issues-1">Known Issues</a></h1>
+<ul>
+<li>The <code>nvpmodel</code> may fail with an error on the first boot after flashing an Orin device.  You can clear this problem by using the <code>nvpmodel</code> command to select a power model configuration, then rebooting (changing the power model may prompt you to reboot immediately). <strong>NOTE</strong> Fixed with <a href="https://github.com/OE4T/meta-tegra/pull/1294">PR #1294</a>.</li>
+<li>Soft reboots on the Orin Nano devkit may fail during OP-TEE startup with a <code>Heap free list corrupted !!!</code> error.  Powering off the device for 10 seconds, then powering it back on, clears the problem. <strong>NOTE</strong> This does not occur when using the supported <code>initrd-flash</code> mechanism for flashing the development kit.  Do not try to use the direct flashing mechanism (the <code>doflash.sh</code> script) when flashing an Orin NX or Nano device using an NVMe drive for its rootfs storage.</li>
+<li>The <code>nvfancontrol</code> daemon on the Orin Nano devkit may raise the fan to the highest speed and log warnings about <code>Failed to open empty file! (Bad address)</code>.  This should also be fixed with <a href="https://github.com/OE4T/meta-tegra/pull/1294">PR #1294</a>.</li>
+<li>There are still some known issues outstanding with the JetPack 5 integration.  See <a href="https://github.com/OE4T/meta-tegra/issues?q=is%3Aissue+is%3Aopen+milestone%3A%22JetPack+5%22">this issues list</a> for the current status.  Any help with resolving these issues would be appreciated!</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 08 Feb 2023, the <code>master</code>, <code>langdale</code>, and <code>kirkstone</code> branches support Jetson Linux R35.2.1 and JetPack 5.1.
+As of 16 Apr 2023, <code>master</code> and <code>kirkstone</code> have been updated to <a href="#changes-from-l4t-r3521jetpack-510">JetPack 5.1.1/L4T R35.3.1</a>.</p>
+<h1 id="changes-from-l4t-r3510jetpack-502"><a class="header" href="#changes-from-l4t-r3510jetpack-502">Changes from L4T R35.1.0/JetPack 5.0.2</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3521">Jetson Linux R35.2.1 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-51">JetPack 5.1 page</a></li>
+</ul>
+<h2 id="machine-changes-6"><a class="header" href="#machine-changes-6">Machine changes</a></h2>
+<p>L4T R35.2.1 adds support for Jetson Orin NX 16GB production modules. A machine configuration for this module mounted on a Xavier NX development kit carrier board is available in the layer: <a href="https://github.com/OE4T/meta-tegra/blob/master/conf/machine/p3509-a02-p3767-0000.conf">p3509-a02-p3767-0000.conf</a>.</p>
+<h2 id="bsp-changes-12"><a class="header" href="#bsp-changes-12">BSP changes</a></h2>
+<p>Many of the BSP components have been updated.  The significant new feature in this release is support for <a href="#getting-started">UEFI Secure Boot</a>.</p>
+<p>UEFI and OP-TEE are now built from source by default, rather than using the pre-built copies from the L4T package.</p>
+<h3 id="kernel-changes-13"><a class="header" href="#kernel-changes-13">Kernel changes</a></h3>
+<p>No major updates to the kernel, which is still based on 5.10.104.</p>
+<h2 id="jetpack-changes-10"><a class="header" href="#jetpack-changes-10">JetPack changes</a></h2>
+<ul>
+<li>Minor updates to CUDA packages</li>
+<li>New versions of cuDNN, TensorRT, and VPI</li>
+</ul>
+<h2 id="deepstream-sdk-9"><a class="header" href="#deepstream-sdk-9">DeepStream SDK</a></h2>
+<p>With JetPack 5.1, the DeepStream SDK has been updated to version 6.2.0-1.  The recipes in <code>meta-tegra-community</code> have
+been updated accordingly for the SDK itself and the Python bindings.</p>
+<h1 id="known-issues-2"><a class="header" href="#known-issues-2">Known Issues</a></h1>
+<p>There are some known issues with the JetPack 5 integration.  See <a href="https://github.com/OE4T/meta-tegra/issues?q=is%3Aissue+is%3Aopen+milestone%3A%22JetPack+5%22">this issues list</a> for the current status.  Any help with resolving these issues would be appreciated!</p>
+<p>NVIDIA issued an “overlay” to the L4T R35.2.1 kit to fix problems with Orin secure boot support (specifically, using SBKPKC signing + encryption).  That overlay was integrated in the <code>master</code> and <code>kirkstone</code> branches.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 18 Sep 2022, the <code>master</code> and <code>kirkstone</code> branches support Jetson Linux R35.1.0 and JetPack 5.0.2 (rev. 1).</p>
+<p>Please note that the official name for the BSP from NVIDIA is <strong>Jetson Linux</strong>, instead of Linux for Tegra.  We’ll continue to use “L4T” as an abbreviation.</p>
+<h1 id="changes-from-l4t-r3272jetpack-462"><a class="header" href="#changes-from-l4t-r3272jetpack-462">Changes from L4T R32.7.2/JetPack 4.6.2</a></h1>
+<p>This is a major update to L4T and JetPack which adds support for the Jetson AGX Orin modules and <em>removes</em> support for <strong>all other</strong> Jetson modules except for the Jetson AGX Xavier and Jetson Xavier NX series.</p>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r351">Jetson Linux R35.1.0 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-502">JetPack 5.0.2 page</a></li>
+</ul>
+<h2 id="machine-changes-7"><a class="header" href="#machine-changes-7">Machine changes</a></h2>
+<p>The <strong>only</strong> Jetson modules supported in this release (and future releases) are:</p>
+<ul>
+<li>Jetson AGX Orin series</li>
+<li>Jetson AGX Xavier series</li>
+<li>Jetson Xavier NX series</li>
+</ul>
+<p>We also have a machine configuration for the Clara AGX development kit.</p>
+<h2 id="bsp-changes-13"><a class="header" href="#bsp-changes-13">BSP changes</a></h2>
+<p>This is a <strong>major</strong> update to the BSP and is not compatible with the R32.x series of releases.</p>
+<ul>
+<li>The <code>cboot</code> bootloader has been replaced by UEFI. You can use either NVIDIA’s prebuilt copy, or build it from source.</li>
+<li>Boot logos/splash screens are now built into the UEFI bootloader, rather than being separately loaded.  Recipes for custom boot logos have been removed from the layer.</li>
+<li>The device tree plugin manager, which was a <code>cboot</code> feature, is no longer supported.  To dynamically modify the device tree (e.g., for camera configuration), you must configure a device tree overlay instead.</li>
+<li>Bootloader updating and redundancy behaves differently than with earlier L4T releases.  See the L4T documentation for details.</li>
+<li>The Linux kernel has been updated to 5.10.104.  The repository used in the layer for this new kernel is <a href="https://github.com/OE4T/linux-tegra-5.10">here</a>.</li>
+<li>The <code>trusty</code> trusted OS has been replaced by OP-TEE.</li>
+<li>Open-source display driver (AGX Orin series only).</li>
+<li>The OpenMAX gstreamer plugin (<code>gstreamer1.0-omx-tegra</code>), which has been deprecated since L4T R32.1.0, is no longer supported.</li>
+<li>Improved support for Wayland/Weston via the EGL-GBM backend interface.</li>
+<li>Container support now defaults to a smaller set of libraries passed through from the host to the container.</li>
+</ul>
+<h3 id="kernel-changes-14"><a class="header" href="#kernel-changes-14">Kernel changes</a></h3>
+<p>Besides the upgrade to the Linux 5.10 LTS kernel as a base, the new default kernel configuration for Jetson devices
+builds far more features and drivers as modules, rather than building them into the kernel itself. If you have recipes
+that depend on specific kernel features/drivers, you may need to add <code>RRECOMMENDS</code> settings to ensure that the
+necessary modules get installed into your rootfs image.  The kernel configuration in the layer diverges slightly from the stock
+Jetson Linux configuration by building in a small number of drivers, rather than leaving them as modules.</p>
+<h2 id="jetpack-changes-11"><a class="header" href="#jetpack-changes-11">JetPack changes</a></h2>
+<ul>
+<li>CUDA updated to 11.4.</li>
+<li>New versions of cuDNN, TensorRT, VPI.</li>
+<li><code>libvisionworks</code> is no longer supported.</li>
+</ul>
+<h2 id="deepstream-sdk-10"><a class="header" href="#deepstream-sdk-10">DeepStream SDK</a></h2>
+<p>With JetPack 5.0.2 (rev. 1), the DeepStream SDK has been updated to version 6.1.1-1.  The recipes in <code>meta-tegra-community</code> have
+been updated accordingly for the SDK itself and the Python bindings.</p>
+<h1 id="known-issues-3"><a class="header" href="#known-issues-3">Known Issues</a></h1>
+<p>There are some known issues with the JetPack 5 integration.  See <a href="https://github.com/OE4T/meta-tegra/issues?q=is%3Aissue+is%3Aopen+milestone%3A%22JetPack+5%22">this issues list</a> for the current status.  Any help with resolving these issues would be appreciated!</p>
+<p>In addition, while NVIDIA supplies sources for the OP-TEE trusted OS, recipes for building OP-TEE from source are not yet ready for merging.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 29 Nov 2024, the <code>kirkstone-l4t-r32.7.x</code> and branch supports L4T R32.7.6/JetPack 4.6.6.</p>
+<h1 id="changes-from-l4t-r3275jetpack-465"><a class="header" href="#changes-from-l4t-r3275jetpack-465">Changes from L4T R32.7.5/JetPack 4.6.5</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/linux-tegra-r3276">L4T R32.7.6 page</a></li>
+<li><a href="https://developer.nvidia.com/jetpack-sdk-466">JetPack release page</a></li>
+</ul>
+<p>Content for this release is identical to L4T R32.7.5/JetPack 4.6.5, with the following updates:</p>
+<ul>
+<li>Security fixes</li>
+<li>Support for new DRAM part</li>
+</ul>
+<p><strong>Note:</strong> This is the final release of the L4T R32 series. See <a href="https://forums.developer.nvidia.com/t/announcing-end-of-life-for-nvidia-jetpack-4-with-the-release-of-jetpack-4-6-6/314301">this NVIDIA developer forum post</a> for the end-of-life announcement.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 30 Jun 2024, the <code>kirkstone-l4t-r32.7.x</code> and branch supports L4T R32.7.5/JetPack 4.6.5.</p>
+<h1 id="changes-from-l4t-r3274jetpack-464"><a class="header" href="#changes-from-l4t-r3274jetpack-464">Changes from L4T R32.7.4/JetPack 4.6.4</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/linux-tegra-r3275">L4T R32.7.5 page</a></li>
+<li><a href="https://developer.nvidia.com/jetpack-sdk-465">JetPack release page</a></li>
+</ul>
+<p>Content for this release is identical to L4T R32.7.4/JetPack 4.6.4, with the following updates:</p>
+<ul>
+<li>Kernel and driver patches</li>
+<li>Boot firmware updates to support SKU 3 of the TX2-NX module, as well as recent BOM changes (see PCN references in the release notes)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 03 Jul 2023, the <code>kirkstone-l4t-r32.7.x</code> and <code>dunfell</code> branches support L4T R32.7.4/JetPack 4.6.4.</p>
+<h1 id="changes-from-l4t-r3273jetpack-463"><a class="header" href="#changes-from-l4t-r3273jetpack-463">Changes from L4T R32.7.3/JetPack 4.6.3</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/linux-tegra-r3274">L4T R32.7.4 page</a></li>
+<li><a href="https://developer.nvidia.com/jetpack-sdk-464">JetPack release page</a></li>
+</ul>
+<p>Content for this release is identical to L4T R32.7.3/JetPack 4.6.3, with the following updates:</p>
+<ul>
+<li>Security fixes: <a href="https://nvidia.custhelp.com/app/answers/detail/a_id/5466">NVIDIA security bulletin</a></li>
+<li>Kernel update to v4.9.337 base (the last 4.9 LTS kernel release)</li>
+<li>Minor updates to Jetson Multimedia API</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 21 Jan 2023, the <code>kirkstone-l4t-r32.7.x</code> and <code>dunfell</code> branches support L4T R32.7.3/JetPack 4.6.3.</p>
+<h1 id="changes-from-l4t-r3272jetpack-462-1"><a class="header" href="#changes-from-l4t-r3272jetpack-462-1">Changes from L4T R32.7.2/JetPack 4.6.2</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/linux-tegra-r3273">L4T R32.7.3 page</a></li>
+<li><a href="https://developer.nvidia.com/jetpack-sdk-463">JetPack release page</a></li>
+</ul>
+<p>Content for this release is identical to L4T R32.7.2/JetPack 4.6.2, with the following updates:</p>
+<ul>
+<li>Security fixes</li>
+<li>Support for updated <a href="https://developer.nvidia.com/jetson-tx2-pcn209140-addition-manufacturing-bom-components-hynix-dram">Jetson TX2 modules</a> with Hynix DRAM</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 22 May 2022, the <code>master</code>, <code>kirkstone</code>, and <code>dunfell</code> branches support L4T R32.7.2/JetPack 4.6.2.</p>
+<h1 id="changes-from-l4t-r3271jetpack-461"><a class="header" href="#changes-from-l4t-r3271jetpack-461">Changes from L4T R32.7.1/JetPack 4.6.1</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/linux-tegra-r3272">L4T R32.7.2 page</a> Note that the release notes linked on that page are for R32.7.1 (as of 22 May 2022).</li>
+<li><a href="https://developer.nvidia.com/jetpack-sdk-462">JetPack release page</a></li>
+</ul>
+<p>Content for this release is identical to L4T R32.7.1/JetPack 4.6.1, with the following updates:</p>
+<ul>
+<li><a href="https://nvidia.custhelp.com/app/answers/detail/a_id/5343">Security fixes</a></li>
+<li>Support for new <a href="https://developer.nvidia.com/jetson-agx-xavier-pcn208560-bom-addition-dram-and-emmc">AGX Xavier module revisions</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 18 Mar 2022, the <code>master</code> branch supports L4T R32.7.1/JetPack 4.6.1.
+As of 08 Apr 2022, the <code>dunfell</code> branch also supports L4T R32.7.1/JetPack 4.6.1.</p>
+<h1 id="changes-from-l4t-r3261jetpack-46"><a class="header" href="#changes-from-l4t-r3261jetpack-46">Changes from L4T R32.6.1/JetPack 4.6</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/l4t/r32_release_v7.1/jetson_linux_driver_package_release_notes_r32.7.1_ga.pdf">L4T R32.7.1 release notes</a></li>
+<li><a href="https://developer.nvidia.com/jetpack-sdk-461">JetPack release page</a></li>
+</ul>
+<h2 id="machine-changes-8"><a class="header" href="#machine-changes-8">Machine changes</a></h2>
+<ul>
+<li>R32.7.1 adds support for the 64GB Jetson AGX Xavier and 16GB Jetson Xavier NX modules. These should be supported without modifying any machine configuration files, although (as of this writing) that has not been tested.</li>
+</ul>
+<h2 id="flash-layout-file-changes-for-t194-xavier-platforms"><a class="header" href="#flash-layout-file-changes-for-t194-xavier-platforms">Flash layout file changes for t194 (Xavier) platforms</a></h2>
+<p>The flash layout XML files for the Jetson AGX Xavier Industrial module has been changed to add a second badpage partition. Since
+there is no support yet for that module in meta-tegra, that should not affect any current users.</p>
+<h2 id="kernel-updates"><a class="header" href="#kernel-updates">Kernel updates</a></h2>
+<p>The security engine driver has been enhanced to provide <code>hwrng</code> device to the kernel, which can be used with the <code>rng-tools</code> entropy gatherer (for t186/t194 only).  Recipes to enable this on TX2 and Xavier platforms have been added to the <a href="https://github.com/OE4T/meta-tegra-community">meta-tegra-community</a> repo.</p>
+<h3 id="firmware-loading-issue"><a class="header" href="#firmware-loading-issue">Firmware loading issue</a></h3>
+<p>NVIDIA modified the kernel firmware loader in a way that causes significant delays with the default kernel configuration, which enables the long-deprecated userland helper interface for firmware loading. Disabling <code>CONFIG_FW_LOADER_USER_HELPER</code> and <code>CONFIG_FW_LOADER_USER_HELPER_FALLBACK</code> fixes the delay, and this is done by default in the kernel recipe.</p>
+<h2 id="u-boot-updates"><a class="header" href="#u-boot-updates">U-Boot updates</a></h2>
+<p>The U-Boot in L4T R32.7.1 remains at U-Boot v2020.04, with added patches from NVIDIA. In this layer we continue to track
+the upstream OE-Core U-Boot recipes in each branch, porting NVIDIA patches to our fork of the upstream U-Boot repository.</p>
+<p>Note that unlike NVIDIA, our U-Boot fork uses a separate build configuration for the SDcard-based Nano (sku 0000) and the
+eMMC production Nano (sku 0002), so patches related to supporting both in the same build have not been applied.</p>
+<p>On t210 platforms, U-Boot is now responsible for loading the XUSB controller firmware; it is not loaded by cboot.</p>
+<h2 id="cboot-updates"><a class="header" href="#cboot-updates">cboot updates</a></h2>
+<p>cboot on the t186/t194 platforms added a new “unified” A/B redundancy mode that associates a bootloader slot with a rootfs slot.
+For OE4T, this is equivalent to the “user” redundancy mode that we were already using.</p>
+<h2 id="jetpack-updates"><a class="header" href="#jetpack-updates">JetPack updates</a></h2>
+<p>JetPack 4.6.1 includes the following updates:</p>
+<ul>
+<li>VPI 1.2.3</li>
+<li>TensorRT 8.2.1</li>
+</ul>
+<h1 id="deepstream-update"><a class="header" href="#deepstream-update">DeepStream update</a></h1>
+<p>The DeepStream SDK has been updated from 6.0.0 to 6.0.1 for compatibility with the updated L4T/JetPack.  The DeepStream
+recipes are in the <a href="https://github.com/OE4T/meta-tegra-community">meta-tegra-community</a> repo.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 10 Aug 2021, the <code>dunfell</code> branch supports L4T R32.6.1/JetPack 4.6. Users of <code>dunfell</code> that wish to remain
+at L4T R32.3.1 should switch to the <code>dunfell-l4t-r32.3.1</code> branch. As of 11 Aug 2021, the <code>master</code> branch was also
+updated to R32.6.1.</p>
+<p>As of 15 Nov 2021, the <code>dunfell</code>, <code>honister</code>, and <code>master</code> branches have all been updated to R32.6.1 with the updated
+<code>nvidia-l4t-multimedia</code> and <code>nvidia-l4t-multimedia-utils</code> libraries that were released as part of JetPack 4.6 (rev 2)
+in October 2021.  As of 17 Nov 2021, all JetPack 4.6 (rev 2) updates have been applied to the branches.</p>
+<h1 id="changes-from-l4t-r325xjetpack-45"><a class="header" href="#changes-from-l4t-r325xjetpack-45">Changes from L4T R32.5.x/JetPack 4.5</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/l4t/r32_release_v6.1/jetson_linux_driver_package_release_notes_r32.6.1_ga.pdf">L4T R32.6.1 release notes</a></li>
+<li><a href="https://developer.nvidia.com/jetpack-sdk-46">JetPack release page</a></li>
+</ul>
+<h2 id="machine-changes-9"><a class="header" href="#machine-changes-9">Machine changes</a></h2>
+<ul>
+<li>R32.6.1 adds support for the Jetson AGX Xavier industrial module. No machine <code>.conf</code> is present in the layer yet for this module.</li>
+<li>Support for the Jetson AGX Xavier 8GB module has been removed.</li>
+</ul>
+<p>Note that NVIDIA has announced that this L4T release will be the last to support the t210 (TX1/Nano) and t186 (TX2) platforms.</p>
+<h2 id="flash-layout-file-changes-for-t194-xavier-platforms-1"><a class="header" href="#flash-layout-file-changes-for-t194-xavier-platforms-1">Flash layout file changes for t194 (Xavier) platforms</a></h2>
+<p>The flash layout XML files for the Xavier platforms in the L4T BSP have been modified to include new attributes (but no location/size
+changes).  In particular, the <code>xusb-fw</code> partition is now marked <code>oem_signed="true"</code>, as cboot now performs signature validation
+on the USB controller firmware.</p>
+<h2 id="kernel-updated-to-49253"><a class="header" href="#kernel-updated-to-49253">Kernel updated to 4.9.253</a></h2>
+<p>The Linux kernel in R32.6.1 has been updated to a 4.9.253 base.</p>
+<h2 id="u-boot-updates-1"><a class="header" href="#u-boot-updates-1">U-Boot updates</a></h2>
+<p>The U-Boot in L4T R32.6.1 remains at U-Boot v2020.04, with added patches from NVIDIA. In this layer we continue to track
+the upstream OE-Core U-Boot recipes in each branch, porting NVIDIA patches to our fork of the upstream U-Boot repository.</p>
+<p>Note that unlike NVIDIA, our U-Boot fork uses a separate build configuration for the SDcard-based Nano (sku 0000) and the
+eMMC production Nano (sku 0002), so patches related to supporting both in the same build have not been applied.</p>
+<h2 id="cboot-updates-1"><a class="header" href="#cboot-updates-1">cboot updates</a></h2>
+<p>cboot on the t186/t194 platforms added a new “unified” A/B redundancy mode that associates a bootloader slot with a rootfs slot.
+For OE4T, this is equivalent to the “user” redundancy mode that we were already using.</p>
+<h2 id="flashingsigning-tools-updates"><a class="header" href="#flashingsigning-tools-updates">Flashing/signing tools updates</a></h2>
+<ul>
+<li>As mentioned above, the USB controller firmware is now signed on t194 platforms.</li>
+<li>The PT (Tegra partition table) partition on t210 platforms now gets a 16-byte trailer added.</li>
+<li>Bootloader update payloads (BUPs) have been changed to include more version information in the header.</li>
+</ul>
+<h2 id="container-support"><a class="header" href="#container-support">Container support</a></h2>
+<ul>
+<li>The Jetson-specific container runtime (<code>libnvidia-container-tools</code>) was updated to version 0.10, which adds a mechanism for filtering out some of the pass-through mounts.</li>
+</ul>
+<h2 id="jetpack-updates-1"><a class="header" href="#jetpack-updates-1">JetPack updates</a></h2>
+<p>JetPack 4.6 includes the following updates:</p>
+<ul>
+<li>VPI 1.1</li>
+<li>CUDA 10.2.300</li>
+<li>TensorRT 8.0.1</li>
+<li>cuDNN 8.2.1</li>
+</ul>
+<p>JetPack 4.6 (rev2) was released in October 2021 with updates to support the DeepStream 6.0 SDK. (The DeepStream 6.0 SDK recipe has been integrated into the <a href="https://github.com/OE4T/meta-tegra-community">meta-tegra-community</a> layer.)</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 15 Jul 2021, the <code>master</code> branch supports L4T R32.5.2/JetPack 4.5.1 content for all current Jetson platforms.</p>
+<h1 id="changes-from-l4t-r3251"><a class="header" href="#changes-from-l4t-r3251">Changes from L4T R32.5.1</a></h1>
+<p>This minor release includes fixes for issues mentioned in <a href="https://nvidia.custhelp.com/app/answers/detail/a_id/5205">this security bulletin</a></p>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/l4t/r32_release_v5.2/jetson_linux_driver_package_release_notes_r32.5.2_ga.pdf">L4T R32.5.2 release notes</a></li>
+</ul>
+<p>See also the notes on <a href="#changes-from-l4t-r3250jetpack-45">L4T R32.5.1</a>
+and <a href="#changes-from-l4t-r3244jetpack-441">L4T R32.5.0</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 28 Feb 2021, the <code>master</code> branch supports L4T R32.5.1/JetPack 4.5.1 content for all current Jetson platforms.</p>
+<h1 id="changes-from-l4t-r3250jetpack-45"><a class="header" href="#changes-from-l4t-r3250jetpack-45">Changes from L4T R32.5.0/JetPack 4.5</a></h1>
+<p>This minor release mainly adds support for the Jetson TX2-NX module.</p>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://docs.nvidia.com/jetson/l4t/pdf/Jetson_Linux_Driver_Package_Release_Notes_R32.5.1_GA.pdf">L4T R32.5.1 release notes</a></li>
+<li><a href="https://docs.nvidia.com/jetson/jetpack/release-notes/index.html">JetPack release notes</a></li>
+</ul>
+<h2 id="jetson-tx2-nx-module-support"><a class="header" href="#jetson-tx2-nx-module-support">Jetson TX2-NX Module support</a></h2>
+<p>Support for the Jetson TX2-NX module, installed in the P3509 carrier board from a Jetson Xavier NX development kit, is added. The MACHINE
+name is <code>jetson-xavier-nx-devkit-tx2-nx</code>.</p>
+<h2 id="jetpack-updates-2"><a class="header" href="#jetpack-updates-2">JetPack updates</a></h2>
+<p>JetPack 4.5.1 is mostly identical to 4.5.0. <a href="https://developer.nvidia.com/embedded/vpi">VPI (Vision Programing Interface)</a> was updated to version 1.0.15.</p>
+<h2 id="sdk-manager-no-longer-required"><a class="header" href="#sdk-manager-no-longer-required">SDK Manager no longer required</a></h2>
+<p>As of 24 Apr 2021, the host-side (x86-64) CUDA recipes have been updated to use package feeds
+that NVIDIA has added for them as well.  SDK Manager is no longer required.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 03 Feb 2021, the <code>master</code> branch supports L4T R32.5.0/JetPack 4.5 content for all current Jetson platforms. This support was
+then ported to the <code>dunfell-l4t-r32.5.0</code> branch as of 10 Feb 2021.</p>
+<h1 id="changes-from-l4t-r3244jetpack-441"><a class="header" href="#changes-from-l4t-r3244jetpack-441">Changes from L4T R32.4.4/JetPack 4.4.1</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://docs.nvidia.com/jetson/l4t/pdf/Jetson_Linux_Driver_Package_Release_Notes_R32.5_GA.pdf">L4T R32.5.0 release notes</a></li>
+<li><a href="https://docs.nvidia.com/jetson/jetpack/release-notes/index.html">JetPack release notes</a></li>
+</ul>
+<h2 id="machine-name-changes"><a class="header" href="#machine-name-changes">Machine name changes</a></h2>
+<p>Names of machine configuration files have change to match the updated naming convention in L4T R32.5.0. The main change is that
+all of the machine names now include <code>devkit</code>, to make it clearer that they correspond to developer kits rather than bare modules.
+Machine names unchanged from the last release are <code>jetson-nano-2gb-devkit</code>, <code>jetson-xavier-nx-devkit</code>, and <code>jetson-xavier-nx-devkit-emmc</code>.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Old name</th><th>New name</th></tr>
+</thead>
+<tbody>
+<tr><td>jetson-tx1</td><td>jetson-tx1-devkit</td></tr>
+<tr><td>jetson-tx2</td><td>jetson-tx2-devkit</td></tr>
+<tr><td>jetson-tx2i</td><td>jetson-tx2-devkit-tx2i</td></tr>
+<tr><td>jetson-tx2-4gb</td><td>jetson-tx2-devkit-4gb</td></tr>
+<tr><td>jetson-nano-qspi-sd</td><td>jetson-nano-devkit</td></tr>
+<tr><td>jetson-nano-emmc</td><td>jetson-nano-devkit-emmc</td></tr>
+<tr><td>jetson-xavier</td><td>jetson-agx-xavier-devkit</td></tr>
+<tr><td>jetson-xavier-8gb</td><td>jetson-agx-xavier-devkit-8gb</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="flash-layout-file-changes-for-jetson-nano-developer-kit"><a class="header" href="#flash-layout-file-changes-for-jetson-nano-developer-kit">Flash layout file changes for Jetson Nano Developer Kit</a></h2>
+<p>On the Nano developer kit, all boot-related partitions have been relocated to the QSPI flash in R32.5.0.
+Only the rootfs partition gets written to the SDcard.</p>
+<h2 id="kernel-updated-to-49201"><a class="header" href="#kernel-updated-to-49201">Kernel updated to 4.9.201</a></h2>
+<p>The Linux kernel in R32.5.0 has changed from being based on 4.9.140 to 4.9.201.</p>
+<h2 id="u-boot-updates-2"><a class="header" href="#u-boot-updates-2">U-Boot updates</a></h2>
+<p>The U-Boot in L4T R32.5.0 changed from a base of U-Boot v2016.07 to U-Boot v2020.04. The meta-tegra layer
+switched to upstream U-Boot starting with the <code>dunfell-l4t-r32.4.3</code> branch (and is at v2020.07 in <code>gatesgarth</code>
+and <code>v2020.10</code> in master), but relevant patches added by NVIDIA for the L4T release have been ported to our
+branches.</p>
+<h2 id="jetpack-updates-3"><a class="header" href="#jetpack-updates-3">JetPack updates</a></h2>
+<p>Only minor updates were made in JetPack 4.5, with little impact on recipes in meta-tegra.</p>
+<h3 id="vpi-10"><a class="header" href="#vpi-10">VPI 1.0</a></h3>
+<p><a href="https://developer.nvidia.com/embedded/vpi">VPI (Vision Programing Interface)</a> went from “developer preview” to general release with version 1.0.12.</p>
+<h2 id="sdk-manager-no-longer-required-1"><a class="header" href="#sdk-manager-no-longer-required-1">SDK Manager no longer required</a></h2>
+<p>As of 24 Apr 2021, the host-side (x86-64) CUDA recipes have been updated to use package feeds
+that NVIDIA has added for them as well.  SDK Manager is no longer required.</p>
+<h1 id="new-features-not-implemented-in-meta-tegra"><a class="header" href="#new-features-not-implemented-in-meta-tegra">New Features not implemented in meta-tegra</a></h1>
+<p>The following features have been added in L4T R32.5.0/JetPack 4.5 but have not (yet) been implemented in meta-tegra.</p>
+<h2 id="ab-rootfs-redundancy"><a class="header" href="#ab-rootfs-redundancy">A/B rootfs redundancy</a></h2>
+<p>R32.5.0 introduced rootfs A/B redundancy for L4T, decoupled from the bootloader A/B redundancy feature (which was only available on TX2 and Xavier platforms).</p>
+<h2 id="encrypted-rootfs-support"><a class="header" href="#encrypted-rootfs-support">Encrypted rootfs support</a></h2>
+<p>R32.5.0 added a mechanism for setting up the Ubuntu distribution to use LUKS to encrypt the rootfs (on TX2 and Xavier).  The implementation is specific to the Ubuntu distro used for L4T/JetPack and the sample Trusty image NVIDIA provides.  It was already possible to implement this feature with an OE/Yocto-based distro, so it’s unlikely to be needed in meta-tegra.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 30 Oct 2020, the <code>master</code> branch supports L4T R32.4.4/JetPack 4.4.1 content for Jetson TX1, Jetson TX2, Jetson Nano (including Nano 2GB devkit), and Jetson AGX Xavier, and Jetson Xavier NX.</p>
+<h1 id="changes-from-l4t-r3243jetpack-44"><a class="header" href="#changes-from-l4t-r3243jetpack-44">Changes from L4T R32.4.3/JetPack 4.4</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.download.nvidia.com/assets/embedded/downloads/Jetson_Linux_Driver_Package_Release_Notes_R32.4.4_EA.pdf">L4T R32.4.4 release notes</a></li>
+<li><a href="https://docs.nvidia.com/jetson/jetpack/release-notes/index.html">JetPack release notes</a></li>
+</ul>
+<h2 id="flash-layout-file-changes-for-tegra210-platforms"><a class="header" href="#flash-layout-file-changes-for-tegra210-platforms">Flash layout file changes for Tegra210 platforms</a></h2>
+<p>NVIDIA has updated their flashing tools in the Tegra210 BSP package so the <code>id=</code> field in the flash layout XML file
+is used as the partition number in the GPT of the eMMC/SDcard.  They have updated their flash layouts to reflect that,
+with the APP partition appearing at the end of the file with <code>id="1"</code>. Bear this in mind if you have customized flash
+layouts for your TX1 or Nano devices.</p>
+<h2 id="kernel-recipe-using-new-branch"><a class="header" href="#kernel-recipe-using-new-branch">Kernel recipe using new branch</a></h2>
+<p>The kernel update into the <code>patches-l4t-r32.4</code> branch did not merge cleanly, so a the <code>linux-tegra_4.9.bb</code> recipe now points
+to a new <code>oe4t-patches-l4t-r32.4</code> branch which has our patches rebased on top of the R32.4.4 release from NVIDIA.</p>
+<h2 id="jetpack-updates-4"><a class="header" href="#jetpack-updates-4">JetPack updates</a></h2>
+<p>None of the JetPack packages have changed in 4.4.1, except for a minor update to the Tegra MultiMedia API SDK.
+The update obsoletes a patch for an issue that was present in the R32.4.3/4.4 version of the SDK.</p>
+<h2 id="sdk-manager-no-longer-required-2"><a class="header" href="#sdk-manager-no-longer-required-2">SDK Manager no longer required</a></h2>
+<p>As of 24 Apr 2021, the host-side (x86-64) CUDA recipes have been updated to use package feeds
+that NVIDIA has added for them as well.  SDK Manager is no longer required.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 13 Jul 2020, the <code>master</code> and <code>dunfell-l4t-r32.4.3</code> branches support L4T R32.4.3/JetPack 4.4 (GA) content for Jetson TX1, Jetson TX2, Jetson Nano, and Jetson AGX Xavier, and Jetson Xavier NX.</p>
+<h1 id="notable-changes-from-r3231--jetpack-43"><a class="header" href="#notable-changes-from-r3231--jetpack-43">Notable changes from R32.3.1 / JetPack 4.3</a></h1>
+<p>NVIDIA documentation:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/secure/tools/files/jetpack-sdks/jetpack-4.4-ga/Jetson_Linux_Driver_Package_Release_Notes_R32.4.3_GA.pdf">L4T R32.4.3 release notes</a></li>
+<li><a href="https://docs.nvidia.com/jetson/jetpack/release-notes/index.html">JetPack release notes</a></li>
+</ul>
+<h2 id="u-boot-updated-to-v202004"><a class="header" href="#u-boot-updated-to-v202004">U-Boot updated to v2020.04</a></h2>
+<p>NVIDIA has upstreamed all of their U-Boot changes, so the <code>u-boot-tegra</code> recipe is now based off the upstream
+U-Boot repository, instead of NVIDIA’s.  NVIDIA has not yet created a separate U-Boot configuration for
+the Nano eMMC (sku 0002) module, so patches have been added for it, as was done for R32.3.1.</p>
+<p><strong>Note</strong> that with L4T R32.4.3, NVIDIA has defined a region of the eMMC boot1 block (or QSPI flash on platforms that use it) for
+storing the U-Boot environment block.  The <code>u-boot-tegra</code> sources have been changed to use the NVIDIA-defined location and size
+for that region, which differs from prior versions.</p>
+<h2 id="cuda-102"><a class="header" href="#cuda-102">CUDA 10.2</a></h2>
+<p>JetPack 4.4 updates CUDA to version 10.2, which is compatible with GCC 8.  Recipes for building
+the GCC 8 toolchain have been added to the <code>meta-tegra/contrib</code> layer.</p>
+<h2 id="fewer-sdk-manager-downloads-required"><a class="header" href="#fewer-sdk-manager-downloads-required">Fewer SDK Manager downloads required</a></h2>
+<p>With NVIDIA now providing direct package feeds for their L4T/JetPack OTA updates, recipes have been updated
+to use those feeds where possible.  <del>The host-side CUDA toolkit must still be downloaded using the SDK Manager,
+as before.</del> As of 24 Apr 2021, the host-side (x86-64) CUDA recipes have been updated to use package feeds
+that NVIDIA has added for them as well.  SDK Manager is no longer required.</p>
+<h1 id="other-notes-5"><a class="header" href="#other-notes-5">Other Notes</a></h1>
+<h2 id="cuda-host-tools"><a class="header" href="#cuda-host-tools">CUDA host tools</a></h2>
+<p>If you ran the SDK Manager on Ubuntu 16.04 to download the CUDA host-side tools, you should add the following setting to your build configuration:</p>
+<pre><code>CUDA_BINARIES_x86-64 = "cuda-binaries-ubuntu1604"
+</code></pre>
+<p>By default, the recipes assume you used Ubuntu 18.04 and reference that version of the CUDA host-side tools.</p>
+<h2 id="kernel-defconfig-file-removed"><a class="header" href="#kernel-defconfig-file-removed">Kernel <code>defconfig</code> file removed</a></h2>
+<p>The kernel (linux-tegra) recipe has been changed to generate the default configuration from the <code>arch/arm64/configs/tegra_defconfig</code> file in the source tree, rather than including the full kernel
+configuration as a <code>defconfig</code> file.  If you have a customized kernel configuration and were overriding
+the default configuration by supplying your own <code>defconfig</code> file, you will either need to convert your
+modifications into config fragment files (see the <a href="https://www.yoctoproject.org/docs/3.1/kernel-dev/kernel-dev.html">YP Linux Kernel Dev Manual</a> for documentation), or use a <code>.bbappend</code> file to add your <code>defconfig</code> file back into the SRC_URI.</p>
+<h2 id="tegraflash-default-packaging-change"><a class="header" href="#tegraflash-default-packaging-change">Tegraflash default packaging change</a></h2>
+<p>The <code>tegraflash</code> image type now generates a compressed tarball (<code>.tegraflash.tar.gz</code>) by default instead of a ZIP package (<code>.tegraflash.zip</code>), to better utilize sparse file support. See <a href="https://github.com/madisongh/meta-tegra/wiki/Tegraflash-enhancements">this page</a> for more information.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 30 Apr 2020, the <code>master</code> and <code>dunfell-l4t-r32.4.2</code> branches support L4T R32.4.2/JetPack 4.4 Developer Preview content for Jetson TX1, Jetson TX2, Jetson Nano, and Jetson AGX Xavier. Experimental support for
+Jetson Xavier NX (eMMC module in Jetson Nano B01 carrier) is also present.</p>
+<p>As of 12 Jul 2020, L4T R32.4.3/JetPack 4.4 GA is available on the <code>master</code> branch. R32.4.2/4.4 DP should not be used for new development.</p>
+<h1 id="notable-changes-from-r3231--jetpack-43-1"><a class="header" href="#notable-changes-from-r3231--jetpack-43-1">Notable changes from R32.3.1 / JetPack 4.3</a></h1>
+<h2 id="u-boot-updated-to-v202004-1"><a class="header" href="#u-boot-updated-to-v202004-1">U-Boot updated to v2020.04</a></h2>
+<p>NVIDIA has upstreamed all of their U-Boot changes, so the <code>u-boot-tegra</code> recipe is now based off the upstream
+U-Boot repository, instead of NVIDIA’s.  NVIDIA has not yet created a separate U-Boot configuration for
+the Nano eMMC (sku 0002) module, so patches have been added for it, as was done for R32.3.1.</p>
+<h2 id="cuda-102-1"><a class="header" href="#cuda-102-1">CUDA 10.2</a></h2>
+<p>JetPack 4.4 DP updates CUDA to version 10.2, which is compatible with GCC 8.  Recipes for building
+the GCC 8 toolchain have been added to the <code>meta-tegra/contrib</code> layer.</p>
+<h2 id="fewer-sdk-manager-downloads-required-1"><a class="header" href="#fewer-sdk-manager-downloads-required-1">Fewer SDK Manager downloads required</a></h2>
+<p>With NVIDIA now providing direct package feeds for their L4T/JetPack OTA updates, recipes have been updated
+to use those feeds where possible.  The host-side CUDA toolkit must still be downloaded using the SDK Manager,
+as before.</p>
+<h1 id="other-notes-6"><a class="header" href="#other-notes-6">Other Notes</a></h1>
+<h2 id="cuda-host-tools-1"><a class="header" href="#cuda-host-tools-1">CUDA host tools</a></h2>
+<p>If you ran the SDK Manager on Ubuntu 16.04 to download the CUDA host-side tools, you should add the following setting to your build configuration:</p>
+<pre><code>CUDA_BINARIES_x86-64 = "cuda-binaries-ubuntu1604"
+</code></pre>
+<p>By default, the recipes assume you used Ubuntu 18.04 and reference that version of the CUDA host-side tools.</p>
+<h2 id="kernel-defconfig-file-removed-1"><a class="header" href="#kernel-defconfig-file-removed-1">Kernel <code>defconfig</code> file removed</a></h2>
+<p>The kernel (linux-tegra) recipe has been changed to generate the default configuration from the <code>arch/arm64/configs/tegra_defconfig</code> file in the source tree, rather than including the full kernel
+configuration as a <code>defconfig</code> file.  If you have a customized kernel configuration and were overriding
+the default configuration by supplying your own <code>defconfig</code> file, you will either need to convert your
+modifications into config fragment files (see the <a href="https://www.yoctoproject.org/docs/3.1/kernel-dev/kernel-dev.html">YP Linux Kernel Dev Manual</a> for documentation), or use a <code>.bbappend</code> file to add your <code>defconfig</code> file back into the SRC_URI.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>As of 01 Aug 2021, the <code>dunfell-l4t-r32.3.1</code> branch was created off the last L4T R32.3.1-based commit into the <code>dunfell</code> branch, for users
+wishing to continue with the older BSP.  The <code>dunfell</code> branch has been updated with L4T R32.6.1/JetPack 4.6.</p>
+<p>As of 26 Apr 2020, the <code>dunfell</code> and <code>zeus-l4t-r32.3.1</code> branches support L4T R32.3.1/JetPack 4.3 content for Jetson TX1, Jetson TX2, Jetson Nano, and Jetson AGX Xavier. (There is also <code>thud-l4t-r32.3.1</code>, but it is not actively maintained.)</p>
+<h1 id="notable-changes-from-r322x"><a class="header" href="#notable-changes-from-r322x">Notable changes from R32.2.x</a></h1>
+<p>There are several changes in this version of L4T that required updates to Tegra platform support in this layer.</p>
+<h2 id="bootloader-update-support"><a class="header" href="#bootloader-update-support">Bootloader update support</a></h2>
+<p>Support for bootloader updates has been added to tegra210 (Jetson-TX1 and Jetson Nano) platforms. The <code>tegra186-redundant-boot</code> recipe has been renamed to <code>tegra-redundant-boot</code>, which installs the <code>l4t_payloader_updater_t210</code> script on tegra210 platforms.  Note that bootloader redundancy on tegra210 is different from tegra186/tegra194 (for example, no A/B slots with failover). See the <em>Bootloader</em> chapter of the L4T documentation for details.</p>
+<p>With the wider support for bootloader updates and more module variants that may need different boot-time configuration files, BUP payload packages now support all variants for a MACHINE. Also added is a service
+that runs at boot time to populate the TNSPEC field of the <code>/etc/nv_boot_control.conf</code> file based on the
+contents of the EEPROM on the module, so the update tools can select the correct files out of the BUP
+payload for the specific module in the system.  This differs from stock L4T, where the configuration file is written into the rootfs after the module’s EEPROM has been read during the flashing process, but should
+result in the same TNSPEC as would be present after using L4T’s <code>flash.sh</code>.</p>
+<h2 id="tegra-multimedia-api"><a class="header" href="#tegra-multimedia-api">Tegra Multimedia API</a></h2>
+<p>As of L4T R32.3.1, NVIDIA has stopped providing the Tegra Multimedia API kit with the BSP, so if you need the Multimedia API in your builds, you must download the kit to your <code>NVIDIA_DEVNET_MIRROR</code> directory.</p>
+<p>The NVIDIA-specific OpenGL extension header files that used to be extracted from the Multimedia API kit are now obtained from the graphics demos source package in the L4T BSP.</p>
+<h2 id="jetson-nano-machine-rename"><a class="header" href="#jetson-nano-machine-rename">Jetson Nano MACHINE rename</a></h2>
+<p>The MACHINE name for the original Jetson Nano developer kit (using SPI flash and an SDcard) has been changed from <code>jetson-nano</code> to <code>jetson-nano-qspi-sd</code>.  This aligns with NVIDIA’s naming and will make it easier to distinguish between the older kit and the upcoming newer kit based on the 0002 SKU that uses eMMC.</p>
+<h2 id="single-flash-layout-file-for-jetson-nano"><a class="header" href="#single-flash-layout-file-for-jetson-nano">Single flash layout file for Jetson Nano</a></h2>
+<p>Builds for <code>jetson-nano-qspi-sd</code> now use only the unified SPI+SDcard flash layout XML file (<code>flash_l4t_t210_spi_sd_p3448.xml</code>), as this layout file has been updated for compatibility with bootloader updates.</p>
+<p>Also changed are the workflows for flashing and creating SDcard images for the Nano. The <code>tegraflash.zip</code> package now includes two shell scripts: <code>doflash.sh</code> for flashing via USB (which now flashes <strong>both</strong> the QSPI flash and and an SDcard mounted on the device), and <code>dosdcard.sh</code> for creating either a file containing SDcard image or for writing directly to an SDcard mounted on your development host.</p>
+<h2 id="tensorrt-packaging-change"><a class="header" href="#tensorrt-packaging-change">TensorRT packaging change</a></h2>
+<p>TensorRT 6.0.1 has a more complicated packaging layout than prior versions, but has the same issue as prior versions where NVIDIA uses the exact same <code>.deb</code> package names for the Xavier-specific packages and the non-Xavier packages.  To make it clearer which packages are which, the <code>tensorrt</code> recipe looks for the Xavier-specific packages in <code>${NVIDIA_DEVNET_MIRROR}/DLA</code> and the non-Xavier packages in <code>${NVIDIA_DEVNET_MIRROR}/NoDLA</code>.  You must move the packages yourself once you have downloaded them using SDK Manager.</p>
+<p>Example, for Xavier:</p>
+<pre><code>  $ cd ~/Downloads/nvidia/sdkm_downloads
+  $ mkdir DLA
+  $ mv tensorrt*.deb *libnvinfer*.deb libnv*parsers*.deb uff*.deb graphsurgeon*.deb DLA/
+</code></pre>
+<p>Example, for all other platforms:</p>
+<pre><code>  $ cd ~/Downloads/nvidia/sdkm_downloads
+  $ mkdir NoDLA
+  $ mv tensorrt*.deb *libnvinfer*.deb libnv*parsers*.deb uff*.deb graphsurgeon*.deb NoDLA/
+</code></pre>
+<h1 id="other-notes-7"><a class="header" href="#other-notes-7">Other notes</a></h1>
+<p>The following notes from prior releases also apply.</p>
+<h2 id="sdk-manager-downloads-required"><a class="header" href="#sdk-manager-downloads-required">SDK Manager downloads required</a></h2>
+<p>JetPack 4.3 content cannot be downloaded anonymously from NVIDIA’s servers. You <strong>must</strong> use NVIDIA SDK Manager to download the JetPack 4.3 Debian packages to your build host, then add this setting to your build configuration (e.g., in <code>conf/local.conf</code> under your build directory):</p>
+<pre><code>NVIDIA_DEVNET_MIRROR = "file://path/to/downloads"
+</code></pre>
+<p>By default, the SDK Manager downloads to a directory called <code>Downloads/nvidia/sdkm_downloads</code> under your <code>$HOME</code> directory, so use that path in the above setting.</p>
+<h2 id="cuda-host-tools-2"><a class="header" href="#cuda-host-tools-2">CUDA host tools</a></h2>
+<p>If you ran the SDK Manager on Ubuntu 16.04 to download the JetPack packages, you should add the following setting to your build configuration:</p>
+<pre><code>CUDA_BINARIES_NATIVE = "cuda-binaries-ubuntu1604-native"
+</code></pre>
+<p>By default, the recipes assume you used Ubuntu 18.04 and reference that version of the CUDA host-side tools.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="l4t-r3223-notes"><a href="#l4t-r3223-notes" class="header">L4T-R32.2.3-Notes</a></h1>
+<p>As of 23 Nov 2019, the <code>master</code> and <code>zeus</code> branches support L4T R32.2.3/JetPack 4.2.3 content for Jetson TX1, Jetson TX2, Jetson Nano, and Jetson AGX Xavier.</p>
+<h2 id="please-note"><a class="header" href="#please-note">Please Note</a></h2>
+<p>The JetPack 4.2.3 content cannot be downloaded anonymously from NVIDIA’s servers. You <strong>must</strong> use NVIDIA SDK Manager to download the JetPack 4.2.3 Debian packages to your build host, then add this setting to your build configuration (e.g., in <code>conf/local.conf</code> under your build directory):</p>
+<pre><code>NVIDIA_DEVNET_MIRROR = "file://path/to/downloads"
+</code></pre>
+<p>By default, the SDK Manager downloads to a directory called <code>Downloads/nvidia/sdkm_downloads</code> under your <code>$HOME</code> directory, so use that path in the above setting.</p>
+<p>If you are building TensorRT for Jetson AGX Xavier, you must create a subdirectory called <code>P2888</code> under your <code>${NVIDIA_DEVNET_MIRROR}</code> directory and copy the Xavier-specific tensorrt <code>deb</code> files there. The TensorRT <code>deb</code> files for Jetson TX1/TX2 should remain in the main <code>${NVIDIA_DEVNET_MIRROR}</code> directory.  NVIDIA uses the exact same names for the two sets of <code>deb</code> packages, even though the content for Xavier is different from the other platforms.</p>
+<p>If you ran the SDK Manager on Ubuntu 16.04 to download the JetPack packages, you should add the following setting to your build configuration:</p>
+<pre><code>CUDA_BINARIES_NATIVE = "cuda-binaries-ubuntu1604-native"
+</code></pre>
+<p>By default, the recipes assume you used Ubuntu 18.04 and reference that version of the CUDA host-side tools.</p>
+<p>The L4T BSP files (driver package, sources for gstreamer plugins, etc.) are accessible without a DevNet account, so if your builds only require the BSP, you don’t have to go through these extra steps.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="l4t-r3221-notes"><a href="#l4t-r3221-notes" class="header">L4T-R32.2.1-Notes</a></h1>
+<p>As of 01 Sep 2019, the <code>master</code> branch supports L4T R32.2.1/JetPack 4.2.2 content for Jetson TX1, Jetson TX2, Jetson Nano, and Jetson AGX Xavier.</p>
+<h2 id="please-note-1"><a class="header" href="#please-note-1">Please Note</a></h2>
+<p>The JetPack 4.2.2 content cannot be downloaded anonymously from NVIDIA’s servers. You <strong>must</strong> use NVIDIA SDK Manager to download the JetPack 4.2.2 Debian packages to your build host, then add this setting to your build configuration (e.g., in <code>conf/local.conf</code> under your build directory):</p>
+<pre><code>NVIDIA_DEVNET_MIRROR = "file://path/to/downloads"
+</code></pre>
+<p>By default, the SDK Manager downloads to a directory called <code>Downloads/nvidia/sdkm_downloads</code> under your <code>$HOME</code> directory, so use that path in the above setting.</p>
+<p>If you are building TensorRT for Jetson AGX Xavier, you must create a subdirectory called <code>P2888</code> under your <code>${NVIDIA_DEVNET_MIRROR}</code> directory and copy the Xavier-specific tensorrt <code>deb</code> files there. The TensorRT <code>deb</code> files for Jetson TX1/TX2 should remain in the main <code>${NVIDIA_DEVNET_MIRROR}</code> directory.  NVIDIA uses the exact same names for the two sets of <code>deb</code> packages, even though the content for Xavier is different from the other platforms.</p>
+<p>If you ran the SDK Manager on Ubuntu 16.04 to download the JetPack packages, you should add the following setting to your build configuration:</p>
+<pre><code>CUDA_BINARIES_NATIVE = "cuda-binaries-ubuntu1604-native"
+</code></pre>
+<p>By default, the recipes assume you used Ubuntu 18.04 and reference that version of the CUDA host-side tools.</p>
+<p>The L4T BSP files (driver package, sources for gstreamer plugins, etc.) are accessible without a DevNet account, so if your builds only require the BSP, you don’t have to go through these extra steps.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="l4t-r3220-notes"><a href="#l4t-r3220-notes" class="header">L4T-R32.2.0-Notes</a></h1>
+<p>As of 18 Aug 2019, the <code>master</code> and <code>warrior-l4t-r32.2</code> branches support L4T R32.2.0/JetPack 4.2.1 content for Jetson TX1, Jetson TX2, Jetson Nano, and Jetson AGX Xavier.</p>
+<h2 id="please-note-2"><a class="header" href="#please-note-2">Please Note</a></h2>
+<p>The JetPack 4.2.1 content cannot be downloaded anonymously from NVIDIA’s servers. You <strong>must</strong> use NVIDIA SDK Manager to download the JetPack 4.2.1 Debian packages to your build host, then add this setting to your build configuration (e.g., in <code>conf/local.conf</code> under your build directory):</p>
+<pre><code>NVIDIA_DEVNET_MIRROR = "file://path/to/downloads"
+</code></pre>
+<p>By default, the SDK Manager downloads to a directory called <code>Downloads/nvidia/sdkm_downloads</code> under your <code>$HOME</code> directory, so use that path in the above setting.</p>
+<p>If you are building TensorRT for Jetson AGX Xavier, you must create a subdirectory called <code>P2888</code> under your <code>${NVIDIA_DEVNET_MIRROR}</code> directory and copy the Xavier-specific tensorrt <code>deb</code> files there. The TensorRT <code>deb</code> files for Jetson TX1/TX2 should remain in the main <code>${NVIDIA_DEVNET_MIRROR}</code> directory.  NVIDIA uses the exact same names for the two sets of <code>deb</code> packages, even though the content for Xavier is different from the other platforms.</p>
+<p>If you ran the SDK Manager on Ubuntu 16.04 to download the JetPack packages, you should add the following setting to your build configuration:</p>
+<pre><code>CUDA_BINARIES_NATIVE = "cuda-binaries-ubuntu1604-native"
+</code></pre>
+<p>By default, the recipes assume you used Ubuntu 18.04 and reference that version of the CUDA host-side tools.</p>
+<p>The L4T BSP files (driver package, sources for gstreamer plugins, etc.) are accessible without a DevNet account, so if your builds only require the BSP, you don’t have to go through these extra steps.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="l4t-r3210-notes"><a href="#l4t-r3210-notes" class="header">L4T-R32.1.0-Notes</a></h1>
+<p>As of 13 Apr 2019, the <code>master</code> and <code>warrior</code> branches support L4T R32.1.0/JetPack 4.2 content for Jetson TX1, Jetson TX2, Jetson Nano, and Jetson AGX Xavier.</p>
+<h2 id="please-note-3"><a class="header" href="#please-note-3">Please Note</a></h2>
+<p>The JetPack 4.2 content cannot be downloaded anonymously from NVIDIA’s servers. You <strong>must</strong> use NVIDIA SDK Manager to download the JetPack 4.2 Debian packages to your build host, then add this setting to your build configuration (e.g., in <code>conf/local.conf</code> under your build directory):</p>
+<pre><code>NVIDIA_DEVNET_MIRROR = "file://path/to/downloads"
+</code></pre>
+<p>By default, the SDK Manager downloads to a directory called <code>Downloads/nvidia/sdkm_downloads</code> under your <code>$HOME</code> directory, so use that path in the above setting.</p>
+<p>The L4T BSP files (driver package, sources for gstreamer plugins, etc.) are accessible without a DevNet account, so if your builds only require the BSP, you don’t have to go through these extra steps.</p>
+<h2 id="jetson-tx1-notes"><a class="header" href="#jetson-tx1-notes">Jetson TX1 Notes</a></h2>
+<p>NVIDIA <strong>does not</strong> support Jetson TX1 with L4T R32.1.0, but it does appear to work with this version of the BSP.  For production use of Jetson TX1, you should stick with L4T R28.x BSP releases.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="l4t-r283-notes"><a href="#l4t-r283-notes" class="header">L4T-R28.3-Notes</a></h1>
+<p>As of 10 Apr 2019, the <code>thud-l4t-r28.3</code> branch supports L4T R28.3.0/JetPack 3.3 content for Jetson TX1 and Jetson TX2.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="l4t-r282-notes"><a href="#l4t-r282-notes" class="header">L4T-R28.2-Notes</a></h1>
+<p>As of 25 Aug 2018, the <code>rocko-l4t-r28.2</code>, <code>sumo</code> and <code>master</code> branches all support the Jetson TX1 with L4T R28.2 and the Jetson TX2 with L4T R28.2.1.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="l4t-r281-notes"><a href="#l4t-r281-notes" class="header">L4T-R28.1-notes</a></h1>
+<p>As of 30 Jul 2017, the <code>pyro-l4t-r28.1</code> branch supports Jetson TX1 and Jetson TX2 builds using L4T R28.1.</p>
+<p>Only minimal testing has been performed so far, but core-image-sato images build, and most functionality tested appears to work OK.</p>
+<p>Note that with R28.1, the Jetson TX1 boot sequence has been changed to include <strong>cboot</strong> in the chain of bootloaders, similar to the Jetson TX2.  <strong>cboot</strong> loads U-Boot from the LNX partition in the eMMC.</p>
+<div style="break-before: page; page-break-before: always;"></div>
 <h1 id="instructions-for-r35"><a class="header" href="#instructions-for-r35">Instructions for r35</a></h1>
 <p>See https://github.com/OE4T/tegra-demo-distro/discussions/310#discussioncomment-10534547</p>
 <ol>
@@ -827,7 +1703,7 @@ See <a href="https://github.com/NVIDIA/nvidia-docker/wiki/NVIDIA-Container-Runti
 <h1 id="building"><a class="header" href="#building">Building</a></h1>
 <ol>
 <li>To run any containers, add <code>nvidia-docker</code> to your image.</li>
-<li>The <a href="https://ngc.nvidia.com/catalog/containers?orderBy=modifiedDESC&amp;pageNumber=0&amp;query=jetson&amp;quickFilter=containers&amp;filters=">Docker containers that NVIDIA supplies</a> do not bundle in most of the hardware-specific libraries needed to run them, but expect them to be provided by the underlying host OS, so be sure to include TensorRT (<a href="L4T-R32.3.1-Notes.html#tensorrt-packaging-change">note</a>), CuDNN, and/or VisionWorks, if you expect to be running containers needing those packages.</li>
+<li>The <a href="https://ngc.nvidia.com/catalog/containers?orderBy=modifiedDESC&amp;pageNumber=0&amp;query=jetson&amp;quickFilter=containers&amp;filters=">Docker containers that NVIDIA supplies</a> do not bundle in most of the hardware-specific libraries needed to run them, but expect them to be provided by the underlying host OS, so be sure to include TensorRT (<a href="#tensorrt-packaging-change">note</a>), CuDNN, and/or VisionWorks, if you expect to be running containers needing those packages.</li>
 <li>For containers that use GStreamer, be sure to include the Jetson-specific GStreamer plugins you may need.</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -1035,7 +1911,7 @@ image being installed, etc.), use of this process should be managed carefully.</
 </li>
 <li>
 <p>Full BUP support in meta-tegra, covering multiple module revisions in a single payload,
-was added with the update to <a href="L4T-R32.3.1-Notes.html#bootloader-update-support">L4T R32.3.1</a>.
+was added with the update to <a href="#bootloader-update-support">L4T R32.3.1</a>.
 If you are currently running builds based off an older version of L4T, you may run into
 boot issues after installing the upgrader BUP payload on some TX2 modules.  Adjusting the
 TEGRA_FAB setting in your build configuration to match the actual FAB revision of the
@@ -1420,8 +2296,10 @@ use R32.3.1 and bundle the initramfs into your kernel.</p>
 KERNEL_DEVICETREE:jetson-orin-nano-devkit-nvme = "tegra234-p3768-0000+p3767-0005-oe4t.dtb"
 KERNEL_DEVICETREE:jetson-orin-nano-devkit = "tegra234-p3768-0000+p3767-0005-oe4t.dtb"
 </code></pre>
-<p>Where <code>KERNEL_DEVICETREE</code> overrides the setting for your MACHINE, referencing the devicetree filename with <code>*.dtb</code> in the place of <code>*.dts</code>.
-5. Build, flash, and boot the board, and <code>cat /sys/firmware/devicetree/base/compatible</code> to see the compatible string printed as configured in the devicetree. You should see a string which starts with “oe4t”, as shown here for the orin nano</p>
+<p>Where <code>KERNEL_DEVICETREE</code> overrides the setting for your MACHINE, referencing the devicetree filename with <code>*.dtb</code> in the place of <code>*.dts</code>.</p>
+<ol start="5">
+<li>Build, flash, and boot the board, and <code>cat /sys/firmware/devicetree/base/compatible</code> to see the compatible string printed as configured in the devicetree. You should see a string which starts with “oe4t”, as shown here for the orin nano</li>
+</ol>
 <pre><code>root@jetson-orin-nano-devkit-nvme:~# cat /sys/firmware/devicetree/base/compatible
 oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p3767-0005nvidia,tegra234
 </code></pre>
