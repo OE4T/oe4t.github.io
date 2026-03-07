@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Applying-PREEMPT-RT-Real‐Time-Kernel-Patches.md - OE4T Meta Tegra</title>
+        <title>Applying-PREEMPT-RT-Real-Time-Kernel-Patches.md - OE4T Meta Tegra</title>
 
 
         <!-- Custom HTML head -->
@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-4488a22d.js";
+            window.path_to_searchindex_js = "searchindex-2e12e4d2.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-29bb050b.js"></script>
+        <script src="toc-87ae8402.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -175,7 +175,76 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="applying-preempt-rt-realtime-kernel-patchesmd"><a class="header" href="#applying-preempt-rt-realtime-kernel-patchesmd">Applying-PREEMPT-RT-Real‐Time-Kernel-Patches.md</a></h1>
+                        <h2 id="dynamically-apply-the-rt-patches-to-kirkstone"><a class="header" href="#dynamically-apply-the-rt-patches-to-kirkstone">Dynamically apply the RT patches to Kirkstone</a></h2>
+<ol>
+<li>Append the recipe to run an additional step prior to running the do_patch stage</li>
+</ol>
+<p><code>recipes-kernel/linux/linux-tegra_4.9.bbappend</code></p>
+<pre><code class="language-bitbake">do_patch:prepend() {
+    oldwd=$PWD
+    cd ${S}/scripts
+    ./rt-patch.sh apply-patches
+    cd ${S}
+    git add . &amp;&amp; git commit -m 'Apply PREEMPT_RT patches'
+    cd $oldwd
+}
+</code></pre>
+<h2 id="dynamically-apply-the-rt-patches-to-dunfell"><a class="header" href="#dynamically-apply-the-rt-patches-to-dunfell">Dynamically apply the RT patches to Dunfell</a></h2>
+<ol>
+<li>Append the recipe to run an additional step prior to running the do_patch stage</li>
+</ol>
+<p><code>recipes-kernel/linux/linux-tegra_4.9.bbappend</code></p>
+<pre><code class="language-bitbake">do_patch_prepend() {
+    oldwd=$PWD
+    cd ${S}/scripts
+    ./rt-patch.sh apply-patches
+    cd ${S}
+    git add . &amp;&amp; git commit -m 'Apply PREEMPT_RT patches'
+    cd $oldwd
+}
+</code></pre>
+<h2 id="how-to-use-the-real-time-kernel-by-switching-to-a-patched-branch"><a class="header" href="#how-to-use-the-real-time-kernel-by-switching-to-a-patched-branch">How to use the Real-Time Kernel by switching to a patched branch</a></h2>
+<ol>
+<li>Find which git has your meta-tegra is currently using</li>
+</ol>
+<pre><code>user@pc:~/meta-tegra$ cat recipes-kernel/linux/linux-tegra_4.9.bb | grep -n SRCREV -A5 -B5
+13-
+14-LINUX_VERSION_EXTENSION ?= "-l4t-r${@'.'.join(d.getVar('L4T_VERSION').split('.')[:2])}"
+15-SCMVERSION ??= "y"
+16-
+17-SRCBRANCH = "patches${LINUX_VERSION_EXTENSION}"
+18:SRCREV = "0be1a57448010ae60505acf4e2153638455cee7c"
+19-KBRANCH = "${SRCBRANCH}"
+20-SRC_REPO = "github.com/OE4T/linux-tegra-4.9"
+21-KERNEL_REPO = "${SRC_REPO}"
+22-SRC_URI = "git://${KERNEL_REPO};name=machine;branch=${KBRANCH} \
+23-	   ${@'file://localversion_auto.cfg' if d.getVar('SCMVERSION') == 'y' else ''} \
+</code></pre>
+<ol start="2">
+<li>Fork https://github.com/OE4T/linux-tegra-4.9</li>
+<li><code>git clone https://github.com/you/linux-tegra-4.9</code></li>
+<li><code>cd linux-tegra-4.9</code></li>
+<li><code>git checkout -b patches-l4t-r32.4-rt patches-l4t-r32.4</code> (or specify the git hash from the SRCREV setting in the recipe)</li>
+<li><code>cd scripts</code></li>
+<li><code>./rt-patch.sh apply-patches</code></li>
+<li><code>cd ..</code></li>
+<li><code>git add .</code></li>
+<li><code>git commit -m "Applied PREEMPT RT Patch to kernel"</code></li>
+<li><code>git push --set-upstream origin patches-l4t-r32.4-rt</code></li>
+<li>git log to find the commit hash for your rt patched kernel source</li>
+<li>Now go back to your meta-tegra folder</li>
+<li><code>touch recipes-kernel/linux/linux-tegra_4.9.bbappend</code></li>
+<li>put the below in your linux-tegra_4.9.bbappend</li>
+</ol>
+<pre><code>SRCBRANCH = "patches${LINUX_VERSION_EXTENSION}-rt"
+SRCREV = "##YOUR_HASH###"
+KBRANCH = "${SRCBRANCH}"
+SRC_REPO = "##YOUR_FORK###"
+KERNEL_REPO = "${SRC_REPO}"
+SRC_URI = "git://${KERNEL_REPO};name=machine;branch=${KBRANCH};protocol=ssh \
+           ${@'file://localversion_auto.cfg' if d.getVar('SCMVERSION') == 'y' else ''} \
+"
+</code></pre>
 
                     </main>
 
