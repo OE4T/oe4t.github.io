@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-e31a92eb.js";
+            window.path_to_searchindex_js = "searchindex-1947158c.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-347ffddc.js"></script>
@@ -176,6 +176,109 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="documentation-workflow"><a class="header" href="#documentation-workflow">Documentation Workflow</a></h1>
+<p>This project uses <a href="https://rust-lang.github.io/mdBook/">mdBook</a> to generate
+documentation, with GitHub Actions for automated builds and GitHub Pages for
+hosting.</p>
+<h2 id="repository-layout"><a class="header" href="#repository-layout">Repository Layout</a></h2>
+<p>Documentation source files live alongside the Yocto BSP layer content:</p>
+<pre><code>meta-tegra/
+├── book.toml                      # mdBook configuration
+├── docs/                          # Documentation source (markdown)
+│   ├── SUMMARY.md                 # Table of contents for mdBook
+│   ├── README.md                  # Introduction / landing page
+│   ├── *.md                       # Documentation pages
+│   └── mdbook/                    # Custom mdBook assets
+│       ├── css/custom.css         # Version dropdown styling
+│       └── js/version-dropdown.js # Version switching logic
+└── .github/workflows/
+    └── mdbook-versioned.yml       # CI/CD workflow
+</code></pre>
+<p>The <code>book.toml</code> in the repository root configures mdBook. The <code>src</code> setting
+points to the <code>docs/</code> directory, and custom CSS and JavaScript are loaded for
+the version dropdown:</p>
+<pre><code class="language-toml">[book]
+title = "OE4T Meta Tegra"
+authors = ["Matt Madison", "Dan Walkes"]
+language = "en"
+src = "docs"
+
+[output.html]
+additional-css = ["docs/mdbook/css/custom.css"]
+additional-js = ["docs/mdbook/js/version-dropdown.js"]
+</code></pre>
+<h2 id="multi-version-support"><a class="header" href="#multi-version-support">Multi-Version Support</a></h2>
+<p>Each tracked branch gets its own independent copy of the documentation on GitHub
+Pages. The list of published versions is controlled by a <code>versions.json</code> file
+in the GitHub Pages content repository (<a href="https://github.com/OE4T/oe4t.github.io">OE4T/oe4t.github.io</a>).</p>
+<h2 id="adding-pages"><a class="header" href="#adding-pages">Adding Pages</a></h2>
+<p>All documentation pages are Markdown files in the <code>docs/</code> directory. To add a
+new page:</p>
+<ol>
+<li>Create a new <code>.md</code> file in <code>docs/</code>.</li>
+<li>Add an entry for it in <code>docs/SUMMARY.md</code>. The SUMMARY file defines the table
+of contents and sidebar navigation. Pages not listed in SUMMARY.md will not
+appear in the built documentation.</li>
+</ol>
+<h2 id="page-editing-tips"><a class="header" href="#page-editing-tips">Page Editing Tips</a></h2>
+<ul>
+<li>Please ensure any embedded links to other documentation files are done with relative
+paths.  For example, use <code>[Link to another page in docs](OtherPageName.md)</code> instead
+of <code>[Link to another page in docs](https://github.com/OE4T/meta-tegra/blob/master/docs/OtherPageName.md)</code></li>
+<li>You can use the trick at <a href="https://stackoverflow.com/a/26601810">this stackoverflow post</a> to add
+images to your markdown file without the need to check images into the repo.</li>
+</ul>
+<h2 id="preview-locally"><a class="header" href="#preview-locally">Preview Locally</a></h2>
+<p>To preview the documentation locally with markdown, install
+<a href="https://rust-lang.github.io/mdBook/guide/installation.html">mdBook</a> and run:</p>
+<pre><code class="language-sh">mdbook serve
+</code></pre>
+<p>This starts a local web server with live reloading as you edit files.</p>
+<h3 id="build-and-deploy"><a class="header" href="#build-and-deploy">Build and Deploy</a></h3>
+<p>The GitHub Actions workflow (<code>.github/workflows/mdbook-versioned.yml</code>) triggers
+on pushes to tracked branches:</p>
+<ol>
+<li><strong>Build</strong> — runs <code>mdbook build</code> inside a <code>peaceiris/mdbook</code> container,
+producing output in a per-branch directory.</li>
+<li><strong>Deploy</strong> — pushes the built HTML to a subdirectory in the <code>main</code> branch of
+the external GitHub Pages content repository (<a href="https://github.com/OE4T/oe4t.github.io">OE4T/oe4t.github.io</a>) using
+<code>peaceiris/actions-gh-pages</code>.</li>
+</ol>
+<p>Each branch deploys to its own directory, resulting in a structure like this in
+<a href="https://github.com/OE4T/oe4t.github.io">OE4T/oe4t.github.io</a>:</p>
+<pre><code>&lt;repo-root&gt;/
+├── index.html          # redirects to ./master/
+├── versions.json       # lists available versions for the dropdown
+├── master/             # docs built from the master branch
+└── scarthgap/          # docs built from the scarthgap branch
+</code></pre>
+<p>The workflow can also be triggered manually via <code>workflow_dispatch</code> from the
+GitHub Actions UI.</p>
+<h4 id="deployment-credentials"><a class="header" href="#deployment-credentials">Deployment credentials</a></h4>
+<p>The deploy step requires an SSH deploy key stored as a repository secret:</p>
+<ul>
+<li><code>OE4T_GITHUB_DEPLOY_KEY</code></li>
+</ul>
+<p>If the secret is missing (common in forks), the workflow will emit a warning:
+“The repository secret must contain the OE4T_GITHUB_DEPLOY_KEY to run this step.”
+Then it will skip the deploy step without failing the workflow.</p>
+<h3 id="version-dropdown"><a class="header" href="#version-dropdown">Version Dropdown</a></h3>
+<p>A custom JavaScript file (<code>docs/mdbook/js/version-dropdown.js</code>) adds a version
+selector dropdown to the mdBook navigation bar. It fetches <code>versions.json</code> from
+the site root to populate the list, and when a different version is selected it
+navigates to the same page path under the new version’s directory.</p>
+<p>The <code>versions.json</code> file is maintained manually in the GitHub Pages content
+repository (<a href="https://github.com/OE4T/oe4t.github.io">OE4T/oe4t.github.io</a>, <code>main</code> branch) (not auto-generated), giving
+explicit control over which versions appear in the dropdown.</p>
+<h3 id="adding-a-new-version"><a class="header" href="#adding-a-new-version">Adding a New Version</a></h3>
+<p>To add documentation for a new branch (e.g., <code>kirkstone</code>):</p>
+<ol>
+<li>Add the branch name to the <code>on.push.branches</code> list in
+<code>.github/workflows/mdbook-versioned.yml</code>.</li>
+<li>Push content to that branch. The workflow will automatically build and deploy
+to a new directory in <a href="https://github.com/OE4T/oe4t.github.io">OE4T/oe4t.github.io</a>.</li>
+<li>Update <code>versions.json</code> in <a href="https://github.com/OE4T/oe4t.github.io">OE4T/oe4t.github.io</a> (on the <code>main</code> branch) to
+include the new entry so it appears in the version dropdown.</li>
+</ol>
 
                     </main>
 
