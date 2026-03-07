@@ -1,4 +1,5 @@
 [
 { "folder": "master", "name": "master" },
+{ "folder": "master-l4t-r38.4.x", "name": "master-l4t-r38.4.x" },
 { "folder": "scarthgap", "name": "scarthgap" }
 ]
