@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-1947158c.js";
+            window.path_to_searchindex_js = "searchindex-e46c8b48.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-347ffddc.js"></script>
@@ -185,13 +185,14 @@ L4T <code>extlinux.conf</code> support in your builds.</p>
 <p>When set, this adds a devicetree entry in the extlinux.conf file.  This setting is useful for easy testing of devicetree changes in the kernel and to support devicetree transitions on slot switch without capsule update.  Note that when <code>UBOOT_EXTLINUX</code> or <code>UBOOT_EXTLINUX_FDT</code> is not set, the <code>kernel-dtb</code> partitions defined in the root filesystem are ignored and the devicetree for the kernel is taken from the devicetree which is appended to the uefi image, therefore only updated when the uefi image is changed via tegraflash or capsule update.</p>
 <p><code>efivar -p --name 781e084c-a330-417c-b678-38e696380cb9-L4TDefaultBootMode</code> should return a value of <code>1</code> when using this feature. For additional context see <a href="https://matrix.to/#/!YBfWVpJwNVtkmqVCPS:gitter.im/$x-m4h9rIYnwtMOaYtEkHg0a5HFzM4-mcpjoALOGkP4Y?via=gitter.im&amp;via=matrix.org&amp;via=3dvisionlabs.com">this thread</a> in element.</p>
 <h2 id="uboot_extlinux_fdtoverlays"><a class="header" href="#uboot_extlinux_fdtoverlays">UBOOT_EXTLINUX_FDTOVERLAYS</a></h2>
-<p>The PR at <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> adds support for specifying a list of overlays in your extlinux.conf file.  These overlays are also stored on the rootfs and applied to the kernel DTB at boot time after root slot selection.</p>
+<p>The PR at <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> adds support for specifying a list of overlays in your extlinux.conf file. These overlays are stored on the rootfs and applied to the kernel DTB at boot time after root slot selection.</p>
+<p>On <code>scarthgap</code> and other JetPack 6 / L4T R36.x branches, this is the rootfs-based runtime overlay mechanism. See <a href="Using-device-tree-overlays.html">Using-device-tree-overlays</a> for a branch-specific comparison with the SPI-flash and build-time approaches.</p>
 <p>This feature is only supported when <code>UBOOT_EXTLINUX_FDT</code> is specified.</p>
 <p>To use, specify</p>
 <pre><code>UBOOT_EXTLINUX_FDT = "${DTBFILE}"
 UBOOT_EXTLINUX_FDTOVERLAYS = "my-overlay.dtbo"
 </code></pre>
-<p>Where <code>"my-overlay.dtbo"</code> is an overlay built using the mechanisms specific to your branch implementation (or potentially one provided by NVIDIA.  See <a href="Using-device-tree-overlays.html">Using-device-tree-overlays</a> for more details.  Note that since the overlay only happens to the kernel DTB this mechanism cannot be used to make any changes to the UEFI DTB.</p>
+<p>Where <code>"my-overlay.dtbo"</code> is an overlay built using the mechanisms specific to your branch implementation, or one provided by NVIDIA. Since the overlay only happens to the kernel DTB, this mechanism cannot be used to make any changes to the UEFI DTB.</p>
 <h2 id="caveats"><a class="header" href="#caveats">Caveats</a></h2>
 <ul>
 <li>The upstream UEFI bootloader does not implement this; it was tacked on by NVIDIA in their <code>L4TLauncher</code> EFI application.</li>

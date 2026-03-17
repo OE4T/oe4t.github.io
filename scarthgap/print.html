@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-1947158c.js";
+            window.path_to_searchindex_js = "searchindex-e46c8b48.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-347ffddc.js"></script>
@@ -1523,61 +1523,68 @@ use R32.3.1 and bundle the initramfs into your kernel.</p>
 <h1 id="jetson-tx1nano-platforms"><a class="header" href="#jetson-tx1nano-platforms">Jetson TX1/Nano platforms</a></h1>
 <p>While NVIDIA does ship a pre-built version of cboot for the tegra210 platforms (TX1 and Nano), they do not provide source code.  U-Boot is the user-modifiable bootloader for those platforms.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<p>For many L4T/Jetson Linux releases, NVIDIA has provided a mechanism (the <code>jetson-io</code> scripts) for applying device tree overlays (<code>.dtbo</code> files) dynamically at runtime. For OE/Yocto-based builds, device trees are built from sources, so runtime application of DTB overlays is less of an issue. The <code>meta-tegra</code> layer does provide some mechanisms for applying DTB overlays, through some build-time variable settings.</p>
-<h1 id="build-time-application-of-overlays"><a class="header" href="#build-time-application-of-overlays">Build-time application of overlays</a></h1>
-<p>This mechanism is supported in the branches based on L4T R32.6.x through R35.x only. Overlays are applied to the device tree during the kernel build, directly modifying your kernel DTB. (For L4T R36 and later, the NVIDIA device trees are no longer provided in the kernel source tree.)</p>
-<h2 id="locating-overlays"><a class="header" href="#locating-overlays">Locating overlays</a></h2>
-<p>The exact list of overlays supplied by NVIDIA varies by target platform. You can find them by building the kernel recipe (<code>virtual/kernel</code> or <code>linux-tegra</code>) and examining its output under <code>${BUILDDIR}/work/tmp/${MACHINE}/linux-tegra</code>.</p>
-<h2 id="applying-overlays"><a class="header" href="#applying-overlays">Applying overlays</a></h2>
-<p>Set the <code>KERNEL_DEVICETREE_APPLY_OVERLAYS</code> variable to a blank-separate list of <code>.dtbo</code> file names to have those overlays applied during the kernel build. You can do this in your machine configuration file, or add it, for example, to the <code>local.conf</code> file in your build workspace.</p>
-<h3 id="example"><a class="header" href="#example">Example</a></h3>
-<p>For example, to configure a Jetson Xavier NX development kit for IMX477 and IMX219 cameras, you would add the following line to your <code>$BUILDDIR/conf/local.conf</code> file:</p>
-<pre><code>    KERNEL_DEVICETREE_APPLY_OVERLAYS:jetson-xavier-nx-devkit = "tegra194-p3668-all-p3509-0000-camera-imx477-imx219.dtbo"
-</code></pre>
-<h2 id="other-possible-use-cases"><a class="header" href="#other-possible-use-cases">Other possible use cases</a></h2>
-<p>For U-Boot-based Jetsons (only supported on a subset of Jetson modules with L4T R32.x), the <code>.dtbo</code> files will get populated into the <code>/boot</code> directory in the rootfs, and you could modify the <code>/boot/extlinux/extlinux.conf</code> file to add an <code>FDTOVERLAY</code> line to have one or more overlays applied at boot time. Unfortunately, OE-Core’s support for generating <code>extlinux.conf</code> content does not include support for <code>FDTOVERLAY</code> lines, so to make such a change you would have to work out a way to rewrite that file in a bbappend.</p>
-<h2 id="for-out-of-tree-device-trees"><a class="header" href="#for-out-of-tree-device-trees">For out-of-tree device trees</a></h2>
-<p>For L4T R36.x, the <code>nvidia-kernel-oot</code> recipe is the default device tree provider for the Jetson platforms. You can also set the <code>PREFERRED_PROVIDER_virtual/dtb</code> variable to point to a recipe for providing your own customized device tree. To apply overlays to these device trees, add <code>fdtoverlay</code> invocations to the compilation step via a <code>bbappend</code> (for <code>nvidia-kernel-oot</code>) or in your custom recipe.</p>
-<h3 id="example-out-of-tree-devicetree-in-tegra-demo-distro"><a class="header" href="#example-out-of-tree-devicetree-in-tegra-demo-distro">Example out-of-tree devicetree in tegra-demo-distro</a></h3>
-<p>See the tegra-demo-distro example at <a href="https://github.com/OE4T/tegra-demo-distro/tree/master/layers/meta-tegrademo/recipes-bsp/tegrademo-devicetree">meta-tegrademo/recipes-bsp/tegrademo-devicetree</a> which shows how to modify a base devicetree from <code>nvidia-kernel-oot</code> to one specific to your hardware platform. This simple example just adds a single “compatible” line to your base devicetree.  To use this example:</p>
-<ol>
-<li>Determine which devicetree is currently in use.  One way to do this is with <code>bitbake -e &lt;your image&gt;</code> and look at the value of <code>KERNEL_DEVICETREE</code>.</li>
-<li>Determine whether there’s an existing devicetree in the <a href="https://github.com/OE4T/tegra-demo-distro/tree/master/layers/meta-tegrademo/recipes-bsp/tegrademo-devicetree">meta-tegrademo/recipes-bsp/tegrademo-devicetree</a> which uses your existing devictree as a base.  Current examples are:</li>
-</ol>
+<p>For many L4T/Jetson Linux releases, NVIDIA has provided a mechanism (the <code>jetson-io</code> scripts) for applying device tree overlays (<code>.dtbo</code> files) dynamically at runtime.</p>
+<p>For <code>scarthgap</code> and other JetPack 6 / L4T R36.x branches, the NVIDIA device trees are no longer built from the in-kernel device tree sources. That means the older <code>KERNEL_DEVICETREE_APPLY_OVERLAYS</code> flow is not the normal path on this branch.</p>
+<p>If you need to customize device trees on <code>scarthgap</code>, choose the mechanism that matches when the change needs to happen:</p>
 <ul>
-<li><code>tegra234-p3768-0000+p3767-0005-oe4t.dts</code>: <code>jetson-orin-nano-devkit</code> or <code>jetson-orin-nano-devkit-nvme</code> builds on a p3768 (Orin Nano Devboard) carrier</li>
-<li><code>tegra234-p3768-0000+p3767-0000-oe4t.dts</code>: Nvidia Jetson Orin NX 16GB in a p3768 (Orin Nano Devboard) carrier</li>
+<li>Use <code>PREFERRED_PROVIDER_virtual/dtb</code> when you want to replace or derive the kernel DTB at build time.</li>
+<li>Use <code>TEGRA_PLUGIN_MANAGER_OVERLAYS</code> when you want UEFI to apply overlays stored in SPI flash at runtime.</li>
+<li>Use <code>UBOOT_EXTLINUX_FDT</code> together with <code>UBOOT_EXTLINUX_FDTOVERLAYS</code> when you want overlays stored in the rootfs and applied to the kernel DTB at boot time.</li>
+</ul>
+<h1 id="current-guidance-for-scarthgap--jetpack-6-l4t-r36x"><a class="header" href="#current-guidance-for-scarthgap--jetpack-6-l4t-r36x">Current guidance for scarthgap / JetPack 6 (L4T R36.x)</a></h1>
+<h2 id="build-time-customization-with-an-out-of-tree-device-tree-provider"><a class="header" href="#build-time-customization-with-an-out-of-tree-device-tree-provider">Build-time customization with an out-of-tree device tree provider</a></h2>
+<p>For L4T R36.x, <code>nvidia-kernel-oot-dtb</code> is the default <code>virtual/dtb</code> provider for Jetson platforms. If you need your own DTB, set <code>PREFERRED_PROVIDER_virtual/dtb</code> to a recipe that provides your customized device tree.</p>
+<p>If that recipe needs to apply overlays, do it as part of the recipe build, for example by adding <code>fdtoverlay</code> invocations in a <code>bbappend</code> for <code>nvidia-kernel-oot</code> or in your custom provider recipe. This is the normal <code>scarthgap</code> path when you need to modify or replace the active kernel DTB at build time.</p>
+<h3 id="example-out-of-tree-devicetree-in-tegra-demo-distro"><a class="header" href="#example-out-of-tree-devicetree-in-tegra-demo-distro">Example out-of-tree devicetree in tegra-demo-distro</a></h3>
+<p>See the tegra-demo-distro example at <a href="https://github.com/OE4T/tegra-demo-distro/tree/scarthgap/layers/meta-tegrademo/recipes-bsp/tegrademo-devicetree">meta-tegrademo/recipes-bsp/tegrademo-devicetree</a>, which shows how to modify a base device tree from <code>nvidia-kernel-oot</code> to one specific to your hardware platform. This simple example just adds a single <code>compatible</code> entry to the base device tree.</p>
+<ol>
+<li>Determine which device tree is currently in use. One way to do this is with <code>bitbake -e &lt;your image&gt;</code> and the value of <code>KERNEL_DEVICETREE</code>.</li>
+<li>Determine whether there is already an example in <a href="https://github.com/OE4T/tegra-demo-distro/tree/scarthgap/layers/meta-tegrademo/recipes-bsp/tegrademo-devicetree">meta-tegrademo/recipes-bsp/tegrademo-devicetree</a> that uses your current <code>KERNEL_DEVICETREE</code> as a base. Current examples include:
+<ul>
+<li><code>tegra234-p3768-0000+p3767-0005-oe4t.dts</code>: <code>jetson-orin-nano-devkit</code> or <code>jetson-orin-nano-devkit-nvme</code> on a p3768 carrier</li>
+<li><code>tegra234-p3768-0000+p3767-0000-oe4t.dts</code>: Jetson Orin NX 16GB on a p3768 carrier</li>
 <li><code>tegra234-p3737-0000+p3701-0000-oe4t.dts</code>: <code>jetson-agx-orin-devkit</code></li>
 </ul>
-<ol start="3">
-<li>If there’s not an existing devicetree built from your base <code>KERNEL_DEVICETREE</code>, follow the examples to add one to SRC_URI and to the repo.</li>
-<li>Modify your MACHINE conf or local conf to specify your dtb provider and <code>KERNEL_DEVICETREE</code> using something like this:</li>
+</li>
+<li>If there is not an existing device tree built from your base <code>KERNEL_DEVICETREE</code>, follow those examples to add one to <code>SRC_URI</code> and to the recipe sources.</li>
+<li>Set your DTB provider and machine-specific <code>KERNEL_DEVICETREE</code> to use the generated DTB:</li>
 </ol>
 <pre><code>PREFERRED_PROVIDER_virtual/dtb = "tegrademo-devicetree"
 KERNEL_DEVICETREE:jetson-orin-nano-devkit-nvme = "tegra234-p3768-0000+p3767-0005-oe4t.dtb"
 KERNEL_DEVICETREE:jetson-orin-nano-devkit = "tegra234-p3768-0000+p3767-0005-oe4t.dtb"
 </code></pre>
-<p>Where <code>KERNEL_DEVICETREE</code> overrides the setting for your MACHINE, referencing the devicetree filename with <code>*.dtb</code> in the place of <code>*.dts</code>.</p>
-<ol start="5">
-<li>Build, flash, and boot the board, and <code>cat /sys/firmware/devicetree/base/compatible</code> to see the compatible string printed as configured in the devicetree. You should see a string which starts with “oe4t”, as shown here for the orin nano</li>
-</ol>
-<pre><code>root@jetson-orin-nano-devkit-nvme:~# cat /sys/firmware/devicetree/base/compatible
-oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p3767-0005nvidia,tegra234
-</code></pre>
-<h1 id="runtime-application-of-overlays-in-spi-flash"><a class="header" href="#runtime-application-of-overlays-in-spi-flash">Runtime application of overlays in SPI Flash</a></h1>
-<p>This mechanism is supported in branches based on L4T R35.x and later. Overlays are appended to the kernel DTB by the NVIDIA flashing/signing tools, and are applied by the UEFI bootloader at runtime.  Overlays are stored in SPI flash and are only updated on capsule update or tegraflash.</p>
-<h2 id="locating-overlays-1"><a class="header" href="#locating-overlays-1">Locating overlays</a></h2>
-<p>The exact list of overlays supplied by NVIDIA varies by target platform. You can find them on R35.x-based branches by building the kernel recipe (<code>virtual/kernel</code> or <code>linux-tegra</code>) and examining its output under <code>${BUILDDIR}/work/tmp/${MACHINE}/linux-tegra</code>.  For R36.x-based branches, device trees are built as part of the <code>nvidia-kernel-oot</code> recipe.</p>
-<h2 id="applying-overlays-1"><a class="header" href="#applying-overlays-1">Applying overlays</a></h2>
-<p>Append your additional overlays to the <code>TEGRA_PLUGIN_MANAGER_OVERLAYS</code> variable, which consists of a blank-separate list of <code>.dtbo</code> file names. You can do this in your machine configuration file, or add it, for example, to the <code>local.conf</code> file in your build workspace. That variable is set by the layer to include overlays that NVIDIA requires for its platforms, so be sure to append to it, rather than overwriting it.</p>
-<h3 id="example-1"><a class="header" href="#example-1">Example</a></h3>
-<p>For example, to configure the pins on the 40-pin expansion header of the Jetson Orin Nano development kit, you would add the following line to your <code>$BUILDDIR/conf/local.conf</code> file:</p>
+<p>Where <code>KERNEL_DEVICETREE</code> overrides the setting for your machine and references the generated <code>.dtb</code> file instead of the <code>.dts</code> source.</p>
+<h2 id="runtime-overlays-stored-in-spi-flash"><a class="header" href="#runtime-overlays-stored-in-spi-flash">Runtime overlays stored in SPI flash</a></h2>
+<p>This mechanism is supported in branches based on L4T R35.x and later. Overlays are appended to the kernel DTB by the NVIDIA flashing/signing tools and are applied by the UEFI bootloader at runtime. The overlays are stored in SPI flash and are only updated by tegraflash or capsule update.</p>
+<h3 id="locating-overlays"><a class="header" href="#locating-overlays">Locating overlays</a></h3>
+<p>The exact list of overlays supplied by NVIDIA varies by target platform. On R35.x-based branches, you can find them by building the kernel recipe (<code>virtual/kernel</code> or <code>linux-tegra</code>) and examining its output under <code>${BUILDDIR}/work/tmp/${MACHINE}/linux-tegra</code>. For R36.x-based branches, device trees are built as part of <code>nvidia-kernel-oot</code> and exposed through the <code>virtual/dtb</code> provider.</p>
+<h3 id="applying-overlays"><a class="header" href="#applying-overlays">Applying overlays</a></h3>
+<p>Append your additional overlays to the <code>TEGRA_PLUGIN_MANAGER_OVERLAYS</code> variable, which consists of a blank-separated list of <code>.dtbo</code> file names. You can do this in your machine configuration file, or add it to the <code>local.conf</code> file in your build workspace. That variable is set by the layer to include overlays that NVIDIA requires for its platforms, so be sure to append to it rather than overwrite it.</p>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
+<p>To configure the pins on the 40-pin expansion header of the Jetson Orin Nano development kit, add the following line to your <code>$BUILDDIR/conf/local.conf</code> file:</p>
 <pre><code>    TEGRA_PLUGIN_MANAGER_OVERLAYS:append:jetson-orin-nano-devkit = " tegra234-p3767-0000+p3509-a02-hdr40.dtbo"
 </code></pre>
-<h1 id="runtime-application-of-overlays-in-the-rootfs-partition"><a class="header" href="#runtime-application-of-overlays-in-the-rootfs-partition">Runtime application of overlays in the rootfs partition</a></h1>
-<p>With <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> support is available to apply overlays in the rootfs partition using the <code>OVERLAYS</code> extlinux.conf option.  This means you are able to link overlays to a rootfs slot and store/update there instead of in the SPI flash.</p>
-<p>Only overlays which modify the kernel DTB are supported, since the overlay application happens late in the boot sequence.</p>
-<p>See <a href="#uboot_extlinux_fdtoverlays">this section</a> of the extlinux.conf wiki page for details about configuring <code>OVERLAYS</code> in extlinux.conf.</p>
+<h1 id="runtime-overlays-stored-in-the-rootfs-partition"><a class="header" href="#runtime-overlays-stored-in-the-rootfs-partition">Runtime overlays stored in the rootfs partition</a></h1>
+<p>Support is available to apply overlays from the rootfs using the <code>OVERLAYS</code> option in <code>extlinux.conf</code>. This is useful when you want overlay selection to live with a rootfs slot instead of in SPI flash.</p>
+<p>This mechanism only affects the kernel DTB, because the overlay application happens after the UEFI DTB has already been selected.</p>
+<p>To use it, enable <code>extlinux.conf</code> support and specify both the base DTB and the overlays:</p>
+<pre><code>UBOOT_EXTLINUX = "1"
+UBOOT_EXTLINUX_FDT = "${DTBFILE}"
+UBOOT_EXTLINUX_FDTOVERLAYS = "tegra234-p3767-0000+p3509-a02-hdr40.dtbo"
+</code></pre>
+<p>See <a href="#uboot_extlinux_fdtoverlays">this section</a> of the extlinux.conf documentation for more details about configuring <code>OVERLAYS</code> in <code>extlinux.conf</code>.</p>
+<h1 id="legacy-build-time-application-of-overlays-l4t-r326x-through-r35x-only"><a class="header" href="#legacy-build-time-application-of-overlays-l4t-r326x-through-r35x-only">Legacy build-time application of overlays (L4T R32.6.x through R35.x only)</a></h1>
+<p>This mechanism is supported in branches based on L4T R32.6.x through R35.x only. Overlays are applied to the device tree during the kernel build, directly modifying the kernel DTB. This is not the normal approach on <code>scarthgap</code>, where the NVIDIA device trees are no longer built from the in-kernel device tree sources.</p>
+<h2 id="locating-overlays-1"><a class="header" href="#locating-overlays-1">Locating overlays</a></h2>
+<p>The exact list of overlays supplied by NVIDIA varies by target platform. You can find them by building the kernel recipe (<code>virtual/kernel</code> or <code>linux-tegra</code>) and examining its output under <code>${BUILDDIR}/work/tmp/${MACHINE}/linux-tegra</code>.</p>
+<h2 id="applying-overlays-1"><a class="header" href="#applying-overlays-1">Applying overlays</a></h2>
+<p>Set the <code>KERNEL_DEVICETREE_APPLY_OVERLAYS</code> variable to a blank-separated list of <code>.dtbo</code> file names to have those overlays applied during the kernel build. You can do this in your machine configuration file, or add it to the <code>local.conf</code> file in your build workspace.</p>
+<h3 id="example-1"><a class="header" href="#example-1">Example</a></h3>
+<p>To configure a Jetson Xavier NX development kit for IMX477 and IMX219 cameras, add the following line to your <code>$BUILDDIR/conf/local.conf</code> file:</p>
+<pre><code>    KERNEL_DEVICETREE_APPLY_OVERLAYS:jetson-xavier-nx-devkit = "tegra194-p3668-all-p3509-0000-camera-imx477-imx219.dtbo"
+</code></pre>
+<h2 id="other-possible-use-cases"><a class="header" href="#other-possible-use-cases">Other possible use cases</a></h2>
+<p>For U-Boot-based Jetsons (only supported on a subset of Jetson modules with L4T R32.x), the <code>.dtbo</code> files are populated into the <code>/boot</code> directory in the rootfs, and you could modify <code>/boot/extlinux/extlinux.conf</code> to add an <code>FDTOVERLAY</code> line to have one or more overlays applied at boot time. OE-Core’s support for generating <code>extlinux.conf</code> content does not include support for <code>FDTOVERLAY</code> lines, so to make such a change you would have to work out a way to rewrite that file in a <code>bbappend</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="using-gcc7-from-the-contrib-layer"><a href="#using-gcc7-from-the-contrib-layer" class="header">Using gcc7 from the Contrib Layer</a></h1>
 <p>Starting with the <code>warrior</code> branch, meta-tegra includes a <code>contrib</code> layer with user-contributed recipes
@@ -1728,13 +1735,14 @@ L4T <code>extlinux.conf</code> support in your builds.</p>
 <p>When set, this adds a devicetree entry in the extlinux.conf file.  This setting is useful for easy testing of devicetree changes in the kernel and to support devicetree transitions on slot switch without capsule update.  Note that when <code>UBOOT_EXTLINUX</code> or <code>UBOOT_EXTLINUX_FDT</code> is not set, the <code>kernel-dtb</code> partitions defined in the root filesystem are ignored and the devicetree for the kernel is taken from the devicetree which is appended to the uefi image, therefore only updated when the uefi image is changed via tegraflash or capsule update.</p>
 <p><code>efivar -p --name 781e084c-a330-417c-b678-38e696380cb9-L4TDefaultBootMode</code> should return a value of <code>1</code> when using this feature. For additional context see <a href="https://matrix.to/#/!YBfWVpJwNVtkmqVCPS:gitter.im/$x-m4h9rIYnwtMOaYtEkHg0a5HFzM4-mcpjoALOGkP4Y?via=gitter.im&amp;via=matrix.org&amp;via=3dvisionlabs.com">this thread</a> in element.</p>
 <h2 id="uboot_extlinux_fdtoverlays"><a class="header" href="#uboot_extlinux_fdtoverlays">UBOOT_EXTLINUX_FDTOVERLAYS</a></h2>
-<p>The PR at <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> adds support for specifying a list of overlays in your extlinux.conf file.  These overlays are also stored on the rootfs and applied to the kernel DTB at boot time after root slot selection.</p>
+<p>The PR at <a href="https://github.com/OE4T/meta-tegra/pull/1968">https://github.com/OE4T/meta-tegra/pull/1968</a> adds support for specifying a list of overlays in your extlinux.conf file. These overlays are stored on the rootfs and applied to the kernel DTB at boot time after root slot selection.</p>
+<p>On <code>scarthgap</code> and other JetPack 6 / L4T R36.x branches, this is the rootfs-based runtime overlay mechanism. See <a href="#current-guidance-for-scarthgap--jetpack-6-l4t-r36x">Using-device-tree-overlays</a> for a branch-specific comparison with the SPI-flash and build-time approaches.</p>
 <p>This feature is only supported when <code>UBOOT_EXTLINUX_FDT</code> is specified.</p>
 <p>To use, specify</p>
 <pre><code>UBOOT_EXTLINUX_FDT = "${DTBFILE}"
 UBOOT_EXTLINUX_FDTOVERLAYS = "my-overlay.dtbo"
 </code></pre>
-<p>Where <code>"my-overlay.dtbo"</code> is an overlay built using the mechanisms specific to your branch implementation (or potentially one provided by NVIDIA.  See <a href="#build-time-application-of-overlays">Using-device-tree-overlays</a> for more details.  Note that since the overlay only happens to the kernel DTB this mechanism cannot be used to make any changes to the UEFI DTB.</p>
+<p>Where <code>"my-overlay.dtbo"</code> is an overlay built using the mechanisms specific to your branch implementation, or one provided by NVIDIA. Since the overlay only happens to the kernel DTB, this mechanism cannot be used to make any changes to the UEFI DTB.</p>
 <h2 id="caveats-1"><a class="header" href="#caveats-1">Caveats</a></h2>
 <ul>
 <li>The upstream UEFI bootloader does not implement this; it was tacked on by NVIDIA in their <code>L4TLauncher</code> EFI application.</li>
