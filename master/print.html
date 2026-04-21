@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-2e12e4d2.js";
+            window.path_to_searchindex_js = "searchindex-0470a0b2.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-87ae8402.js"></script>
@@ -1406,6 +1406,13 @@ If you do not go through the extra steps of setting up a kernel encryption key, 
 <li>Use command line to extract tegraflash.tar.gz image file. When extracting by using a GUI app, esp.img file become corrupted. To use  command-line like <code>tar -xf your-image.tegraflash.tar.gz</code> and follow normal flashing procedure with doflash.sh script.</li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
+<h1 id="update-21-apr-2026"><a class="header" href="#update-21-apr-2026">Update: 21 Apr 2026</a></h1>
+<p>In the <code>master</code> branch:</p>
+<ul>
+<li>The image type for tegraflash packages has been changed from <code>tegraflash.tar</code> to <code>tegraflash-tar</code>.</li>
+<li>The default for <code>IMAGE_FSTYPES</code> has been changed from <code>tegraflash.tar.zst</code> to <code>tegraflash-tar.zst</code>.
+Both to fix <code>.tar</code> suffix parsing with latest oe-core: https://github.com/OE4T/meta-tegra/issues/2191</li>
+</ul>
 <h1 id="update-10-feb-2025"><a class="header" href="#update-10-feb-2025">Update: 10 Feb 2025</a></h1>
 <p>In the <code>master</code> branch:</p>
 <ul>
