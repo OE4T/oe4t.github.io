@@ -16,8 +16,8 @@
         <link rel="icon" href="favicon-de23e50b.svg">
         <link rel="shortcut icon" href="favicon-8114d1fc.png">
         <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-2459343d.css">
-        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/general-0392ca55.css">
+        <link rel="stylesheet" href="css/chrome-fc474251.css">
         <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-39e8e2ee.js";
+            window.path_to_searchindex_js = "searchindex-0aa2eca5.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-347ffddc.js"></script>
+        <script src="toc-3d73b4fe.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -1949,6 +1949,14 @@ cboot’s ext4 implementation have been patched to make this work. Other filesys
 are unlikely to work.  Also, you should use the <code>cboot-t19x</code> recipe that builds
 cboot from source to get the required patches (this is the default).</p>
 <div style="break-before: page; page-break-before: always;"></div>
+<h1 id="uefi-capsule-update"><a class="header" href="#uefi-capsule-update">UEFI Capsule Update</a></h1>
+<h2 id="rollback-protection"><a class="header" href="#rollback-protection">Rollback protection</a></h2>
+<p>By default the <code>LowestSupportedVersion</code> field in UEFI Capsule FMP Payload Header is set to the current L4T version, which prevents bootloader downgrade.
+<code>TEGRA_UEFI_LOWEST_SUPPORTED_VERSION</code> variable can be used to override this behaviour.</p>
+<p>For example to allow downgrading to L4T 36.4.3 add the following line to your machine config:</p>
+<pre><code>TEGRA_UEFI_LOWEST_SUPPORTED_VERSION = "0x00240403"
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
 <h1 id="documentation-workflow"><a class="header" href="#documentation-workflow">Documentation Workflow</a></h1>
 <p>This project uses <a href="https://rust-lang.github.io/mdBook/">mdBook</a> to generate
 documentation, with GitHub Actions for automated builds and GitHub Pages for
@@ -2939,11 +2947,11 @@ result in the same TNSPEC as would be present after using L4T’s <code>flash.sh
 
         <script src="elasticlunr-ef4e11c1.min.js"></script>
         <script src="mark-09e88c2c.min.js"></script>
-        <script src="searcher-c2a407aa.js"></script>
+        <script src="searcher-09f2665d.js"></script>
 
         <script src="clipboard-1626706a.min.js"></script>
         <script src="highlight-abc7f01d.js"></script>
-        <script src="book-a0b12cfe.js"></script>
+        <script src="book-c22b7243.js"></script>
 
         <!-- Custom JS scripts -->
         <script src="docs/mdbook/js/version-dropdown-1d748a69.js"></script>
