@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Using gcc7 from the Contrib Layer - OE4T Meta Tegra</title>
+        <title>Flashing without sudo - OE4T Meta Tegra</title>
 
 
         <!-- Custom HTML head -->
@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f2de32fd.js";
+            window.path_to_searchindex_js = "searchindex-949bfadc.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-91efb799.js"></script>
+        <script src="toc-77019188.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -144,7 +144,7 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
-                        <a href="https://github.com/OE4T/meta-tegra/edit/master/docs/Using-gcc7-from-the-contrib-layer.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/OE4T/meta-tegra/edit/master/docs/Flashing-without-sudo.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -178,38 +178,66 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>Starting with the <code>warrior</code> branch, meta-tegra includes a <code>contrib</code> layer with user-contributed recipes
-for optional inclusion in your builds.  The layer includes recipes for gcc7 that you can use for compatibility
-with CUDA 10.0.</p>
-<h2 id="configuring-your-builds-for-gcc-7"><a class="header" href="#configuring-your-builds-for-gcc-7">Configuring your builds for GCC 7</a></h2>
-<p>Follow the steps below to switch to GCC 7:</p>
-<ol>
-<li>Use <code>bitbake-layers add-layer</code> to add the <code>meta-tegra/contrib</code> layer to your project in <code>build/conf/bblayers.conf</code>.</li>
-<li>Select GCC version in your <code>build/conf/local.conf</code> and use the required configuration like this:</li>
-</ol>
-<pre><code>GCCVERSION = "7.%"
-require contrib/conf/include/gcc-compat.conf
+                        <h1 id="avoiding-sudo"><a class="header" href="#avoiding-sudo">Avoiding sudo</a></h1>
+<p>The <code>initrd-flash</code> script can be run normally, and will invoke the tools that absolutely require root access (specifcally <code>bmaptool</code>
+and, for Thor-family modules, the NVIDIA unified flashing script) under <code>sudo</code> for you if you are not already running as the root user.</p>
+<p>This page has suggestions for configuring your system to help with keeping <code>sudo</code> use to a minimum.</p>
+<h2 id="add-yourself-to-some-useful-groups"><a class="header" href="#add-yourself-to-some-useful-groups">Add yourself to some useful groups</a></h2>
+<p>Disk devices are usually set up such that the <code>disk</code> group has full access to them. Adding yourself
+to that group can help, particularly for formatting/partitioning storage devices.</p>
+<p>The <code>plugdev</code> group, while considered “legacy,” can still be used for access to USB-connected devices.
+Adding yourself to that group can help with the USB flashing process.</p>
+<h2 id="add-udev-rules-to-enable-non-root-access"><a class="header" href="#add-udev-rules-to-enable-non-root-access">Add udev rules to enable non-root access</a></h2>
+<p>Add the following udev rules to your configuration (usually to a file under <code>/etc/udev/rules.d</code>):</p>
+<pre><code># Jetson AGX Orin main CPU
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7023", GROUP="plugdev", TAG+="uaccess"
+# Jetson AGX Orin (32G) main CPU
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7223", GROUP="plugdev", TAG+="uaccess"
+# Jetson AGX Orin/Thor supervisor CPU
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7045", GROUP="plugdev", TAG+="uaccess"
+# Jetson Orin NX (16G)
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7323", GROUP="plugdev", TAG+="uaccess"
+# Jetson Orin NX (8G)
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7423", GROUP="plugdev", TAG+="uaccess"
+# Jetson Orin Nano
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7523", GROUP="plugdev", TAG+="uaccess"
+# Jetson Orin Nano 4GB
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7623", GROUP="plugdev", TAG+="uaccess"
+# Jetson AGX Thor dev kit
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7026", GROUP="plugdev", TAG+="uaccess"
+# Jetson AGX Thor P3834-0001
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="0955", ATTRS{idProduct}=="7326", GROUP="plugdev", TAG+="uaccess"
 </code></pre>
-<h2 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h2>
-<p>Older GCC versions, such as GCC 7, does NOT support <code>fmacro-prefix-map</code>. As a result, <a href="https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/conf/bitbake.conf?h=warrior#n613">due to the default settings</a>, while building newer releases of the Yocto Project, for example Warrior, with older GCC version you may get errors like “cannot compute suffix of object files”. To fix add the following lines to your <code>build/conf/local.conf</code>:</p>
-<pre><code># GCC 7 doesn't support fmacro-prefix-map, results in "error: cannot compute suffix of object files: cannot compile"
-DEBUG_PREFIX_MAP_remove = "-fmacro-prefix-map=${WORKDIR}=/usr/src/debug/${PN}/${EXTENDPE}${PV}-${PR}"
+<p>The GROUP assignment is for legacy <code>plugdev</code>-style access; the TAG addition is for the newer systemd-udevd method for granting user access.</p>
+<h2 id="add-polkit-rules"><a class="header" href="#add-polkit-rules">Add polkit rules</a></h2>
+<p>This is for Orin-family flashing over USB, when your host system uses of the <code>udisks2</code> package for mediating access to removable storage devices,
+such as Ubuntu. The following commands install a configuration file to enable the <code>disk</code> group to perform some disk operations through <code>udisks2</code>
+that might otherwise be denied or result in prompting for your login password:</p>
+<pre><code>mkdir -p /var/lib/polkit-1/localauthority/50-local.d/
+cat &lt;&lt; EOF &gt; /var/lib/polkit-1/localauthority/50-local.d/com.github.oe4t.pkla
+[Allow Mounting for Disk Group]
+Identity=unix-group:disk
+Action=org.freedesktop.udisks2.filesystem-mount
+ResultAny=yes
+
+[Allow Power Off Drive for Disk Group]
+Identity=unix-group:disk
+Action=org.freedesktop.udisks2.power-off-drive
+ResultAny=yes
+EOF
+chmod 644 /var/lib/polkit-1/localauthority/50-local.d/com.github.oe4t.pkla
+systemctl restart polkit
 </code></pre>
-<p><strong>NOTE:</strong> This configuration is applied in <code>contrib/conf/include/gcc-compat.conf</code>. No further actions are required if you have already required it in <code>build/conf/local.conf</code>.</p>
-<h2 id="see-also"><a class="header" href="#see-also">See Also</a></h2>
-<ul>
-<li><a href="https://www.yoctoproject.org/working-with-nvidia-tegra-bsp-and-supporting-latest-cuda-versions-yocto-project-summit-2019/">Working with NVIDIA Tegra BSP and Supporting Latest CUDA Versions, Leon Anavi, Yocto Dev Summit 2019</a> <a href="https://wiki.yoctoproject.org/wiki/images/4/43/Yocto-dev-summit-leon-anavi-2019.pdf">slides</a></li>
-</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="Using-device-tree-overlays.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="Disk-Encryption-for-Jetson-Devices.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="Using-gcc8-from-the-contrib-layer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="NVIDIA-Container-Runtime-support.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -219,11 +247,11 @@ DEBUG_PREFIX_MAP_remove = "-fmacro-prefix-map=${WORKDIR}=/usr/src/debug/${PN}/${
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="Using-device-tree-overlays.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="Disk-Encryption-for-Jetson-Devices.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="Using-gcc8-from-the-contrib-layer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="NVIDIA-Container-Runtime-support.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

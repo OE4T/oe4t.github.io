@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f2de32fd.js";
+            window.path_to_searchindex_js = "searchindex-949bfadc.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-91efb799.js"></script>
+        <script src="toc-77019188.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -179,10 +179,11 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="openembeddedyocto-bsp-layer-for-nvidia-jetson-modules"><a class="header" href="#openembeddedyocto-bsp-layer-for-nvidia-jetson-modules">OpenEmbedded/Yocto BSP layer for NVIDIA Jetson Modules</a></h1>
-<p>Jetson Linux release: R36.5.0
-JetPack release:      6.2.2</p>
+<p>Jetson Linux release: R39.2.0
+JetPack release:      7.2</p>
 <p>Boards supported:</p>
 <ul>
+<li>Jetson AGX Thor development kit</li>
 <li>Jetson AGX Orin development kit</li>
 <li>Jetson Orin NX 16GB (p3767-0000) in Xavier NX (p3509) carrier</li>
 <li>Jetson Orin NX 16GB (p3767-0000) in Orin Nano (p3768) carrier</li>
@@ -193,25 +194,23 @@ JetPack release:      6.2.2</p>
 URI: https://git.openembedded.org/openembedded-core
 branch: master
 LAYERSERIES_COMPAT: blacksail</p>
-<h2 id="cuda-toolchain-compatibility-note"><a class="header" href="#cuda-toolchain-compatibility-note">CUDA toolchain compatibility note</a></h2>
-<p>CUDA 12.6 supports up through gcc 13.2 only, so recipes are included
-for adding the gcc 13.2 toolchain to the build for CUDA use, and <code>cuda.bbclass</code>
-has been updated to pass the g++ 13 compiler to nvcc for CUDA code compilation.</p>
+<p>See <a href="docs/JetPack-7.2-L4T-R39.2.0-Notes.html">this page</a> for information
+about changes in this release.</p>
 <h2 id="getting-help"><a class="header" href="#getting-help">Getting Help</a></h2>
+<p>Our documentation is available <a href="https://oe4t.github.io">here</a>. You can
+also find documentation in Markdown form in the <a href="docs">docs</a> directory.</p>
 <p>For general build issues or questions about getting started with your build
 setup please use the
 <a href="https://github.com/OE4T/meta-tegra/discussions">Discussions</a> tab of the
 meta-tegra repository:</p>
 <ul>
-<li>Use the Ideas category for anything you’d like to see included in meta-tegra,
-Wiki content, or the
-<a href="https://github.com/OE4T/tegra-demo-distro/issues">tegra-demo-distro</a>.</li>
-<li>Use the Q&amp;A category for questions about how to build or modify your Tegra
-target based on the content here.</li>
+<li>Use the Ideas category for anything you’d like to see included in the layer
+or the wiki content.</li>
+<li>Use the Q&amp;A category for questions about the layer, recipes, etc.</li>
 <li>Use the “Show and Tell” category for any projects you’d like to share which
-are related to meta-tegra.</li>
+are related to the layer.</li>
 <li>Use the General channel for anything that doesn’t fit well into the categories
-above, and which doesn’t relate to a build or runtime issue with Tegra yocto
+above, and which doesn’t relate to a build or runtime issue with Yocto/OE
 builds.</li>
 </ul>
 <h2 id="reporting-issues"><a class="header" href="#reporting-issues">Reporting Issues</a></h2>

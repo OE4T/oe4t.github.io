@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Using gcc8 from the Contrib Layer - OE4T Meta Tegra</title>
+        <title>Flashing Basics - OE4T Meta Tegra</title>
 
 
         <!-- Custom HTML head -->
@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f2de32fd.js";
+            window.path_to_searchindex_js = "searchindex-949bfadc.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-91efb799.js"></script>
+        <script src="toc-77019188.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -144,7 +144,7 @@
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
-                        <a href="https://github.com/OE4T/meta-tegra/edit/master/docs/Using-gcc8-from-the-contrib-layer.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/OE4T/meta-tegra/edit/master/docs/Flashing.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -178,43 +178,160 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p><strong>Update 16-Dec-2021:</strong> The master branch has support for restricting the use of the
-older gcc toolchain <em>just</em> for CUDA compilations, and the meta-tegra main layer includes
-the recipes to support this. You no longer need to use an older toolchain for building
-everything, and the recipes for the older toolchains have been dropped from
-the contrib layer.  See <a href="https://github.com/OE4T/meta-tegra/pull/867">#867</a> for more information.</p>
-<h1 id="for-honister-and-earlier-branches"><a class="header" href="#for-honister-and-earlier-branches">For honister and earlier branches</a></h1>
-<p>With the JetPack 4.4 Developer Preview release (L4T R32.4.2), NVIDIA updated CUDA support
-for the Jetson platforms to CUDA 10.2, which is compatible with GCC 8. On the <code>dunfell-l4t-r32.4.2</code>
-and <code>master</code> branches, the <code>contrib</code> layer in this repository has been updated to include recipes
-for the gcc 8 toolchain, imported from the OE-Core <code>warrior</code> branch. If you intend to build
-packages that use CUDA, you should configure your build to use GCC 8.</p>
-<p>If you have previously configured your builds for GCC 7 when using an earlier version of
-meta-tegra with an older L4T/JetPack release, you can retain those settings and continue to
-use GCC, as builds should be compatible with either version of the toolchain.</p>
-<h2 id="configuring-your-builds-for-gcc-8"><a class="header" href="#configuring-your-builds-for-gcc-8">Configuring your builds for GCC 8</a></h2>
-<p>Follow the steps below to switch to GCC 8:</p>
+                        <h1 id="flashing-basics"><a class="header" href="#flashing-basics">Flashing Basics</a></h1>
+<p>As of L4T R39.2.0, all initial flashing is performed by “RCM booting” (booting over a USB link while the device is in ReCovery Mode) a
+specialized Linux image that reads partition content over the USB link from the host and writes it to the correct location. The underlying
+mechanism is different for Orin family vs. Thor family modules, but the end result is similar.</p>
+<h2 id="differences-from-stock-jetson-linux-flashing"><a class="header" href="#differences-from-stock-jetson-linux-flashing">Differences from stock Jetson Linux flashing</a></h2>
+<p>There are several differences between Jetson Linux and an operating system built using the
+OpenEmbedded/Yocto Project tools, plus there are some differences in the way flashing is implemented
+between the two environments.</p>
+<h3 id="jetson-linux-flashing"><a class="header" href="#jetson-linux-flashing">Jetson Linux flashing</a></h3>
+<ul>
+<li>
+<p>Jetson Linux is comprised of a collection of pre-built binary artifacts. The flashing process
+contacts the device to identify which specific binaries should be used, assembles them, then writes them
+to the device.</p>
+</li>
+<li>
+<p>Jetson Linux flashing scripts expect you to have your current working directory at the top-level
+<code>Linux_for_Tegra</code> directory of the Jetson Linux/L4T kit, and to find the artifacts to flash
+under that directory.</p>
+</li>
+<li>
+<p>The Jetson Linux flashing scripts are expected to be run under specific, supported Linux environments,
+and can, more or less, require any available package to be installed. In addition, they expect to run
+on a developer’s workstation, and so can make changes to the host system’s networking configuration, or
+other system-level changes, and expect you to run all scripts under <code>sudo</code> to allow that.</p>
+</li>
+</ul>
+<h3 id="oeyocto-flashing"><a class="header" href="#oeyocto-flashing">OE/Yocto flashing</a></h3>
+<ul>
+<li>
+<p>OE/Yocto builds are configured for a specific machine (i.e., a specific model of Jetson module or
+dev kit). Some of the binary selection that happens during flashing with Jetson Linux instead happens
+at build time.</p>
+</li>
+<li>
+<p>The <code>tegraflash</code> image type provided in the <code>meta-tegra</code> layer attempts to package nearly everything
+you need to perform the flashing of your build into a tarball that you can unpack and use anywhere.</p>
+</li>
+<li>
+<p>The scripts provided by the <code>meta-tegra</code> layer attempt to minimize the number of additional dependencies on
+external packages, and should be usable with any recent-vintage Linux distribution.</p>
+</li>
+</ul>
+<h1 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h1>
+<p>Before you get started, you will need:</p>
+<ul>
+<li>A suitable USB cable. All Orin and Thor family development kits have a USB-C connector for the
+USB-OTG port. You don’t need to have USB-C on your development host, though.</li>
+<li>A free USB port on your development host. Random failures may occur if you connect via an external hub.</li>
+<li>The <code>dtc</code> command (package <code>device-tree-compiler</code> on Debian/Ubuntu systems)</li>
+<li>The <code>cpp</code> command (from the GNU toolchain, package <code>cpp</code> on Debian/Ubuntu systems)</li>
+<li>The <code>bash</code> shell and a recent-vintage Python 3 installation are also needed for the scripts.</li>
+<li>The <code>.tegraflash-tar.zst</code> package for your target machine, generated from a Yocto build.</li>
+</ul>
+<h2 id="additional-tools-for-orin-flashing"><a class="header" href="#additional-tools-for-orin-flashing">Additional tools for Orin flashing:</a></h2>
+<p>For Orin targets, you will also need:</p>
+<ul>
+<li>The <code>sgdisk</code> command (from the <code>gdisk</code>/<code>gptfdisk</code> package)</li>
+<li>The <code>udisksctl</code> command (part of the <code>udisks2</code> package)</li>
+<li>The <code>bmaptool</code> command (part of the <code>bmap-tools</code> package)</li>
+</ul>
+<p>Note that <code>bmaptool</code> isn’t strictly required, but without it flashing even a moderately large rootfs image will take an extremely long time.</p>
+<p>You should also disable automatic mounting of removable media in your desktop settings.
+On recent Ubuntu (GNOME), go to Settings -&gt; Removable Media, and check the box next to “Never prompt or start programs on media insertion.”  You may also need to update the <code>/org/gnome/desktop/media-handling/automount</code> setting via <code>dconf</code>.  Check the setting with:</p>
+<pre><code>$ dconf read /org/gnome/desktop/media-handling/automount
+</code></pre>
+<p>If it reports <code>true</code>, set it with:</p>
+<pre><code>$ dconf write /org/gnome/desktop/media-handling/automount false
+</code></pre>
+<p>For Ubuntu 24.04, use <code>gsettings</code>, and also disable <code>automount-open</code>:</p>
+<pre><code>$ gsettings set org.gnome.desktop.media-handling automount false
+$ gsettings set org.gnome.desktop.media-handling automount-open false
+</code></pre>
+<h2 id="additional-tools-for-thor-flashing"><a class="header" href="#additional-tools-for-thor-flashing">Additional tools for Thor flashing:</a></h2>
+<p>NVIDIA implemented a different flashing process for the Thor module family and provides tools for it in the L4T kit. This same set of tools
+is also used for flashing Thor-family modules with Yocto/OE builds. Note, however, that
+if you are flashing a module that has been fused for secure boot, the scripts currently expect the <code>xmllint</code> command
+(from package <code>libxml2-utils</code>).</p>
+<h2 id="serial-console-access"><a class="header" href="#serial-console-access">Serial console access</a></h2>
+<p>While not required, having a serial console connection is very helpful for troubleshooting flashing issues.</p>
+<ul>
+<li>AGX Orin development kits have a USB micro-B port that can be directly connected to your development host, exporting CDC-ACM serial connections over USB.</li>
+<li>AGX Thor development kits have a USB type-C port hidden under the lid above the ports on the back of the unit. Serial connections are exported via CDC-ACM over USB.</li>
+<li>The Orin Nano development kit has a “button header” connector that exposes 3.3V TTL UART signals. A USB-serial adapter can be used to connect these to a modern PC.</li>
+</ul>
+<h1 id="the-initrd-based-flashing-process"><a class="header" href="#the-initrd-based-flashing-process">The initrd-based flashing process</a></h1>
+<h2 id="step-1---unpack-the-tegraflash-tarball"><a class="header" href="#step-1---unpack-the-tegraflash-tarball">Step 1 - Unpack the tegraflash tarball</a></h2>
+<p>To begin, unpack the <code>.tegraflash-tar.zst</code> file that was created by your image build into an empty directory. For example:</p>
+<pre><code>$ MACHINE=jetson-orin-nano-devkit-nvme bitbake demo-image-base
+$ mkdir -p $HOME/scratch/flashing
+$ cd $HOME/scratch/flashing
+$ tar xf $BUILDDIR/tmp/deploy/images/jetson-orin-nano-devkit-nvme/demo-image-base-jetson-orin-nano-devkit-nvme.tegraflash-tar.zst
+</code></pre>
+<h2 id="step-2---put-the-target-in-recovery-mode"><a class="header" href="#step-2---put-the-target-in-recovery-mode">Step 2 - Put the target in recovery mode</a></h2>
+<p>Next, make sure your target device is in recovery mode, with the USB OTG port connected to your host machine. You can use the command</p>
+<pre><code>$ lsusb -d 0955:
+</code></pre>
+<p>to check this.</p>
+<h2 id="step-3---run-the-script"><a class="header" href="#step-3---run-the-script">Step 3 - Run the script</a></h2>
+<pre><code>$ ./initrd-flash
+</code></pre>
+<p>By default, the script flashes both the boot firmware to the QSPI flash and the rootfs to the external drive (or SDcard, for the stock Orin Nano dev kit). Flashing the boot firmware can take a long time, however, and isn’t usually needed after the first flashing, so you can save time by adding the <code>--external-only</code> flag to skip the boot firmware update. Alternatively, you can write <em>just</em> the boot firmware by specifying the <code>--qspi-only</code> option.</p>
+<h2 id="step-4---reboot-the-device-thor-only"><a class="header" href="#step-4---reboot-the-device-thor-only">Step 4 - Reboot the device (Thor only)</a></h2>
+<p>For Thor-family devices, you must power cycle or reset the target after flashing is done.</p>
+<h1 id="sdcardexternal-drive-writing-orin-only"><a class="header" href="#sdcardexternal-drive-writing-orin-only">SDcard/External drive writing (Orin only)</a></h1>
+<p>For the Orin Nano development kit where you use the SDcard slot, or any Orin target where you use either a USB or NVMe external drive for the rootfs partition, you can use initrd flashing once (to ensure the boot firmware is at the correct version), then use either the <code>./dosdcard.sh</code> or <code>./doexternal.sh</code> script to write to a storage device that is directly connected to your host.  These scripts run the flashing helper script to assemble the partitions for the SDcard or external storage device, then runs a script to write those partitions to a storage device.</p>
+<p>The <code>dosdcard.sh</code> script is created only for Orin Nano dev kit targets, since that is the only system that has an SDcard slot. To use it, insert a good-quality
+SDcard (preferably 32G or larger) into an SDcard reader/writer on you host, and run <code>./dosdcard.sh /dev/sdXXX</code> or <code>sudo ./dosdcard.sh /dev/sdXXX</code>, specifying the actual name of your SDcard reader/writer device for <code>/dev/sdXXX</code>. The script will prompt you to confirm that you want to overwrite the contents of the card; you can add the <code>-y</code> option to skip the confirmation.</p>
+<p>The <code>doexternal.sh</code> script is created for targets that are configured to boot off external (NVMe or USB) storage. To use this script, connect the storage device
+that will be used in your Jetson system to a suitable interfacde on your host, and run <code>./dosdcard.sh /dev/sdXXX</code> or <code>sudo ./dosdcard.sh /dev/sdXXX</code>, specifying the actual name of the storage device for <code>/dev/sdXXX</code>. The script will prompt you to confirm that you want to overwrite the contents of the card; you can add the <code>-y</code> option to skip the confirmation.</p>
+<p><strong>WARNING</strong> Be absolutely sure that the device name you specify is correct! Do not accidentally erase/overwrite filesystems on your host system!</p>
+<h1 id="general-troubleshooting-tipssuggestions"><a class="header" href="#general-troubleshooting-tipssuggestions">General Troubleshooting Tips/Suggestions</a></h1>
+<p>Once you have it set up properly for your target hardware, the flashing process should “just work” most of the time. Getting that initial setup right
+can sometimes be difficult, and the low-level tools used by the scripts often generate messages with confusing or undocumented error codes.</p>
+<h2 id="where-to-find-information-about-the-flashing-process"><a class="header" href="#where-to-find-information-about-the-flashing-process">Where to find information about the flashing process</a></h2>
 <ol>
-<li>Use <code>bitbake-layers add-layer</code> to add the <code>meta-tegra/contrib</code> layer to your project in <code>build/conf/bblayers.conf</code>.</li>
-<li>Select GCC version in your <code>build/conf/local.conf</code> and use the required configuration like this:</li>
+<li>The <code>initrd-flash</code> script typically displays just high-level status. If it fails, look in the <code>log.initrd-flash.DATE-TIME-STAMP</code> file that it creates
+(the specific name is displayed when the script is finished).</li>
+<li>For Thor-family flashing, the <code>initrd-flash</code> script hands off control to the NVIDIA “unified” flashing script. Adding the <code>--debug</code> (or <code>-D</code>) option
+to <code>initrd-flash</code> enables more-verbose debug logging for those scripts, which can help with troubleshooting.</li>
+<li>Monitor your host’s kernel logs during the flashing process. USB issues can show up as kernel warnings.</li>
+<li>If you can, monitor the serial console of the target device during the flashing process, so you can see what is happening on the device.</li>
 </ol>
-<pre><code>GCCVERSION = "8.%"
-</code></pre>
-<p>or</p>
-<pre><code>GCCVERSION_aarch64 = "8.%"
-</code></pre>
-<p>if you have other platforms (with other CPU architectures) in your build setup that require
-the latest toolchain provided by OE-Core.</p>
+<h2 id="usb-communication-errors"><a class="header" href="#usb-communication-errors">USB communication errors</a></h2>
+<ol>
+<li>Sometimes USB problems are transient, and just power-cycling the target device and re-running the <code>initrd-flash</code> script will work.</li>
+<li>Try swapping USB cables/ports, and ensure you are using a high quality cable.</li>
+<li>If you are flashing after a soft reboot, try power cycling the device/entering tegraflash mode from power on instead of using <code>reboot forced-recovery</code>. There have been issues with the boot firmware not properly setting up for recovery mode after a soft reboot.</li>
+</ol>
+<h2 id="permissions-failures"><a class="header" href="#permissions-failures">Permissions failures</a></h2>
+<p>Try running the entire flashing script under <code>sudo</code>, especially if any error message mention permissions (although the script should be using <code>sudo</code> where it’s needed).</p>
+<h2 id="storage-layout-issues"><a class="header" href="#storage-layout-issues">Storage layout issues</a></h2>
+<p>Suspect issues with partition table, especially if you’ve modified the partition table or increase sizes of partitions. Obscure errors like <code>cp: cannot stat 'signed/*': No such file or directory</code> typically mean you’ve got some problem with your custom partition table and/or target storage device size.</p>
+<h2 id="host-environment-issues"><a class="header" href="#host-environment-issues">Host environment issues</a></h2>
+<ol>
+<li>Use an x86-64 Linux host system for flashing, and always run the flashing scripts natively on that host. The low-level
+tools that NVIDIA provides are binary-only, and may not operate on ARM or other non-x86 hosts.</li>
+<li>Virtualization can interfere with the USB communication used by the flashing tools, so as mentioned above, run the flashing scripts natively, not in a virtual machine.</li>
+<li>The TLP package (sometimes installed on notebooks/laptops to save battery power) can interfere with the flashing process. Use <code>sudo apt remove tlp</code> and reboot your host computer to remove it before flashing.</li>
+<li>Use the <code>tar</code> command to unpack the tegraflash tarball, rather than a graphical file management tool. There have been issues in the past with file corruption caused by graphical tools.</li>
+</ol>
+<h2 id="try-alternative-setups"><a class="header" href="#try-alternative-setups">Try alternative setups</a></h2>
+<p>The <a href="https://github.com/OE4T/tegra-demo-distro">demo distro</a> is built frequently, and images from those builds are tested often, so if you are unsure about
+how your custom build environment might be affecting the flashing process, try building and flashing a <code>demo-base-image</code> from the demo distro for comparison. You can also compare against flashing using stock Jetson Linux/JetPack/SDK Manager.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="Using-gcc7-from-the-contrib-layer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="Which-branch-should-I-use.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="Using-linaro-gcc7-for-CUDA-support.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="OE4T-Contributor-Guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -224,11 +341,11 @@ the latest toolchain provided by OE-Core.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="Using-gcc7-from-the-contrib-layer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="Which-branch-should-I-use.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="Using-linaro-gcc7-for-CUDA-support.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="OE4T-Contributor-Guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

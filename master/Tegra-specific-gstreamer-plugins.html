@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f2de32fd.js";
+            window.path_to_searchindex_js = "searchindex-949bfadc.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-91efb799.js"></script>
+        <script src="toc-77019188.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,12 +178,50 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>Originally, the machine configurations set MACHINE_GSTREAMER_1_0_PLUGIN to include the <code>gstreamer1.0-plugins-tegra</code> package, which is the base set of binary-only gstreamer plugins that is provided with L4T.  In more recent releases, this has been changed to point to <code>gstreamer1.0-omx-tegra</code> instead (and using the now-current MACHINE_HWCODECS variable) to make it easier to build multimedia-ready images.</p>
-<p>Note that since the OpenMAX plugins package is flagged as commercially licensed, it is also whitelisted in the machine configuration with:</p>
-<pre><code>LICENSE_FLAGS_WHITELIST_append = " commercial_gstreamer1.0-omx-tegra"
-</code></pre>
-<h2 id="update-2020-09-17"><a class="header" href="#update-2020-09-17">Update 2020-09-17</a></h2>
-<p>Starting with the branches using L4T R32.4.3 (<code>dunfell-l4t-r32.4.3</code> and later), the commercially-licensed flag was removed from the OpenMAX plugin recipe, as the sources are available and do not appear to contain any encumbered code.</p>
+                        <h1 id="tegra-specific-gstreamer-plugins"><a class="header" href="#tegra-specific-gstreamer-plugins">Tegra-specific GStreamer plugins</a></h1>
+<p>Starting with L4T R35.x (JetPack 5), the NVIDIA-specific GStreamer plugins are built individually
+from source as separate recipes, rather than being delivered as a single binary blob package.
+Each recipe below corresponds to a Yocto package that can be added to your image.</p>
+<h2 id="plugin-recipes"><a class="header" href="#plugin-recipes">Plugin recipes</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Recipe</th><th>GStreamer element(s)</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>gstreamer1.0-plugins-nvarguscamerasrc</code></td><td><code>nvarguscamerasrc</code></td><td>LibArgus-based CSI camera capture source</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvcompositor</code></td><td><code>nvcompositor</code></td><td>GPU-accelerated multi-input compositor</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvdrmvideosink</code></td><td><code>nvdrmvideosink</code></td><td>DRM/KMS video sink</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nveglgles</code></td><td><code>nvvideosink</code>, <code>nvoverlaysink</code></td><td>EGL/GLES-based render sinks</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvipcpipeline</code></td><td><code>nvipcsrc</code>, <code>nvipcsink</code></td><td>Inter-process GStreamer pipeline elements</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvjpeg</code></td><td><code>nvjpegdec</code>, <code>nvjpegenc</code></td><td>Hardware-accelerated JPEG decode/encode</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvsiplcamerasrc</code></td><td><code>nvsiplcamerasrc</code></td><td>SIPL-based camera source (R39.2.0+, requires <code>jetson-sipl-api</code>)</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvtee</code></td><td><code>nvtee</code></td><td>Tegra-specific tee element</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvunixfd</code></td><td><code>nvunixfdsrc</code>, <code>nvunixfdsink</code></td><td>Unix file-descriptor buffer sharing elements</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvv4l2camerasrc</code></td><td><code>nvv4l2camerasrc</code></td><td>V4L2-based camera capture source</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvvidconv</code></td><td><code>nvvidconv</code></td><td>Hardware video format and color-space conversion</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvvideo4linux2</code></td><td><code>nvv4l2dec</code>, <code>nvv4l2h264enc</code>, <code>nvv4l2h265enc</code>, etc.</td><td>V4L2-based hardware video decode and encode</td></tr>
+<tr><td><code>gstreamer1.0-plugins-nvvideosinks</code></td><td><code>nvvideosink</code></td><td>NvBuf-backed video sink</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="supporting-packages"><a class="header" href="#supporting-packages">Supporting packages</a></h3>
+<ul>
+<li><strong><code>libgstnvcustomhelper</code></strong> — shared helper library used internally by several of the plugins above; pulled in automatically as a dependency</li>
+<li><strong><code>nvgstapps</code></strong> — sample GStreamer applications from NVIDIA demonstrating use of these plugins</li>
+</ul>
+<h2 id="machine-configuration"><a class="header" href="#machine-configuration">Machine configuration</a></h2>
+<p>The <code>MACHINE_HWCODECS</code> variable in each machine configuration selects the hardware codec packages
+for that target. The GStreamer plugins above can be included individually in your image recipe, or
+grouped through appropriate <code>IMAGE_INSTALL</code> or <code>MACHINE_EXTRA_RRECOMMENDS</code> settings in your
+layer.</p>
+<h2 id="camera-source-plugin-notes"><a class="header" href="#camera-source-plugin-notes">Camera source plugin notes</a></h2>
+<p><strong>nvarguscamerasrc</strong> is the standard CSI camera source for most Jetson platforms, using the
+LibArgus camera API.</p>
+<p><strong>nvsiplcamerasrc</strong> (available from R39.2.0/JetPack 7.2 onwards) is an alternative source for
+cameras attached via the SIPL framework. It is built from source and depends on the
+<code>jetson-sipl-api</code> package. SIPL is typically used with more complex camera module configurations
+that require an ISP tuning database.</p>
 
                     </main>
 
@@ -193,7 +231,7 @@
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="Tegraflash-Troubleshooting.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="USB-device-mode-support.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -207,7 +245,7 @@
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="Tegraflash-Troubleshooting.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="USB-device-mode-support.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f2de32fd.js";
+            window.path_to_searchindex_js = "searchindex-949bfadc.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-91efb799.js"></script>
+        <script src="toc-77019188.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,8 +178,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>As of 08 Dec 2023, this feature is supported in the kirkstone, mickledore, nanbield, and master branches.</p>
-<p>As of the latest Jetpack 5 r35.x releases, NVIDIA provides partition layouts which support <a href="https://docs.nvidia.com/jetson/archives/r35.4.1/DeveloperGuide/text/SD/RootFileSystem.html#root-file-system-redundancy">Root File System Redundancy</a>, whereby bootloader slots and rootfs slots are paired together to support automatically selecting the associated root filesystem partition at boot to match the selected bootloader slot.  The selected bootloader slot, a or b, will select the corresponding rootfs slot a or b.</p>
+                        <p>NVIDIA provides partition layouts which support <a href="https://docs.nvidia.com/jetson/archives/r35.4.1/DeveloperGuide/text/SD/RootFileSystem.html#root-file-system-redundancy">Root File System Redundancy</a>, whereby bootloader slots and rootfs slots are paired together to support automatically selecting the associated root filesystem partition at boot to match the selected bootloader slot.  The selected bootloader slot, a or b, will select the corresponding rootfs slot a or b.</p>
 <p>When paired with the UEFI <a href="https://github.com/OE4T/meta-tegra/pull/1285">capsule update</a> feature, a redundant root filesystem supports switching the root filesystem, kernel, and kernel dtb to match the updated bootloader slot.  When paired with an update tool which can update kernel, dtb and rootfs partitions (swupdate, rauc, mender, or others) the process of performing capsule update can also switch to an updated rootfs through the redundant rootfs feature.</p>
 <p>If you have the available root filesystem space to support redundant rootfs, using a redundant partition layout at the outset of your project might give you the option to support updates later without a repartition (or tegraflash) of the device.</p>
 <h1 id="selecting-redundant-root-filesystem-partition-layout"><a class="header" href="#selecting-redundant-root-filesystem-partition-layout">Selecting Redundant Root Filesystem Partition Layout</a></h1>
@@ -200,19 +199,16 @@
 </ul>
 <h2 id="overriding-bsp-layer-changes"><a class="header" href="#overriding-bsp-layer-changes">Overriding BSP Layer Changes</a></h2>
 <p>Use <code>ROOTFSPART_SIZE</code>, <code>PARTITION_LAYOUT_EXTERNAL</code> and <code>PARTITION_LAYOUT_TEMPLATE</code> as done before changes in <a href="https://github.com/OE4T/meta-tegra/pull/1428">https://github.com/OE4T/meta-tegra/pull/1428</a>, to provide your own implementation outside the BSP layer and ignore the setting of <code>USE_REDUNDANT_FLASH_LAYOUT</code>.</p>
-<h1 id="limitations"><a class="header" href="#limitations">Limitations</a></h1>
-<p>NVIDIA does not provide a redundant flash layout for <code>flash_l4t_external.xml</code>.  Any targets which use <code>flash_l4t_external.xml</code>, which as of   <a href="https://github.com/OE4T/meta-tegra/pull/1295">https://github.com/OE4T/meta-tegra/pull/1295</a> include Orin NX 16 GB in P3509 carrier, Orin NX 16 GB in P3768 carrier, or Orin Nano 4GB in p3768 carrier use <code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL ?= "0"</code> and therefore don’t support the <code>USE_REDUNDANT_FLASH_LAYOUT</code> feature described here.  Alternatively, override <code>USE_REDUNDANT_FLASH_LAYOUT = "1"</code> and set <code>PARTITION_LAYOUT_EXTERNAL_DEFAULT ?= "flash_l4t_nvme.xml"</code> or your custom external layout, but be aware of issue <a href="https://github.com/OE4T/meta-tegra/discussions/1286">https://github.com/OE4T/meta-tegra/discussions/1286</a>.
-`</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="PPS-GPIO-Support-on-Jetson-TX1-TX2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="NVIDIA-Container-Runtime-support.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="SPI-support.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="Secure-Boot-Support.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -222,11 +218,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="PPS-GPIO-Support-on-Jetson-TX1-TX2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="NVIDIA-Container-Runtime-support.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="SPI-support.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="Secure-Boot-Support.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

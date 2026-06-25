@@ -36,10 +36,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-f2de32fd.js";
+            window.path_to_searchindex_js = "searchindex-949bfadc.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-91efb799.js"></script>
+        <script src="toc-77019188.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,23 +178,12 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>For many L4T/Jetson Linux releases, NVIDIA has provided a mechanism (the <code>jetson-io</code> scripts) for applying device tree overlays (<code>.dtbo</code> files) dynamically at runtime. For OE/Yocto-based builds, device trees are built from sources, so runtime application of DTB overlays is less of an issue. The <code>meta-tegra</code> layer does provide some mechanisms for applying DTB overlays, through some build-time variable settings.</p>
-<h1 id="build-time-application-of-overlays"><a class="header" href="#build-time-application-of-overlays">Build-time application of overlays</a></h1>
-<p>This mechanism is supported in the branches based on L4T R32.6.x through R35.x only. Overlays are applied to the device tree during the kernel build, directly modifying your kernel DTB. (For L4T R36 and later, the NVIDIA device trees are no longer provided in the kernel source tree.)</p>
-<h2 id="locating-overlays"><a class="header" href="#locating-overlays">Locating overlays</a></h2>
-<p>The exact list of overlays supplied by NVIDIA varies by target platform. You can find them by building the kernel recipe (<code>virtual/kernel</code> or <code>linux-tegra</code>) and examining its output under <code>${BUILDDIR}/work/tmp/${MACHINE}/linux-tegra</code>.</p>
-<h2 id="applying-overlays"><a class="header" href="#applying-overlays">Applying overlays</a></h2>
-<p>Set the <code>KERNEL_DEVICETREE_APPLY_OVERLAYS</code> variable to a blank-separate list of <code>.dtbo</code> file names to have those overlays applied during the kernel build. You can do this in your machine configuration file, or add it, for example, to the <code>local.conf</code> file in your build workspace.</p>
-<h3 id="example"><a class="header" href="#example">Example</a></h3>
-<p>For example, to configure a Jetson Xavier NX development kit for IMX477 and IMX219 cameras, you would add the following line to your <code>$BUILDDIR/conf/local.conf</code> file:</p>
-<pre><code>    KERNEL_DEVICETREE_APPLY_OVERLAYS:jetson-xavier-nx-devkit = "tegra194-p3668-all-p3509-0000-camera-imx477-imx219.dtbo"
-</code></pre>
-<h2 id="other-possible-use-cases"><a class="header" href="#other-possible-use-cases">Other possible use cases</a></h2>
-<p>For U-Boot-based Jetsons (only supported on a subset of Jetson modules with L4T R32.x), the <code>.dtbo</code> files will get populated into the <code>/boot</code> directory in the rootfs, and you could modify the <code>/boot/extlinux/extlinux.conf</code> file to add an <code>FDTOVERLAY</code> line to have one or more overlays applied at boot time. Unfortunately, OE-Core’s support for generating <code>extlinux.conf</code> content does not include support for <code>FDTOVERLAY</code> lines, so to make such a change you would have to work out a way to rewrite that file in a bbappend.</p>
-<h2 id="for-out-of-tree-device-trees"><a class="header" href="#for-out-of-tree-device-trees">For out-of-tree device trees</a></h2>
-<p>For L4T R36.x, the <code>nvidia-kernel-oot</code> recipe is the default device tree provider for the Jetson platforms. You can also set the <code>PREFERRED_PROVIDER_virtual/dtb</code> variable to point to a recipe for providing your own customized device tree. To apply overlays to these device trees, add <code>fdtoverlay</code> invocations to the compilation step via a <code>bbappend</code> (for <code>nvidia-kernel-oot</code>) or in your custom recipe.</p>
+                        <h1 id="using-device-tree-overlays-and-custom-devicetrees"><a class="header" href="#using-device-tree-overlays-and-custom-devicetrees">Using device tree overlays (and custom devicetrees)</a></h1>
+<p>For many L4T/Jetson Linux releases, NVIDIA has provided a mechanism (the <code>jetson-io</code> scripts) for applying device tree overlays (<code>.dtbo</code> files) dynamically at runtime. For OE/Yocto-based builds, device trees are built from sources, so runtime application of DTB overlays is less of an issue. The <code>meta-tegra</code> layer does provide some mechanisms for applying DTB overlays, through some build-time variable settings. Creating the devicetree and devicetree overlay sources is done with recipes providing either <code>virtual/dtb</code> or <code>virtual/dtbo</code>, respectively.</p>
+<h2 id="for-out-of-tree-devicetrees-virtualdtb"><a class="header" href="#for-out-of-tree-devicetrees-virtualdtb">For out-of-tree devicetrees (virtual/dtb)</a></h2>
+<p>The <code>nvidia-kernel-oot-dtb</code> recipe is the default device tree provider for the devkit machines in OE4T, which builds devicetree binaries from the L4T sources packaged by <code>nvidia-kernel-oot</code>. You can also set the <code>PREFERRED_PROVIDER_virtual/dtb</code> variable to point to a recipe for providing your own customized device tree, and inherit the same <code>tegra-devicetree</code> bbclass used by the <code>nvidia-kernel-oot-dtb</code> recipe.</p>
 <h3 id="example-out-of-tree-devicetree-in-tegra-demo-distro"><a class="header" href="#example-out-of-tree-devicetree-in-tegra-demo-distro">Example out-of-tree devicetree in tegra-demo-distro</a></h3>
-<p>See the tegra-demo-distro example at <a href="https://github.com/OE4T/tegra-demo-distro/tree/master/layers/meta-tegrademo/recipes-bsp/tegrademo-devicetree">meta-tegrademo/recipes-bsp/tegrademo-devicetree</a> which shows how to modify a base devicetree from <code>nvidia-kernel-oot</code> to one specific to your hardware platform. This simple example just adds a single “compatible” line to your base devicetree.  To use this example:</p>
+<p>See the tegra-demo-distro example at <a href="https://github.com/OE4T/tegra-demo-distro/tree/master/layers/meta-tegrademo/recipes-bsp/tegrademo-devicetree">meta-tegrademo/recipes-bsp/tegrademo-devicetree</a> which shows how to modify a base devicetree from <code>nvidia-kernel-oot-dtb</code> to one specific to your hardware platform. This simple example just adds a single “compatible” line to your base devicetree.  To use this example:</p>
 <ol>
 <li>Determine which devicetree is currently in use.  One way to do this is with <code>bitbake -e &lt;your image&gt;</code> and look at the value of <code>KERNEL_DEVICETREE</code>.</li>
 <li>Determine whether there’s an existing devicetree in the <a href="https://github.com/OE4T/tegra-demo-distro/tree/master/layers/meta-tegrademo/recipes-bsp/tegrademo-devicetree">meta-tegrademo/recipes-bsp/tegrademo-devicetree</a> which uses your existing devictree as a base.  Current examples are:</li>
@@ -203,6 +192,8 @@
 <li><code>tegra234-p3768-0000+p3767-0005-oe4t.dts</code>: <code>jetson-orin-nano-devkit</code> or <code>jetson-orin-nano-devkit-nvme</code> builds on a p3768 (Orin Nano Devboard) carrier</li>
 <li><code>tegra234-p3768-0000+p3767-0000-oe4t.dts</code>: Nvidia Jetson Orin NX 16GB in a p3768 (Orin Nano Devboard) carrier</li>
 <li><code>tegra234-p3737-0000+p3701-0000-oe4t.dts</code>: <code>jetson-agx-orin-devkit</code></li>
+<li><code>tegra264-p4071-0000+p3834-0008-oe4t.dts</code>: <code>jetson-agx-thor-devkit</code> (AGX Thor T5000, p3834-0008 module)</li>
+<li><code>tegra264-p4071-0000+p3834-0000-oe4t.dts</code>: <code>jetson-agx-thor-t4000</code> (AGX Thor T4000, p3834-0000 module)</li>
 </ul>
 <ol start="3">
 <li>If there’s not an existing devicetree built from your base <code>KERNEL_DEVICETREE</code>, follow the examples to add one to SRC_URI and to the repo.</li>
@@ -219,13 +210,29 @@ KERNEL_DEVICETREE:jetson-orin-nano-devkit = "tegra234-p3768-0000+p3767-0005-oe4t
 <pre><code>root@jetson-orin-nano-devkit-nvme:~# cat /sys/firmware/devicetree/base/compatible
 oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p3767-0005nvidia,tegra234
 </code></pre>
+<h2 id="for-out-of-tree-overlays-virtualdtbo"><a class="header" href="#for-out-of-tree-overlays-virtualdtbo">For out-of-tree overlays (virtual/dtbo)</a></h2>
+<p>Overlay files can also be built from source via a <code>virtual/dtbo</code> provider, analogous to <code>virtual/dtb</code> for device trees. The default provider is <code>nvidia-kernel-oot-dtbo</code>, which builds NVIDIA’s platform overlays from the <code>nvidia-kernel-oot</code> source tree.</p>
+<p>To provide custom overlays built from source, create a recipe structured like <code>tegrademo-devicetree</code> but with <code>PROVIDES = "virtual/dtbo"</code> added and overlay source files in <code>SRC_URI</code>:</p>
+<pre><code class="language-bitbake">inherit tegra-devicetree
+
+PROVIDES = "virtual/dtbo"
+COMPATIBLE_MACHINE = "(tegra)"
+
+S = "${UNPACKDIR}"
+
+SRC_URI = "file://my-board-overlay.dtso"
+</code></pre>
+<p>Then point to it in your machine or distro configuration:</p>
+<pre><code>PREFERRED_PROVIDER_virtual/dtbo = "my-overlay-recipe"
+</code></pre>
+<p>The <code>tegra-devicetree</code> class installs built DTBO files to <code>/boot/devicetree/</code> in the sysroot. The <code>l4t-launcher-extlinux</code> recipe picks up all <code>.dtbo</code> files from that directory. Any files not explicitly named in <code>UBOOT_EXTLINUX_FDTOVERLAYS</code> or <code>L4T_UBOOT_EXTLINUX_EXTRA_FDTS</code> are placed in the <code>l4t-launcher-extlinux-dtb-extra</code> package. See <a href="extlinux.conf-support.html">extlinux.conf-support.md</a> for details.</p>
 <h1 id="runtime-application-of-overlays-in-spi-flash"><a class="header" href="#runtime-application-of-overlays-in-spi-flash">Runtime application of overlays in SPI Flash</a></h1>
 <p>This mechanism is supported in branches based on L4T R35.x and later. Overlays are appended to the kernel DTB by the NVIDIA flashing/signing tools, and are applied by the UEFI bootloader at runtime.  Overlays are stored in SPI flash and are only updated on capsule update or tegraflash.</p>
-<h2 id="locating-overlays-1"><a class="header" href="#locating-overlays-1">Locating overlays</a></h2>
+<h2 id="locating-overlays"><a class="header" href="#locating-overlays">Locating overlays</a></h2>
 <p>The exact list of overlays supplied by NVIDIA varies by target platform. You can find them on R35.x-based branches by building the kernel recipe (<code>virtual/kernel</code> or <code>linux-tegra</code>) and examining its output under <code>${BUILDDIR}/work/tmp/${MACHINE}/linux-tegra</code>.  For R36.x-based branches, device trees are built as part of the <code>nvidia-kernel-oot</code> recipe.</p>
-<h2 id="applying-overlays-1"><a class="header" href="#applying-overlays-1">Applying overlays</a></h2>
+<h2 id="applying-overlays"><a class="header" href="#applying-overlays">Applying overlays</a></h2>
 <p>Append your additional overlays to the <code>TEGRA_PLUGIN_MANAGER_OVERLAYS</code> variable, which consists of a blank-separate list of <code>.dtbo</code> file names. You can do this in your machine configuration file, or add it, for example, to the <code>local.conf</code> file in your build workspace. That variable is set by the layer to include overlays that NVIDIA requires for its platforms, so be sure to append to it, rather than overwriting it.</p>
-<h3 id="example-1"><a class="header" href="#example-1">Example</a></h3>
+<h3 id="example"><a class="header" href="#example">Example</a></h3>
 <p>For example, to configure the pins on the 40-pin expansion header of the Jetson Orin Nano development kit, you would add the following line to your <code>$BUILDDIR/conf/local.conf</code> file:</p>
 <pre><code>    TEGRA_PLUGIN_MANAGER_OVERLAYS:append:jetson-orin-nano-devkit = " tegra234-p3767-0000+p3509-a02-hdr40.dtbo"
 </code></pre>
@@ -238,11 +245,11 @@ oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p37
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="Using-cboot-as-bootloader.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="USB-device-mode-support.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="Using-gcc7-from-the-contrib-layer.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="Wayland-Weston-support-on-Jetson-platforms.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -252,11 +259,11 @@ oe4t,p3768-0000+p3767-0005+tegrademonvidia,p3768-0000+p3767-0005-supernvidia,p37
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="Using-cboot-as-bootloader.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="USB-device-mode-support.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="Using-gcc7-from-the-contrib-layer.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="Wayland-Weston-support-on-Jetson-platforms.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
