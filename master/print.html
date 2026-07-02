@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-028c3189.js";
+            window.path_to_searchindex_js = "searchindex-3d11133e.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-77019188.js"></script>
@@ -783,6 +783,10 @@ plugin recipes.</p>
 <p>Consult the documentation in the branch of <code>meta-virtualization</code> you are using for information
 on how to configure Docker to register the <code>nvidia</code> runtime to be available at boot time, to avoid
 having to run the <code>nvidia-ctk</code> tool and restart the Docker service on every boot.</p>
+<ul>
+<li>See <a href="https://github.com/OE4T/tegra-demo-distro/tree/master/layers/meta-tegrademo/dynamic-layers/meta-virtualization/recipes-demo/images/demo-image-docker-base.bb">demo-image-docker-base.bb</a>
+for a minimal example of an image which includes runtime support with the tegrademo distro configuration.</li>
+</ul>
 </li>
 </ol>
 <div style="break-before: page; page-break-before: always;"></div>
