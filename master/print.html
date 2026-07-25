@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-53fe0f89.js";
+            window.path_to_searchindex_js = "searchindex-8b206862.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-77019188.js"></script>
+        <script src="toc-93b25f19.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -1216,7 +1216,7 @@ to use a capsule update as part of a field (OTA) upgrade to L4T R39.x or later, 
 change that may occur as part of the upgrade.</p>
 <p>The R39.x GUID for the <code>t23x_general</code>/<code>t26x_general</code> full-featured UEFI configuration is used by default, and matches the
 corresponding <code>general</code> configuration used in prior releases. If you intend to switch to one of the minimal-boot configurations
-described on <a href="UEFI-Minimal-for-A-B-Updates.html">this page</a> as part of the upgrade, the GUID in the new configuration
+described on <a href="#quick-start">this page</a> as part of the upgrade, the GUID in the new configuration
 will be different, and you must take one of the following steps to provide a compatible upgrade path.</p>
 <h4 id="option-1-use-the-same-image-type-guid"><a class="header" href="#option-1-use-the-same-image-type-guid">Option 1: Use the same image type GUID</a></h4>
 <p>The simpler option is to paste the old GUID into the variable setting in your machine configuration, so it matches. This
@@ -1248,6 +1248,81 @@ which could render a device unbootable. Troubleshooting such issues can be diffi
 <p>For example to allow downgrading to L4T 36.4.3 add the following line to your machine config:</p>
 <pre><code>TEGRA_UEFI_LOWEST_SUPPORTED_VERSION = "0x00240403"
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="uefi-debug-logging"><a class="header" href="#uefi-debug-logging">UEFI Debug Logging</a></h1>
+<p>To enable more verbose logging in the UEFI bootloader, which
+can help with troubleshooting boot issues, set</p>
+<pre><code>TEGRA_UEFI_VERBOSE_LOGGING = "1"
+</code></pre>
+<p>in your <code>local.conf</code> file. This adds a configuration fragment
+to the build that the NVIDIA Kconfig/Kbuild system uses to enable
+more extensive logging in what would otherwise be a release-type
+build.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<p>This page documents an <strong>EXPERIMENTAL</strong> feature for improving the
+reliability of any over-the-air update process which performs combined
+rootfs and capsule (boot firmware) updates.</p>
+<p>See <a href="#uefi-capsule-update">this page</a> for more information on capsule
+updates, and for information on planning upgrades when changing between the
+standard UEFI build and the minimal build enabled by this feature.</p>
+<p>Use with caution.</p>
+<h1 id="quick-start"><a class="header" href="#quick-start">Quick start</a></h1>
+<p>To enable the minimal UEFI configuration:</p>
+<pre><code>TEGRA_MINIMAL_BOOT = "1"
+</code></pre>
+<p>This would normally be set in your machine configuration file. If you
+set this elsewhere (e.g., in your <code>local.conf</code>), and want it to apply
+to just one machine, you could use the <code>:&lt;machine-name&gt;</code> override
+on the variable.</p>
+<h1 id="what-this-does"><a class="header" href="#what-this-does">What this does</a></h1>
+<ol>
+<li>
+<p>Selects an appropriate “simple” configuration for the UEFI build, based
+on the boot device (from the <code>TNSPEC_BOOTDEV</code> variable), so only
+drivers needed for booting from that device are included.</p>
+</li>
+<li>
+<p>Disables other unneeded UEFI features, including the video display.</p>
+</li>
+<li>
+<p>Builds the L4TLauncher application, which normally gets built as a
+separate EFI application binary and stored in the ESP partition,
+directly into the EFI image.</p>
+</li>
+<li>
+<p>Patches the PlatformBootOrderLib library to boot from the built-in
+L4TLauncher application, but also make the ESP partition accessible,
+so capsule updates can be applied.</p>
+</li>
+</ol>
+<p>With this configuration, no <code>BOOTAA64.EFI</code> file is required in the ESP
+partition. Instead, the embedded L4TLauncher application is used to
+load and start the Linux kernel.</p>
+<p>Boot speed is also improved, since the UEFI image is smaller, and only
+one boot path is probed.</p>
+<p>The configuration settings also disable the use of the Android-style kernel
+and device tree partitions, so you should use the settings to create an
+<a href="#extlinuxconf-support">extlinux.conf file</a> for populating <code>/boot</code>
+with your kernel/device tree/etc. This also allows you to customize your
+storage layout to remove the two kernel and two device tree partitions,
+which are there for Android-style boot support only.</p>
+<h1 id="why-do-it"><a class="header" href="#why-do-it">Why do it</a></h1>
+<p>The one flaw in the otherwise fully redundant A/B boot chain support
+present on Jetson systems is the lack of redundancy in the EFI System
+Partition. Power failures while updating the <code>BOOTAA64.EFI</code> boot
+launcher application on the ESP would render the system unbootable,
+since there would be no OS launcher available. And since the interface
+between UEFI and the boot launcher can change from release to release,
+particularly when using NVIDIA’s <code>L4TLauncher</code>, a boot firmware
+update <em>must</em> be accompanied by an update to the launcher application.</p>
+<p>Some workarounds for this shortcoming have been developed, such as
+having a second partition for to hold the updated OS launcher and
+swapping the partition type GUIDs between the active ESP and secondary
+ESP during an update. Most, if not all, workarounds still leave some
+window of time during which they are vulnerable to power failures.</p>
+<p>By building the launcher directly into the EFI image itself, no ESP
+update is ever required. The ESP is still present, and is used to
+store update capsules, but it does not need to be atomically updated.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="documentation-workflow"><a class="header" href="#documentation-workflow">Documentation Workflow</a></h1>
 <p>This project uses <a href="https://rust-lang.github.io/mdBook/">mdBook</a> to generate
