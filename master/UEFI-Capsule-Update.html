@@ -15,8 +15,8 @@
         <link rel="icon" href="favicon-de23e50b.svg">
         <link rel="shortcut icon" href="favicon-8114d1fc.png">
         <link rel="stylesheet" href="css/variables-8adf115d.css">
-        <link rel="stylesheet" href="css/general-0392ca55.css">
-        <link rel="stylesheet" href="css/chrome-fc474251.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
         <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-3d11133e.js";
+            window.path_to_searchindex_js = "searchindex-53fe0f89.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-77019188.js"></script>
@@ -179,6 +179,57 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h1 id="uefi-capsule-update"><a class="header" href="#uefi-capsule-update">UEFI Capsule Update</a></h1>
+<p>For more general information on UEFI capsules, see the “UEFI Adaptation” and “Update and Redundancy” sections
+of the Bootloader chapter in the version of the Jetson Linux Developer Guide for the version of Jetson Linux
+you are using (archives <a href="https://docs.nvidia.com/jetson/archives/">here</a>), or visit the <a href="https://www.tianocore.org/tianocore-wiki.github.io/">Tianocore EDK II
+documentation</a>.</p>
+<h2 id="fmp-system-image-type"><a class="header" href="#fmp-system-image-type">FMP System Image Type</a></h2>
+<p>The Firmware Management Protocol (FMP), which implements capsule updates, selects a firmware update capsule based on a system
+image type GUID. For Tegra UEFI builds, the <code>CONFIG_FMP_SYSTEM_IMAGE_TYPE_ID</code> Kconfig setting is used to set the value
+that FMP should look for. When an update capsule is created, the <code>--guid</code> option for the <code>GenerateCapsule.py</code> script
+is used to set the system type ID for the firmware contained in the capsule. A capsule update will be applied <em>only</em> if
+that GUID matches the system type GUID built into the currently running firmware.</p>
+<p>In the initial Jetson Linux UEFI releases (L4T R35.x/R36.x), one system type GUID (per SoC type) was set in the UEFI build configuration,
+and the same GUID was used during capsule generation. However, The EFI and NVIDIA documentation recommend that vendors
+set unique system type GUIDs for their products, and with L4T R38.x and later, NVIDIA sets a different GUID in each of the pre-defined UEFI
+configurations they provide in pre-built form.</p>
+<p>To provide a custom system image type GUID for your target system, you can set the <code>TEGRA_UEFI_SYSTEM_IMAGE_TYPE_GUID</code> variable
+in your machine configuration. When that variable is set to a non-null string, the <code>edk2-firmware-tegra</code> recipe automatically creates a configuration
+fragment to set <code>CONFIG_FMP_SYSTEM_IMAGE_TYPE_ID</code> to the specified string value. The recipe also deploys a file containing the
+system image type GUID that was configured into the build, so the <code>tegra-uefi-capsules</code> recipe can pass that same GUID to the <code>GenerateCapsule.py</code>
+script.</p>
+<h3 id="upgrade-considerations"><a class="header" href="#upgrade-considerations">Upgrade Considerations</a></h3>
+<p>If you have devices you have already deployed with UEFI firmware you built using older versions of L4T, and you intend
+to use a capsule update as part of a field (OTA) upgrade to L4T R39.x or later, make sure you have plan for any system image type ID
+change that may occur as part of the upgrade.</p>
+<p>The R39.x GUID for the <code>t23x_general</code>/<code>t26x_general</code> full-featured UEFI configuration is used by default, and matches the
+corresponding <code>general</code> configuration used in prior releases. If you intend to switch to one of the minimal-boot configurations
+described on <a href="UEFI-Minimal-for-A-B-Updates.html">this page</a> as part of the upgrade, the GUID in the new configuration
+will be different, and you must take one of the following steps to provide a compatible upgrade path.</p>
+<h4 id="option-1-use-the-same-image-type-guid"><a class="header" href="#option-1-use-the-same-image-type-guid">Option 1: Use the same image type GUID</a></h4>
+<p>The simpler option is to paste the old GUID into the variable setting in your machine configuration, so it matches. This
+also simplifies the downgrade path, if you intended to allow for downgrades across a major L4T version boundary using
+OTA packages you may have already created based on the older L4T release.</p>
+<ul>
+<li>For t23x (Orin) systems: set <code>TEGRA_UEFI_SYSTEM_IMAGE_TYPE_GUID = "bf0d4599-20d4-414e-b2c5-3595b1cda402"</code></li>
+<li>For t26x (Thor) systems: set <code>TEGRA_UEFI_SYSTEM_IMAGE_TYPE_GUID = "3c834404-d2d7-4912-8c1c-6e850b5f2824"</code></li>
+</ul>
+<h4 id="option-2-use-multiple-capsules-with-different-image-type-guids"><a class="header" href="#option-2-use-multiple-capsules-with-different-image-type-guids">Option 2: Use multiple capsules with different image type GUIDs</a></h4>
+<p>A more complicated option is to perform an OTA update that supports upgrading the old firmware image to the new one, as well
+as updates to the new firmware that uses the new type ID. To do this, set the <code>TEGRA_UEFI_CAPSULE_ALT_IMAGE_TYPE_GUIDS</code>
+variable to one or more GUID values (separated by blanks if more than one). When set, the <code>tegra-uefi-capsules</code> recipe
+will generate capsules with the specified GUIDs in the capsule header, each containing the same content as the capsule that
+matches the image type GUID specified during the UEFI build. The additional capsules will be named <code>tegra-bl-&lt;GUID&gt;.cap</code>
+(and likewise for a <code>-kernel</code> capsule, if one is generated) where <code>&lt;GUID&gt;</code> is the image type GUID value specified in the variable.</p>
+<p>You can then create an OTA update package specifically for upgrading from the older release to your new release which bundles in
+the capsule that would be recognized by the older firmware.  Alternatively, you could bundle all of the capsules into
+the update package and install the correct capsule into the ESP partition (but you would need to identify a method for
+determining the correct capsule). With all capsules included, the same update package could be used for updates from
+your pre-R39.x <em>or</em> your latest R39.x+ releases.</p>
+<p>Be sure to test thoroughly if you adopt this approach, since the typical failure will be that no capsule is selected at all,
+which could render a device unbootable. Troubleshooting such issues can be difficult, too.</p>
+<h4 id="option-3-re-flash"><a class="header" href="#option-3-re-flash">Option 3: Re-flash</a></h4>
+<p>A third option is to require re-flashing, rather than attempting to support the change with an OTA update.</p>
 <h2 id="rollback-protection"><a class="header" href="#rollback-protection">Rollback protection</a></h2>
 <p>By default the <code>LowestSupportedVersion</code> field in UEFI Capsule FMP Payload Header is set to the current L4T version, which prevents bootloader downgrade.
 <code>TEGRA_UEFI_LOWEST_SUPPORTED_VERSION</code> variable can be used to override this behaviour.</p>
@@ -234,7 +285,7 @@
 
         <script src="clipboard-1626706a.min.js"></script>
         <script src="highlight-abc7f01d.js"></script>
-        <script src="book-c22b7243.js"></script>
+        <script src="book-609e4cb8.js"></script>
 
         <!-- Custom JS scripts -->
         <script src="docs/mdbook/js/version-dropdown-1d748a69.js"></script>
