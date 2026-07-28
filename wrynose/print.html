@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-b4ad4e66.js";
+            window.path_to_searchindex_js = "searchindex-d41ab395.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-93b25f19.js"></script>
@@ -914,7 +914,13 @@ Each recipe below corresponds to a Yocto package that can be added to your image
 <h3 id="supporting-packages"><a class="header" href="#supporting-packages">Supporting packages</a></h3>
 <ul>
 <li><strong><code>libgstnvcustomhelper</code></strong> — shared helper library used internally by several of the plugins above; pulled in automatically as a dependency</li>
-<li><strong><code>nvgstapps</code></strong> — sample GStreamer applications from NVIDIA demonstrating use of these plugins</li>
+<li><strong><code>nvgstapps</code></strong> — sample GStreamer applications from NVIDIA demonstrating use of these plugins:
+<ul>
+<li><strong><code>nvgstcapture</code></strong> — camera capture and encode sample using <code>nvarguscamerasrc</code> or <code>nvv4l2camerasrc</code></li>
+<li><strong><code>nvgstplayer</code></strong> — video playback sample using hardware decode and NVIDIA render sinks</li>
+<li><strong><code>nvgstipctestapp</code></strong> — inter-process pipeline sharing demo using <code>nvipcsrc</code>/<code>nvipcsink</code>; runs as a server (decodes an RTSP H.264/H.265 stream and sends frames over a Unix socket) or as a client (receives those frames and renders them)</li>
+</ul>
+</li>
 </ul>
 <h2 id="machine-configuration"><a class="header" href="#machine-configuration">Machine configuration</a></h2>
 <p>The <code>MACHINE_HWCODECS</code> variable in each machine configuration selects the hardware codec packages
