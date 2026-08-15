@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-ed1622f0.js";
+            window.path_to_searchindex_js = "searchindex-e2d443ca.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-93b25f19.js"></script>
@@ -232,7 +232,7 @@ reporting issues.</p>
 <p>We are required to provide an e-mail address, but please use GitHub as
 described above, instead of sending e-mail to oe4t-questions@madison.systems.</p>
 <h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
-<p>Please see <a href="#contributing-1">CONTRIBUTING.md</a> for information on submitting
+<p>Please see <a href="#submitting-code-changes">CONTRIBUTING.md</a> for information on submitting
 patches to the maintainers.</p>
 <p>Contributions are welcome!</p>
 <div style="break-before: page; page-break-before: always;"></div>
@@ -447,21 +447,19 @@ tools that NVIDIA provides are binary-only, and may not operate on ARM or other 
 how your custom build environment might be affecting the flashing process, try building and flashing a <code>demo-base-image</code> from the demo distro for comparison. You can also compare against flashing using stock Jetson Linux/JetPack/SDK Manager.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="oe4t-contributor-guide"><a href="#oe4t-contributor-guide" class="header">OE4T Contributor Guide</a></h1>
-<p>See the <a href="#contributing-1">CONTRIBUTING.md</a> file for details about contributing to this repository.</p>
+<p>See the <a href="#submitting-code-changes">CONTRIBUTING.md</a> file for details about contributing to this repository.</p>
 <p>In addition to code and documentation contributions we greatly appreciate help in the form of testing.</p>
 <p>Please see the <a href="https://docs.google.com/spreadsheets/d/1EWG5QZvtWdk74gz48D4xCbegK-bsqMFJ8XOsyGdUUeI/edit#gid=1125662453">Release and Validation</a>
 sheet for a list of current test coverage and test cases.  Request edit on this sheet if you’d like to help contribute.</p>
 <div style="break-before: page; page-break-before: always;"></div>
-<h1 id="contributing-1"><a href="#contributing-1" class="header">CONTRIBUTING</a></h1>
 <p>Thank you for contributing to the OE4T project!  Your contributions are greatly
 appreciated!</p>
-<h2 id="submitting-code-changes"><a class="header" href="#submitting-code-changes">Submitting Code Changes</a></h2>
-<p>The OE4T project repositories follow the <a href="https://www.openembedded.org/wiki/Commit_Patch_Message_Guidelines#Patch_Headers_and_Commit_Messages">OpenEmbedded
-Guidelines</a>.
-Please review these when proposing your Pull Request.  A few highlights and
-additional requirements:</p>
+<h1 id="submitting-code-changes"><a class="header" href="#submitting-code-changes">Submitting Code Changes</a></h1>
+<p>The OE4T project follows many of the same guidelines used by OpenEmbedded and the
+Yocto Project. See <a href="https://docs.yoctoproject.org/dev/contributor-guide/index.html">here</a> for
+their guidance to contributors.</p>
 <ul>
-<li>Please submit issues or pull requests through Github.  Only rebase and squash
+<li>Please submit issues or pull requests through GitHub.  Only rebase and squash
 commits are used for PRs, so if you have a PR that is outstanding for a long
 time, please keep your branch up to date by rebasing your changes, rather than
 merging.</li>
@@ -470,6 +468,9 @@ first line, use something like <code>component: Short Summary</code> to describe
 change where <code>component</code> refers to a specific software component being changed.</li>
 <li>Please try to make incremental changes with multiple commits, rather than “big
 bang” single commits with changes spread across multiple components.</li>
+<li>Please try to use one PR (possibly containing a sequence of commits) per
+topic/submission, rather than combining completely unrelated changes together
+into a single PR.</li>
 <li>Add a <code>Signed-off-by:</code> line to your commit, using <code>git commit -s</code> or a
 pre-commit hook like the one setup with <a href="https://github.com/OE4T/tegra-demo-distro/blob/master/scripts-setup/setup-git-hooks">this script</a>,
 using your real name and e-mail address (no anonymous contributions, please).
@@ -498,13 +499,73 @@ redistributed consistent with this project or the open source license(s)
 involved.</li>
 </ol>
 <p>(Adapted from the <a href="https://www.kernel.org/doc/html/latest/process/submitting-patches.html#developer-s-certificate-of-origin-1-1">Linux kernel’s certificate of origin</a>.)</p>
-<h2 id="submitting-documentation-changes"><a class="header" href="#submitting-documentation-changes">Submitting Documentation Changes</a></h2>
-<p>Documentation is served as an mdbook based on the content in the docs
-directory.  Please open a PR for documentation changes on the relevant
-branch.  Please target the master branch for docs changes
-unless your changes are specific to older branches.  Documentation content
-in older branches are based on a snapshot at branch time and may be out of
-date.</p>
+<h1 id="submitting-documentation-changes"><a class="header" href="#submitting-documentation-changes">Submitting Documentation Changes</a></h1>
+<p>Documentation is served using <a href="https://rust-lang.github.io/mdBook/">mdBook</a>,
+based on the content in the <code>docs</code> directory. Updates and corrections are
+submitted using pull requests, like any other changes to the layer. Please
+target the master branch for documentation changes, unless your changes
+are specific to older branches.  Documentation content in older branches
+is based on a snapshot at branch time and may be out of date.</p>
+<h1 id="ai-usage-policy"><a class="header" href="#ai-usage-policy">AI Usage Policy</a></h1>
+<p>We welcome contributions from everyone, including contributions created with
+the assistance of AI tools. However, we still expect humans to own their submissions
+and take responsbility for them, and ask that you follow these
+guidelines when using AI tools to help you with contributions to the project.</p>
+<h2 id="be-up-front-about-using-ai-tools"><a class="header" href="#be-up-front-about-using-ai-tools">Be up-front about using AI tools</a></h2>
+<p>If you have used one or more AI tools to help you with reporting issues,
+creating patches, writing documentation, or making other contributions to
+the project, please say so. For patches/PRs, include an <code>AI-Generated:</code>
+line in the commit message to name the AI tool(s) used. You should not
+attribute co-authorship to tools, and the <code>Signed-off-by:</code> in your
+commit message must be from you, the developer.</p>
+<p>Example:</p>
+<pre><code>AI-Generated: Whiz-Bang AI Tool
+Signed-off-by: Actual Person &lt;developer@example.domain&gt;
+</code></pre>
+<h2 id="please-be-considerate-of-your-fellow-community-members-time"><a class="header" href="#please-be-considerate-of-your-fellow-community-members-time">Please be considerate of your fellow community members’ time</a></h2>
+<p>Using an AI tool may be a time-saver for you, but when you rely too heavily
+on the tool, you run the risk of wasting everyone else’s time by:</p>
+<ul>
+<li>not understanding the problem, or a proposed solution, yourself</li>
+<li>using an AI tool to interact directly with project community members, since
+the signal-to-noise ratio of text generated by AI tools can be very low</li>
+<li>blindly trusting the output of the tool to be accurate, correct, and complete</li>
+</ul>
+<p>For patches, understand the changes you are making and verify that they work, and
+please write the commit messages yourself. Please also write PR descriptions
+yourself. Make use of whatever tools you need to help with grammar and spelling,
+or language translation, but keep commit messages and PR descriptions concise.</p>
+<p>Likewise for submission of issues or entries in our GitHub discussions: if you’re
+seeing a problem, please describe the problem as <strong>you</strong> see it. If you prompted an
+AI tool to help with some analysis, you can include those results, but be clear about
+where they came from. And please don’t simply feed the responses you get from the
+maintainers or other community members back into the AI tool and post the resulting
+output. It’s unlikely to help, and is apt to discourage people from responding
+further.</p>
+<h2 id="licensing-considerations"><a class="header" href="#licensing-considerations">Licensing considerations</a></h2>
+<p>While OE4T is not a Linux Foundation project, we follow their <a href="https://www.linuxfoundation.org/legal/generative-ai">guidance</a>
+regarding the use of generative AI tools:</p>
+<ol>
+<li>
+<p>Contributors should ensure that the terms and conditions of the generative AI
+tool do not place any contractual restrictions on how the tool’s output can be
+used that are inconsistent with the project’s open source software license,
+the project’s intellectual property policies, or the <a href="https://opensource.org/osd/">Open Source Definition</a>.</p>
+</li>
+<li>
+<p>If any pre-existing copyrighted materials (including pre-existing open source code)
+authored or owned by third parties are included in the AI tool’s output, prior to
+contributing such output to the project, the Contributor should confirm that
+they have permission from the third party owners – such as the form of an open source
+license or public domain declaration that complies with the project’s licensing
+policies – to use and modify such pre-existing materials and contribute them
+to the project. Additionally, the contributor should provide notice and attribution
+of such third party rights, along with information about the applicable license terms,
+with their contribution.</p>
+</li>
+</ol>
+<p>When you use an AI tool to assist with your project contributions, your DCO sign-off
+certifies that your submission conforms to the above policy.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>The <code>meta-tegra</code> layer includes MACHINE definitions for NVIDIA’s Jetson development kits. If you are developing a custom device using one of the Jetson modules with, for example, a custom carrier board, or you just want to modify the default boot-time configuration (pinmux, etc.) for an existing development kit as a separate MACHINE in your own metadata layer, you may need to supply a MACHINE-specific file for your builds.</p>
 <p><strong>IMPORTANT:</strong> For any custom carrier board/hardware design, make sure you consult the appropriate Platform Adaptation and Bring-Up Guide document available at the <a href="https://docs.nvidia.com/jetson/">Jetson Software Documentation Site</a> to get all the details on how to customize the pinmux configuration and other low-level hardware configuration settings. <em>Failing to provide the correct settings could damage your device.</em></p>
