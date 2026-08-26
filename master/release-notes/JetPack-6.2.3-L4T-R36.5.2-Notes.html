@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>L4T-R32.2.0-Notes - OE4T Meta Tegra</title>
+        <title>JetPack-6.2.3-L4T-R36.5.2-Notes - OE4T Meta Tegra</title>
 
 
         <!-- Custom HTML head -->
@@ -144,7 +144,7 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
-                        <a href="https://github.com/OE4T/meta-tegra/edit/master/docs/release-notes/L4T-R32.2.0-Notes.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/OE4T/meta-tegra/edit/master/docs/release-notes/JetPack-6.2.3-L4T-R36.5.2-Notes.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -178,28 +178,41 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>As of 18 Aug 2019, the <code>master</code> and <code>warrior-l4t-r32.2</code> branches support L4T R32.2.0/JetPack 4.2.1 content for Jetson TX1, Jetson TX2, Jetson Nano, and Jetson AGX Xavier.</p>
-<h2 id="please-note"><a class="header" href="#please-note">Please Note</a></h2>
-<p>The JetPack 4.2.1 content cannot be downloaded anonymously from NVIDIA’s servers. You <strong>must</strong> use NVIDIA SDK Manager to download the JetPack 4.2.1 Debian packages to your build host, then add this setting to your build configuration (e.g., in <code>conf/local.conf</code> under your build directory):</p>
-<pre><code>NVIDIA_DEVNET_MIRROR = "file://path/to/downloads"
-</code></pre>
-<p>By default, the SDK Manager downloads to a directory called <code>Downloads/nvidia/sdkm_downloads</code> under your <code>$HOME</code> directory, so use that path in the above setting.</p>
-<p>If you are building TensorRT for Jetson AGX Xavier, you must create a subdirectory called <code>P2888</code> under your <code>${NVIDIA_DEVNET_MIRROR}</code> directory and copy the Xavier-specific tensorrt <code>deb</code> files there. The TensorRT <code>deb</code> files for Jetson TX1/TX2 should remain in the main <code>${NVIDIA_DEVNET_MIRROR}</code> directory.  NVIDIA uses the exact same names for the two sets of <code>deb</code> packages, even though the content for Xavier is different from the other platforms.</p>
-<p>If you ran the SDK Manager on Ubuntu 16.04 to download the JetPack packages, you should add the following setting to your build configuration:</p>
-<pre><code>CUDA_BINARIES_NATIVE = "cuda-binaries-ubuntu1604-native"
-</code></pre>
-<p>By default, the recipes assume you used Ubuntu 18.04 and reference that version of the CUDA host-side tools.</p>
-<p>The L4T BSP files (driver package, sources for gstreamer plugins, etc.) are accessible without a DevNet account, so if your builds only require the BSP, you don’t have to go through these extra steps.</p>
+                        <h1 id="changes-from-l4t-r3650jetpack-622"><a class="header" href="#changes-from-l4t-r3650jetpack-622">Changes from L4T R36.5.0/JetPack 6.2.2</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3652">Jetson Linux R36.5.2 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-623">JetPack 6.2.3 page</a></li>
+</ul>
+<h2 id="bsp-changes"><a class="header" href="#bsp-changes">BSP changes</a></h2>
+<p>This release mainly contains bugfixes.</p>
+<p>See NVIDIA release notes for information on other changes/improvements.</p>
+<h3 id="kernel-changes"><a class="header" href="#kernel-changes">Kernel changes</a></h3>
+<p>The Linux kernel (<code>linux-jammy-nvidia-tegra</code>) was updated to <code>5.15.199</code>.</p>
+<p>The kernel source is now fetched directly from the upstream NVIDIA repository
+(<a href="https://gitlab.com/nvidia/nv-tegra/3rdparty/canonical/linux-jammy"><code>nv-tegra/3rdparty/canonical/linux-jammy</code></a>,
+branch <code>l4t/l4t-r36.5.2-Ubuntu-nvidia-tegra-igx-1050.50</code>) instead of the OE4T fork
+(<code>OE4T/linux-jammy-nvidia-tegra</code>) that was used previously. Any changes needed on top of
+the NVIDIA sources are now carried as patches in the recipe rather than as commits on a
+forked branch. For this release, that is two backported upstream fixes for build
+reproducibility (<code>build_OID_registry</code> and <code>conmakehash</code> no longer embed the full source
+path in the generated files).</p>
+<p>The NVIDIA out-of-tree drivers (<code>nvidia-kernel-oot</code>) have been updated to <code>jetson_36.5.2</code> tag.</p>
+<h2 id="jetpack-changes"><a class="header" href="#jetpack-changes">JetPack changes</a></h2>
+<p>No major updates to the JetPack SDK.</p>
+<h2 id="deepstream-sdk"><a class="header" href="#deepstream-sdk">DeepStream SDK</a></h2>
+<p>No updates on the compute stack (<code>CUDA</code>, <code>cuDNN</code>, <code>TensorRT</code>).</p>
+<p>No update to the DeepStream SDK. Version 7.1 remains compatible with JetPack 6.2.3.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../release-notes/L4T-R32.2.1-Notes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../release-notes/JetPack-7.0-L4T-R38.2.x-Notes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../release-notes/L4T-R32.1.0-Notes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../release-notes/JetPack-6.2.2-L4T-R36.5.0-Notes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -209,11 +222,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../release-notes/L4T-R32.2.1-Notes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../release-notes/JetPack-7.0-L4T-R38.2.x-Notes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../release-notes/L4T-R32.1.0-Notes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../release-notes/JetPack-6.2.2-L4T-R36.5.0-Notes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
