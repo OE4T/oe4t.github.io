@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>JetPack-5.1.1-L4T-R35.3.1-Notes - OE4T Meta Tegra</title>
+        <title>JetPack-6.2.3-L4T-R36.5.2-Notes - OE4T Meta Tegra</title>
 
 
         <!-- Custom HTML head -->
@@ -175,47 +175,41 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>As of 16 Apr 2023, the <code>master</code>, <code>mickledore</code>, and <code>kirkstone</code> branches support JetPack 5.1.1/L4T R35.3.1.</p>
-<h1 id="changes-from-l4t-r3521jetpack-510"><a class="header" href="#changes-from-l4t-r3521jetpack-510">Changes from L4T R35.2.1/JetPack 5.1.0</a></h1>
+                        <h1 id="changes-from-l4t-r3650jetpack-622"><a class="header" href="#changes-from-l4t-r3650jetpack-622">Changes from L4T R36.5.0/JetPack 6.2.2</a></h1>
 <p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
 <ul>
-<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3531">Jetson Linux R35.3.1 page</a></li>
-<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-511">JetPack 5.1.1 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3652">Jetson Linux R36.5.2 page</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-623">JetPack 6.2.3 page</a></li>
 </ul>
-<h2 id="machine-changes"><a class="header" href="#machine-changes">Machine changes</a></h2>
-<p>L4T R35.3.1 adds support for the Jetson Orin Nano developer kit. Machine configurations <code>jetson-orin-nano-devkit</code> and <code>jetson-orin-nano-devkit-nvme</code> have been added to the layer to build images for use of the kit with SDcard and NVMe storage, respectively.  These configurations should also be usable as a starting point for a custom machine based on one of the Orin Nano production modules.</p>
 <h2 id="bsp-changes"><a class="header" href="#bsp-changes">BSP changes</a></h2>
-<p>Other than the new hardware support, no major changes to the layer for the BSP update.  The secureboot overlay that NVIDIA issued to fix problems with Orin secure boot support (specifically, using SBKPKC signing + encryption) for R35.2.1 is also applied here.</p>
+<p>This release mainly contains bugfixes.</p>
+<p>See NVIDIA release notes for information on other changes/improvements.</p>
 <h3 id="kernel-changes"><a class="header" href="#kernel-changes">Kernel changes</a></h3>
-<p>There are no major updates to the kernel, which is still based on 5.10.104.</p>
-<p><strong>NOTE,</strong> however, that if you have a custom machine configuration based on one of the Xavier modules (tegra194), you should update your <code>KERNEL_ARGS</code> setting to add <code>video=efifb:off</code> as a kernel parameter to avoid system crashes at boot time.</p>
+<p>The Linux kernel (<code>linux-jammy-nvidia-tegra</code>) was updated to <code>5.15.199</code>.</p>
+<p>The kernel source is now fetched directly from the upstream NVIDIA repository
+(<a href="https://gitlab.com/nvidia/nv-tegra/3rdparty/canonical/linux-jammy"><code>nv-tegra/3rdparty/canonical/linux-jammy</code></a>,
+branch <code>l4t/l4t-r36.5.2-Ubuntu-nvidia-tegra-igx-1050.50</code>) instead of the OE4T fork
+(<code>OE4T/linux-jammy-nvidia-tegra</code>) that was used previously. Any changes needed on top of
+the NVIDIA sources are now carried as patches in the recipe rather than as commits on a
+forked branch. For this release, that is two backported upstream fixes for build
+reproducibility (<code>build_OID_registry</code> and <code>conmakehash</code> no longer embed the full source
+path in the generated files).</p>
+<p>The NVIDIA out-of-tree drivers (<code>nvidia-kernel-oot</code>) have been updated to <code>jetson_36.5.2</code> tag.</p>
 <h2 id="jetpack-changes"><a class="header" href="#jetpack-changes">JetPack changes</a></h2>
-<ul>
-<li>New versions of VPI and Nsight.</li>
-</ul>
+<p>No major updates to the JetPack SDK.</p>
 <h2 id="deepstream-sdk"><a class="header" href="#deepstream-sdk">DeepStream SDK</a></h2>
-<p>DeepStream SDK updates usually lag new JetPack releases.  Will update if/when a new version is released that supports JetPack 5.1.1.</p>
-<h1 id="other-notes"><a class="header" href="#other-notes">Other Notes</a></h1>
-<ul>
-<li>The Orin Nano omits the hardware video encoder present in other Jetson models.  Don’t try to use the NVIDIA-specific gstreamer plugins for video encoding on that platform; stick to the software-based plugins.</li>
-</ul>
-<h1 id="known-issues"><a class="header" href="#known-issues">Known Issues</a></h1>
-<ul>
-<li>The <code>nvpmodel</code> may fail with an error on the first boot after flashing an Orin device.  You can clear this problem by using the <code>nvpmodel</code> command to select a power model configuration, then rebooting (changing the power model may prompt you to reboot immediately). <strong>NOTE</strong> Fixed with <a href="https://github.com/OE4T/meta-tegra/pull/1294">PR #1294</a>.</li>
-<li>Soft reboots on the Orin Nano devkit may fail during OP-TEE startup with a <code>Heap free list corrupted !!!</code> error.  Powering off the device for 10 seconds, then powering it back on, clears the problem. <strong>NOTE</strong> This does not occur when using the supported <code>initrd-flash</code> mechanism for flashing the development kit.  Do not try to use the direct flashing mechanism (the <code>doflash.sh</code> script) when flashing an Orin NX or Nano device using an NVMe drive for its rootfs storage.</li>
-<li>The <code>nvfancontrol</code> daemon on the Orin Nano devkit may raise the fan to the highest speed and log warnings about <code>Failed to open empty file! (Bad address)</code>.  This should also be fixed with <a href="https://github.com/OE4T/meta-tegra/pull/1294">PR #1294</a>.</li>
-<li>There are still some known issues outstanding with the JetPack 5 integration.  See <a href="https://github.com/OE4T/meta-tegra/issues?q=is%3Aissue+is%3Aopen+milestone%3A%22JetPack+5%22">this issues list</a> for the current status.  Any help with resolving these issues would be appreciated!</li>
-</ul>
+<p>No updates on the compute stack (<code>CUDA</code>, <code>cuDNN</code>, <code>TensorRT</code>).</p>
+<p>No update to the DeepStream SDK. Version 7.1 remains compatible with JetPack 6.2.3.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../release-notes/JetPack-5.1.2-L4T-R35.4.1-Notes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../release-notes/JetPack-7.0-L4T-R38.2.x-Notes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../release-notes/JetPack-5.1-L4T-R35.2.1-Notes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../release-notes/JetPack-6.2.2-L4T-R36.5.0-Notes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -225,11 +219,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../release-notes/JetPack-5.1.2-L4T-R35.4.1-Notes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../release-notes/JetPack-7.0-L4T-R38.2.x-Notes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../release-notes/JetPack-5.1-L4T-R35.2.1-Notes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../release-notes/JetPack-6.2.2-L4T-R36.5.0-Notes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
