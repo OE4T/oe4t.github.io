@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-2658ebe0.js";
+            window.path_to_searchindex_js = "searchindex-c8859857.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-43671cb7.js"></script>
@@ -192,7 +192,7 @@
 <ul>
 <li><code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT</code> - Set to <code>"1"</code> in your distro layer to use redundant flash layouts for any supported MACHINEs.  Set to <code>"0"</code> to use default non-redundant layouts from NVIDIA when using tegra-demo-distro (<code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT</code> is the default for master branch builds of tegra-demo-distro).</li>
 <li><code>ROOTFSPART_SIZE_DEFAULT</code> - Set with the size of the root filesystem partition when using the default (non-redundant) flash layout.  This size will be automatically divided by 2 when <code>USE_REDUNDANT_FLASH_LAYOUT</code> is selected.</li>
-<li><code>PARTITION_LAYOUT_TEMPLATE_DEFAULT</code> - set with the partition layout to use with the default (non, external, non redundant) flash layout, for instance <code>custom_layout.xml</code>.   Either provide a <code>custom_external_layout_rootfs_ab.xml</code> file or define <code>PARTITION_LAYOUT_TEMPLATE_REDUNDANT</code> with your redundant file.</li>
+<li><code>PARTITION_LAYOUT_TEMPLATE_DEFAULT</code> - set with the partition layout to use with the default (non external, non redundant) flash layout, for instance <code>custom_layout.xml</code>.   Either provide a <code>custom_external_layout_rootfs_ab.xml</code> file or define <code>PARTITION_LAYOUT_TEMPLATE_REDUNDANT</code> with your redundant file.</li>
 <li><code>PARTITION_LAYOUT_TEMPLATE_DEFAULT_SUPPORTS_REDUNDANT</code> - Set to <code>"1"</code> if no <code>PARTITION_LAYOUT_TEMPLATE_REDUNDANT</code> is required for this MACHINE (and the same template is used for redundant or non redundant builds).</li>
 <li><code>PARTITION_LAYOUT_EXTERNAL_DEFAULT</code> - Set with the default partition layout when using an external device (sdcard or NVMe) for rootfs partition storage, for instance <code>custom_external_layout.xml</code>. Either provide a <code>custom_external_layout_rootfs_ab.xml</code> file or define <code>PARTITION_LAYOUT_EXTERNAL_REDUNDANT</code> with your redundant file.</li>
 <li><code>HAS_REDUNDANT_PARTITION_LAYOUT_EXTERNAL</code> - Set to <code>"0"</code> if your MACHINE does not support a <code>PARTITION_LAYOUT_EXTERNAL_REDUNDANT</code> and therefore does not support <code>USE_REDUNDANT_FLASH_LAYOUT_DEFAULT</code></li>
