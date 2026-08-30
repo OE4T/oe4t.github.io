@@ -37,10 +37,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-d41ab395.js";
+            window.path_to_searchindex_js = "searchindex-9e0f2a0d.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-93b25f19.js"></script>
+        <script src="toc-6aaa0093.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -189,8 +189,8 @@
 <p>Finally, see <a href="#oe4t-contributor-guide">this page</a> for information about contributing to the project as well as information about testing and test coverage.  This project is built and supported by volunteers and we greatly appreciate your participation.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <h1 id="openembeddedyocto-bsp-layer-for-nvidia-jetson-modules"><a class="header" href="#openembeddedyocto-bsp-layer-for-nvidia-jetson-modules">OpenEmbedded/Yocto BSP layer for NVIDIA Jetson Modules</a></h1>
-<p>Jetson Linux release: R39.2.0
-JetPack release:      7.2</p>
+<p>Jetson Linux release: R39.2.1
+JetPack release:      7.2.1</p>
 <p>Boards supported:</p>
 <ul>
 <li>Jetson AGX Thor development kit</li>
@@ -204,7 +204,7 @@ JetPack release:      7.2</p>
 URI: https://git.openembedded.org/openembedded-core
 branch: wrynose
 LAYERSERIES_COMPAT: wrynose</p>
-<p>See <a href="docs/JetPack-7.2-L4T-R39.2.0-Notes.html">this page</a> for information
+<p>See <a href="docs/release-notes/JetPack-7.2.1-L4T-R39.2.1-Notes.html">this page</a> for information
 about changes in this release.</p>
 <h2 id="getting-help"><a class="header" href="#getting-help">Getting Help</a></h2>
 <p>Our documentation is available <a href="https://oe4t.github.io">here</a>. You can
@@ -1377,6 +1377,7 @@ mdbook please ensure you use the “master” branch version of
 documentation to ensure you are referencing the most recent source</p>
 <h1 id="jetpack-72--r39x"><a class="header" href="#jetpack-72--r39x">JetPack 7.2 / R39.x</a></h1>
 <ul>
+<li><a href="#changes-from-l4t-r3920jetpack-72">JetPack-7.2.1-L4T-R39.2.1-Notes</a></li>
 <li><a href="#changes-from-l4t-r3650jetpack-622-and-r384xjetpack-71">JetPack-7.2-L4T-R39.2.0-Notes</a></li>
 </ul>
 <h1 id="jetpack-7071--r38x"><a class="header" href="#jetpack-7071--r38x">JetPack 7.0–7.1 / R38.x</a></h1>
@@ -1429,6 +1430,38 @@ documentation to ensure you are referencing the most recent source</p>
 <li><a href="#l4t-r281-notes">L4T-R28.1-notes</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div>
+<h1 id="changes-from-l4t-r3920jetpack-72"><a class="header" href="#changes-from-l4t-r3920jetpack-72">Changes from L4T R39.2.0/JetPack 7.2</a></h1>
+<p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
+<ul>
+<li><a href="https://docs.nvidia.com/jetson/archives/r39.2.1/ReleaseNotes/Jetson_Linux_Release_Notes_r39.2.1.pdf">Jetson Linux R39.2.1 release notes</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack/downloads/archive-7.2.1">JetPack 7.2.1 download page</a></li>
+</ul>
+<h2 id="bsp-changes"><a class="header" href="#bsp-changes">BSP changes</a></h2>
+<p>This release mainly contains bugfixes.</p>
+<p>See NVIDIA release notes for information on other changes/improvements.</p>
+<h3 id="kernel-changes"><a class="header" href="#kernel-changes">Kernel changes</a></h3>
+<p>The kernel version remains at 6.8.12 for both Orin and Thor, but the out-of-tree module
+sources have moved to the <code>jetson_39.2.1</code> tag, picking up the R39.2.1 L4T patch series
+(nvgpu, nvdisplay, hwpm, and device tree sources all updated).</p>
+<h2 id="jetpack-changes"><a class="header" href="#jetpack-changes">JetPack changes</a></h2>
+<p>No new JetPack SDK features. Some components received micro-version bumps as part of the
+R39.2.1 BSP:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Component</th><th>JetPack 7.2</th><th>JetPack 7.2.1</th></tr>
+</thead>
+<tbody>
+<tr><td>CUDA</td><td>13.2.1</td><td>13.2.2</td></tr>
+<tr><td>CUDA driver</td><td>595.58.03</td><td>595.71.05</td></tr>
+<tr><td>VPI</td><td>4.1.3</td><td>4.1.4</td></tr>
+<tr><td>PVA SDK</td><td>2.9.1</td><td>2.9.4</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="deepstream-sdk"><a class="header" href="#deepstream-sdk">DeepStream SDK</a></h2>
+<p>DeepStream 9.1 targets JetPack 7.2 GA (r39.2 BSP) and remains compatible.</p>
+<div style="break-before: page; page-break-before: always;"></div>
 <h1 id="changes-from-l4t-r3650jetpack-622-and-r384xjetpack-71"><a class="header" href="#changes-from-l4t-r3650jetpack-622-and-r384xjetpack-71">Changes from L4T R36.5.0/JetPack 6.2.2 and R38.4.x/JetPack 7.1</a></h1>
 <p>This is the first JetPack release to support <strong>both</strong> the Orin family (AGX Orin, Orin NX, Orin Nano, previously
 supported in JetPack 6) <strong>and</strong> AGX Thor (T4000, T5000, previously supported only in JetPack 7).</p>
@@ -1437,7 +1470,7 @@ supported in JetPack 6) <strong>and</strong> AGX Thor (T4000, T5000, previously 
 <li><a href="https://docs.nvidia.com/jetson/archives/r39.2/ReleaseNotes/Jetson_Linux_Release_Notes_r39.2.pdf">Jetson Linux R39.2 release notes</a></li>
 <li><a href="https://developer.nvidia.com/embedded/jetpack/downloads/archive-7.2">JetPack 7.2 download page</a></li>
 </ul>
-<h2 id="bsp-changes"><a class="header" href="#bsp-changes">BSP changes</a></h2>
+<h2 id="bsp-changes-1"><a class="header" href="#bsp-changes-1">BSP changes</a></h2>
 <h3 id="new-machine-configurations"><a class="header" href="#new-machine-configurations">New machine configurations</a></h3>
 <p>Support for the AGX Thor platform is incorporated alongside Orin. New machine configurations added versus r36.x:</p>
 <ul>
@@ -1457,7 +1490,7 @@ targets. For Orin users that have customized their UEFI configurations, note tha
 configuration handling for UEFI builds in this release follows the updated
 approach used for Thor in R38.4, providing default ‘general’, ‘minimal’, and
 ‘simple’ configurations in-tree.</p>
-<h2 id="kernel-changes"><a class="header" href="#kernel-changes">Kernel changes</a></h2>
+<h2 id="kernel-changes-1"><a class="header" href="#kernel-changes-1">Kernel changes</a></h2>
 <h3 id="orin-tegra234"><a class="header" href="#orin-tegra234">Orin (Tegra234)</a></h3>
 <p>The kernel for Orin has been upgraded from <code>linux-jammy-nvidia-tegra</code> (5.15-based) to
 <code>linux-noble-nvidia-tegra</code> (6.8.12-based). This is a significant kernel version upgrade.</p>
@@ -1487,7 +1520,7 @@ base version is unchanged, but has been updated to the R39.2.0 L4T patch series.
 <h3 id="out-of-tree-drivers"><a class="header" href="#out-of-tree-drivers">Out-of-tree drivers</a></h3>
 <p>The out-of-tree kernel module package has been updated to R39.2.0, with compatibility updates for
 the 6.8 kernel across both Tegra234 and Tegra264 platforms.</p>
-<h2 id="jetpack-changes"><a class="header" href="#jetpack-changes">JetPack changes</a></h2>
+<h2 id="jetpack-changes-1"><a class="header" href="#jetpack-changes-1">JetPack changes</a></h2>
 <p>JetPack 7.2 includes significant component upgrades from JetPack 6.2.2:</p>
 <div class="table-wrapper">
 <table>
@@ -1514,7 +1547,7 @@ for more information.</p>
 <h2 id="container-support"><a class="header" href="#container-support">Container support</a></h2>
 <p>The <code>nvidia-docker</code> recipe has been removed. The <code>nvidia-container-toolkit</code> recipe provides
 container runtime support; see <a href="#layers-required">NVIDIA Container Runtime Support</a> for details.</p>
-<h2 id="deepstream-sdk"><a class="header" href="#deepstream-sdk">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-1"><a class="header" href="#deepstream-sdk-1">DeepStream SDK</a></h2>
 <p>No information is available yet on DeepStream SDK compatibility with JetPack 7.2.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 23 Feb 2026, the <code>master-l4t-r38.4.x</code> branch supports JetPack 7.1/L4T R38.4.0.</p>
@@ -1526,7 +1559,7 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <li><a href="https://docs.nvidia.com/jetson/archives/r38.4/ReleaseNotes/Jetson_Linux_Release_Notes_r38.4.pdf">Jetson Linux R38.4 release notes</a></li>
 <li><a href="https://developer.nvidia.com/embedded/jetpack/downloads">JetPack download page</a> (note that this link is not version-tagged)</li>
 </ul>
-<h2 id="bsp-changes-1"><a class="header" href="#bsp-changes-1">BSP changes</a></h2>
+<h2 id="bsp-changes-2"><a class="header" href="#bsp-changes-2">BSP changes</a></h2>
 <ul>
 <li>The BSP supports the Jetson T4000, but a machine configuration for it is not yet present in the layer.</li>
 <li>Note that L4T R38.4.x does <strong>not</strong> support Orin hardware. Machine definitions have not been removed from the layer, but they should not be used.</li>
@@ -1535,12 +1568,12 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <p>Flashing in Jetson Linux for Thor targets is performed through a “unified” flashing process that is hidden under the L4T initrd/kernel flashing scripts.</p>
 <p>For meta-tegra builds, after unpacking your tegraflash tarball, use <code>initrd-flash</code> while connected via USB to your Thor device to generate/sign the binary artifacts, stage them to a unified-flash workspace, and run the unified flashing scripts to flash the device. You can use <code>./initrd-flash --external-only</code> to re-flash only the external (rootfs) drive, <code>./initrd-flash -k NAME</code> to re-flash just the named partition, or <code>./initrd-flash --qspi-only</code> to re-flash only the boot firmware in the QSPI flash. The script also takes a <code>--debug</code> option for enabling more verbose logging in the unified flashing tool.</p>
 <p>See NVIDIA release notes and documentation for more information.</p>
-<h3 id="kernel-changes-1"><a class="header" href="#kernel-changes-1">Kernel changes</a></h3>
+<h3 id="kernel-changes-2"><a class="header" href="#kernel-changes-2">Kernel changes</a></h3>
 <p>The Linux kernel is still taken from the Ubuntu “Noble” release, and is based on Linux 6.8.12. The kernel recipe has been changed to use NVIDIA’s GitLab repo directly, instead of the OE4T copy in GitHub.</p>
 <p>Please note that the linux-yocto kernel (or any other kernel than the NVIDIA/Ubuntu one) is still <strong>not supported</strong> on Thor hardware.</p>
-<h2 id="jetpack-changes-1"><a class="header" href="#jetpack-changes-1">JetPack changes</a></h2>
+<h2 id="jetpack-changes-2"><a class="header" href="#jetpack-changes-2">JetPack changes</a></h2>
 <p>JetPack 7.1 include only minor JetPack upgrades, for the PVA SDK and for VPI.</p>
-<h2 id="deepstream-sdk-1"><a class="header" href="#deepstream-sdk-1">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-2"><a class="header" href="#deepstream-sdk-2">DeepStream SDK</a></h2>
 <p>No DeepStream SDK update has been issued, but it is unclear whether the existing DS-8.0 SDK is compatible.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 12 Nov 2025, the <code>master-l4t-r38.2.x</code> branch supports JetPack 7.0/L4T R38.2.2. Note that R38.2.2 only updates some of the components; the rest remain at 38.2.1.</p>
@@ -1554,7 +1587,7 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <li><a href="https://developer.nvidia.com/embedded/jetpack/downloads">JetPack 7.0 download page</a> (note that this link is not version-tagged)</li>
 </ul>
 <p>Note that NVIDIA has not provided release notes for R38.2.2.</p>
-<h2 id="bsp-changes-2"><a class="header" href="#bsp-changes-2">BSP changes</a></h2>
+<h2 id="bsp-changes-3"><a class="header" href="#bsp-changes-3">BSP changes</a></h2>
 <ul>
 <li>Many changes are present to support Thor hardware. Note that L4T R38.2.x does <strong>not</strong> support Orin hardware. Machine definitions have not been removed from the layer, but they should not be used.</li>
 </ul>
@@ -1562,12 +1595,12 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <p>Flashing in Jetson Linux for Thor targets is performed through a “unified” flashing process that is hidden under the L4T initrd/kernel flashing scripts.</p>
 <p>For meta-tegra builds, after unpacking your tegraflash tarball, use <code>initrd-flash</code> while connected via USB to your Thor device to generate/sign the binary artifacts, stage them to a unified-flash workspace, and run the unified flashing scripts to flash the device. You can use <code>./initrd-flash --external-only</code> to re-flash only the external (rootfs) drive, <code>./initrd-flash -k NAME</code> to re-flash just the named partition, or <code>./initrd-flash --qspi-only</code> to re-flash only the boot firmware in the QSPI flash. The script also takes a <code>--debug</code> option for enabling more verbose logging in the unified flashing tool.</p>
 <p>See NVIDIA release notes and documentation for more information.</p>
-<h3 id="kernel-changes-2"><a class="header" href="#kernel-changes-2">Kernel changes</a></h3>
+<h3 id="kernel-changes-3"><a class="header" href="#kernel-changes-3">Kernel changes</a></h3>
 <p>The Linux kernel is now taken from the Ubuntu “Noble” release, and is based on Linux 6.8.12.</p>
-<h2 id="jetpack-changes-2"><a class="header" href="#jetpack-changes-2">JetPack changes</a></h2>
+<h2 id="jetpack-changes-3"><a class="header" href="#jetpack-changes-3">JetPack changes</a></h2>
 <p>JetPack 7.0 upgrades most of the JetPack content. See the NVIDIA documentation for more information.</p>
 <p>CUDA 13, included in JetPack 7.0, supports the use of gcc/g++ 15 as the host toolchain, so the <code>gcc-for-nvcc</code> recipes, which were used for providing an older toolchain for use with <code>nvcc</code>, have been dropped.</p>
-<h2 id="deepstream-sdk-2"><a class="header" href="#deepstream-sdk-2">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-3"><a class="header" href="#deepstream-sdk-3">DeepStream SDK</a></h2>
 <p>DeepStream 8.0 is available. The recipes for DeepStream in the meta-tegra-community layer have been updated.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 28 Feb 2026, the <code>master</code> and <code>scarthgap</code> branches support JetPack 6.2.2/L4T R36.5.0.</p>
@@ -1577,15 +1610,15 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <li><a href="https://developer.nvidia.com/embedded/jetson-linux-r365">Jetson Linux R36.5.0 page</a></li>
 <li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-622">JetPack 6.2.2 page</a></li>
 </ul>
-<h2 id="bsp-changes-3"><a class="header" href="#bsp-changes-3">BSP changes</a></h2>
+<h2 id="bsp-changes-4"><a class="header" href="#bsp-changes-4">BSP changes</a></h2>
 <p>This release mainly contains bugfixes.</p>
 <p>See NVIDIA release notes for information on other changes/improvements.</p>
-<h3 id="kernel-changes-3"><a class="header" href="#kernel-changes-3">Kernel changes</a></h3>
+<h3 id="kernel-changes-4"><a class="header" href="#kernel-changes-4">Kernel changes</a></h3>
 <p>The Linux kernel (<code>linux-jammy-nvidia-tegra</code>) was updated to 5.15.185.</p>
 <p>The NVIDIA out-of-tree drivers have been patched so they build with the NVIDIA-provided kernel as well as newer <code>linux-yocto</code> kernels (6.6 for <code>scarthgap</code> and 6.18 for <code>master</code>).</p>
-<h2 id="jetpack-changes-3"><a class="header" href="#jetpack-changes-3">JetPack changes</a></h2>
+<h2 id="jetpack-changes-4"><a class="header" href="#jetpack-changes-4">JetPack changes</a></h2>
 <p>No major updates to the JetPack SDK.</p>
-<h2 id="deepstream-sdk-3"><a class="header" href="#deepstream-sdk-3">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-4"><a class="header" href="#deepstream-sdk-4">DeepStream SDK</a></h2>
 <p>No update to the DeepStream SDK. Version 7.1 remains compatible with JetPack 6.2.2.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 10 Aug 2025, the <code>master</code> and <code>scarthgap</code> branches support JetPack 6.2.1/L4T R36.4.4.</p>
@@ -1595,15 +1628,15 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3644">Jetson Linux R36.4.4 page</a></li>
 <li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-621">JetPack 6.2.1 page</a></li>
 </ul>
-<h2 id="bsp-changes-4"><a class="header" href="#bsp-changes-4">BSP changes</a></h2>
+<h2 id="bsp-changes-5"><a class="header" href="#bsp-changes-5">BSP changes</a></h2>
 <p>Support has been added for using a Hardware Security Module (HSM) for signing the boot firmware. In the layer, our <code>tegra-flash-helper</code> script has been updated to support an <code>--hsm</code> option, which gets passed through to the NVIDIA signing scripts for this feature.</p>
 <p>Otherwise, this release mainly contains bugfixes.</p>
 <p>See NVIDIA release notes for information on other changes/improvements.</p>
-<h3 id="kernel-changes-4"><a class="header" href="#kernel-changes-4">Kernel changes</a></h3>
+<h3 id="kernel-changes-5"><a class="header" href="#kernel-changes-5">Kernel changes</a></h3>
 <p>The Linux kernel remains at 5.15.148.</p>
-<h2 id="jetpack-changes-4"><a class="header" href="#jetpack-changes-4">JetPack changes</a></h2>
+<h2 id="jetpack-changes-5"><a class="header" href="#jetpack-changes-5">JetPack changes</a></h2>
 <p>No major updates to the JetPack SDK.</p>
-<h2 id="deepstream-sdk-4"><a class="header" href="#deepstream-sdk-4">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-5"><a class="header" href="#deepstream-sdk-5">DeepStream SDK</a></h2>
 <p>No update to the DeepStream SDK. Version 7.1 remains compatible with JetPack 6.2.1.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 02 May 2025, the <code>master</code>, <code>walnascar</code>, and <code>scarthgap</code> branches support JetPack 6.2/L4T R36.4.3.</p>
@@ -1613,17 +1646,17 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3643">Jetson Linux R36.4.3 page</a></li>
 <li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-62">JetPack 6.2 page</a></li>
 </ul>
-<h2 id="bsp-changes-5"><a class="header" href="#bsp-changes-5">BSP changes</a></h2>
+<h2 id="bsp-changes-6"><a class="header" href="#bsp-changes-6">BSP changes</a></h2>
 <ul>
 <li>The main new feature in this release is the addition of “super” power modes for the P3767 series modules (Orin NX and Orin Nano).</li>
 <li>The <code>JetsonMinimal</code> UEFI build configuration, instead of full UEFI, is now used for RCM booting. (RCM boot is used for initrd-based flashing.)</li>
 </ul>
 <p>See NVIDIA release notes for information on other changes/improvements.</p>
-<h3 id="kernel-changes-5"><a class="header" href="#kernel-changes-5">Kernel changes</a></h3>
+<h3 id="kernel-changes-6"><a class="header" href="#kernel-changes-6">Kernel changes</a></h3>
 <p>The Linux kernel remains at 5.15.146.</p>
-<h2 id="jetpack-changes-5"><a class="header" href="#jetpack-changes-5">JetPack changes</a></h2>
+<h2 id="jetpack-changes-6"><a class="header" href="#jetpack-changes-6">JetPack changes</a></h2>
 <p>No major updates to the JetPack SDK.</p>
-<h2 id="deepstream-sdk-5"><a class="header" href="#deepstream-sdk-5">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-6"><a class="header" href="#deepstream-sdk-6">DeepStream SDK</a></h2>
 <p>No update to the DeepStream SDK. Version 7.1 remains compatible with JetPack 6.2.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 27 Oct 2024, the <code>master</code>, <code>styhead</code>, and <code>scarthgap</code> branches support JetPack 6.1/L4T R36.4.0.</p>
@@ -1633,7 +1666,7 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3640">Jetson Linux R36.4.0 page</a></li>
 <li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-61">JetPack 6.1 page</a></li>
 </ul>
-<h2 id="bsp-changes-6"><a class="header" href="#bsp-changes-6">BSP changes</a></h2>
+<h2 id="bsp-changes-7"><a class="header" href="#bsp-changes-7">BSP changes</a></h2>
 <ul>
 <li>NVIDIA has added an implementation of Firmware Trusted Platform Module (fTPM) as an OP-TEE TA. A recipe for building this has not yet been added to the layer.</li>
 <li>The default kernel arguments no longer set <code>net.ifnames=0</code>, so network interfaces will use the newer kernel naming convention.</li>
@@ -1641,11 +1674,11 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <li>A minimal UEFI configuration is now supported on AGX Orin series modules. See <a href="https://docs.nvidia.com/jetson/archives/r36.4/DeveloperGuide/SD/Bootloader/UEFI.html#miniuefi-support">this section</a> in the Jetson Linux Developer Guide for more information. The variable <code>TEGRA_UEFI_MINIMAL</code> can be set to <code>"1"</code> in your build configuration to use this configuration instead of the default.</li>
 </ul>
 <p>See NVIDIA release notes for information on other changes/improvements.</p>
-<h3 id="kernel-changes-6"><a class="header" href="#kernel-changes-6">Kernel changes</a></h3>
+<h3 id="kernel-changes-7"><a class="header" href="#kernel-changes-7">Kernel changes</a></h3>
 <p>The Linux kernel has been updated to 5.15.146.</p>
-<h2 id="jetpack-changes-6"><a class="header" href="#jetpack-changes-6">JetPack changes</a></h2>
+<h2 id="jetpack-changes-7"><a class="header" href="#jetpack-changes-7">JetPack changes</a></h2>
 <p>Several of the JetPack packages have been updated, including CUDA (to 12.6).  See the JetPack release notes for more information.</p>
-<h2 id="deepstream-sdk-6"><a class="header" href="#deepstream-sdk-6">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-7"><a class="header" href="#deepstream-sdk-7">DeepStream SDK</a></h2>
 <p>DeepStream SDK 7.1 is compatible with JetPack 6.1. See the <a href="https://github.com/OE4T/meta-tegra-community/tree/wip-l4t-r36.4.0">meta-tegra-community work-in-progress branch</a> for the updated recipes.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 01 June 2024, the <code>master</code> and <code>scarthgap</code> branches support JetPack 6.0/L4T R36.3.0.</p>
@@ -1657,13 +1690,13 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 </ul>
 <h2 id="machine-changes"><a class="header" href="#machine-changes">Machine changes</a></h2>
 <p>L4T R36.x supports <strong>only</strong> Jetson Orin modules and development kits.  Support for Jetson Xavier modules has been removed.</p>
-<h2 id="bsp-changes-7"><a class="header" href="#bsp-changes-7">BSP changes</a></h2>
+<h2 id="bsp-changes-8"><a class="header" href="#bsp-changes-8">BSP changes</a></h2>
 <p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and “improvements” to the existing boot firmware and low-level libraries.  This includes new versions of the secure OS (TF-A and OP-TEE) and the UEFI bootloader.</p>
-<h3 id="kernel-changes-7"><a class="header" href="#kernel-changes-7">Kernel changes</a></h3>
+<h3 id="kernel-changes-8"><a class="header" href="#kernel-changes-8">Kernel changes</a></h3>
 <p>The 5.10+Android-based kernel has been replaced with a 5.15-based kernel from Ubuntu 22.04.  Jetson-specific drivers and device trees have been moved out of the kernel source tree and are now built separately. This change allows for the replacement of the NVIDIA-provided, Ubuntu-derived base kernel with other upstream kernels; see the L4T documentation and release notes for more information.</p>
-<h2 id="jetpack-changes-7"><a class="header" href="#jetpack-changes-7">JetPack changes</a></h2>
+<h2 id="jetpack-changes-8"><a class="header" href="#jetpack-changes-8">JetPack changes</a></h2>
 <p>Many of the JetPack packages have been updated, including CUDA (to 12.2).  See the JetPack release notes for more information.</p>
-<h2 id="deepstream-sdk-7"><a class="header" href="#deepstream-sdk-7">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-8"><a class="header" href="#deepstream-sdk-8">DeepStream SDK</a></h2>
 <p>The DeepStream SDK has been updated to version 7.0.</p>
 <h1 id="other-notes"><a class="header" href="#other-notes">Other Notes</a></h1>
 <ul>
@@ -1690,7 +1723,7 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 <li><a href="https://developer.nvidia.com/embedded/jetson-linux-r3562">Jetson Linux R35.6.2 page</a></li>
 <li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-515">JetPack 5.1.5 page</a> (same JetPack release as for L4T R35.6.1)</li>
 </ul>
-<h3 id="kernel-changes-8"><a class="header" href="#kernel-changes-8">Kernel changes</a></h3>
+<h3 id="kernel-changes-9"><a class="header" href="#kernel-changes-9">Kernel changes</a></h3>
 <p>No kernel update in this release; the exact same kernel sources are used as for R35.6.1. However, the default <code>KERNEL_ARGS</code> setting for all machines has been changed to remove the <code>nospectre_bhb</code> parameter. If you have a custom machine configuration, you may wish to update your <code>KERNEL_ARGS</code> setting accordingly, to enable Spectre-BHB mitigations in the kernel.</p>
 <h3 id="other-notes-1"><a class="header" href="#other-notes-1">Other notes</a></h3>
 <p>While most of the BSP packages have been updated or re-issued with <code>35.6.2</code> version numbering, the Jetson Multimedia API <code>.deb</code> packages remain at version <code>35.6.1</code> in this release.</p>
@@ -1704,9 +1737,9 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 </ul>
 <h2 id="machine-changes-1"><a class="header" href="#machine-changes-1">Machine changes</a></h2>
 <p>No new machines in this release. Existing machines for P3767 modules (Orin Nano and NX-based) have been updated to use the new MAXN_SUPER power model configurations, which affect the kernel device tree, BPMP configuration, and NVPMODEL configuration files.</p>
-<h2 id="bsp-changes-8"><a class="header" href="#bsp-changes-8">BSP changes</a></h2>
+<h2 id="bsp-changes-9"><a class="header" href="#bsp-changes-9">BSP changes</a></h2>
 <p>Other updates in this release are mainly fixes and improvements to the existing boot firmware and low-level libraries.</p>
-<h3 id="kernel-changes-9"><a class="header" href="#kernel-changes-9">Kernel changes</a></h3>
+<h3 id="kernel-changes-10"><a class="header" href="#kernel-changes-10">Kernel changes</a></h3>
 <p>The upstream base remains at 5.10.216. Updates include some bug fixes and the device tree updates to support MAXN_SUPER power model configurations.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 11 Oct 2024, the <code>scarthgap-l4t-r35.x</code> and <code>kirkstone</code> branches support JetPack 5.1.4/L4T R35.6.0.</p>
@@ -1718,9 +1751,9 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 </ul>
 <h2 id="machine-changes-2"><a class="header" href="#machine-changes-2">Machine changes</a></h2>
 <p>No new machines in this release.</p>
-<h2 id="bsp-changes-9"><a class="header" href="#bsp-changes-9">BSP changes</a></h2>
+<h2 id="bsp-changes-10"><a class="header" href="#bsp-changes-10">BSP changes</a></h2>
 <p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and improvements to the existing boot firmware and low-level libraries.</p>
-<h3 id="kernel-changes-10"><a class="header" href="#kernel-changes-10">Kernel changes</a></h3>
+<h3 id="kernel-changes-11"><a class="header" href="#kernel-changes-11">Kernel changes</a></h3>
 <p>The upstream base was updated to 5.10.216.</p>
 <div style="break-before: page; page-break-before: always;"></div>
 <p>As of 01 June 2024, the <code>scarthgap-l4t-r35.x</code> and <code>kirkstone</code> branches support JetPack 5.1.3/L4T R35.5.0.</p>
@@ -1732,15 +1765,15 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 </ul>
 <h2 id="machine-changes-3"><a class="header" href="#machine-changes-3">Machine changes</a></h2>
 <p>No new machines in this release.</p>
-<h2 id="bsp-changes-10"><a class="header" href="#bsp-changes-10">BSP changes</a></h2>
+<h2 id="bsp-changes-11"><a class="header" href="#bsp-changes-11">BSP changes</a></h2>
 <p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and improvements to the existing boot firmware and low-level libraries.</p>
 <p>Storage layouts (the <code>flash_*.xml</code> files) have been updated slightly over R35.4.1. If you have a custom storage layout you have derived from an earlier version of L4T, you should review the differences for any adjustments you may need to make.</p>
-<h3 id="kernel-changes-11"><a class="header" href="#kernel-changes-11">Kernel changes</a></h3>
+<h3 id="kernel-changes-12"><a class="header" href="#kernel-changes-12">Kernel changes</a></h3>
 <p>The upstream base was updated to 5.10.192.</p>
 <h3 id="uefi-changes-1"><a class="header" href="#uefi-changes-1">UEFI changes</a></h3>
 <p>For secured devices, UEFI now authenticates its variables.  <strong>This requires the addition of an authentication key to the EKB,</strong> without which your secured device will not boot.  This also means that an OTA update from an earlier R35.x release will require that your OTA package also update the EKB, so be warned.</p>
 <p>For more information , see <a href="https://forums.developer.nvidia.com/t/jetpack-5-1-3-boot-error-with-all-security-enabled/284400">this thread on the developer forum</a>.</p>
-<h2 id="jetpack-changes-8"><a class="header" href="#jetpack-changes-8">JetPack changes</a></h2>
+<h2 id="jetpack-changes-9"><a class="header" href="#jetpack-changes-9">JetPack changes</a></h2>
 <ul>
 <li>VPI updated to version 2.4.8</li>
 </ul>
@@ -1758,17 +1791,17 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 </ul>
 <h2 id="machine-changes-4"><a class="header" href="#machine-changes-4">Machine changes</a></h2>
 <p>L4T R35.4.1 adds support for the Jetson AGX Orin Industrial module. The machine configuration <code>jetson-agx-orin-devkit-industrial</code> has been added to the layer to build images for the module when installed in an AGX Orin development kit.</p>
-<h2 id="bsp-changes-11"><a class="header" href="#bsp-changes-11">BSP changes</a></h2>
+<h2 id="bsp-changes-12"><a class="header" href="#bsp-changes-12">BSP changes</a></h2>
 <p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and improvements to the existing boot firmware and low-level libraries.</p>
 <p>For multimedia support, the deprecated <code>nvbuf_utils</code> library was removed in this release.</p>
-<h3 id="kernel-changes-12"><a class="header" href="#kernel-changes-12">Kernel changes</a></h3>
+<h3 id="kernel-changes-13"><a class="header" href="#kernel-changes-13">Kernel changes</a></h3>
 <p>No major updates.  The upstream base was updated to 5.10.120.</p>
-<h2 id="jetpack-changes-9"><a class="header" href="#jetpack-changes-9">JetPack changes</a></h2>
+<h2 id="jetpack-changes-10"><a class="header" href="#jetpack-changes-10">JetPack changes</a></h2>
 <ul>
 <li>VPI updated to version 2.3.9</li>
 <li>Nsight updated to 2023.2</li>
 </ul>
-<h2 id="deepstream-sdk-8"><a class="header" href="#deepstream-sdk-8">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-9"><a class="header" href="#deepstream-sdk-9">DeepStream SDK</a></h2>
 <p>The DeepStream SDK has been updated to version 6.3-1. The recipe in the <a href="https://github.com/OE4T/meta-tegra-community">meta-tegra-community</a> repo has been updated.</p>
 <h1 id="other-notes-3"><a class="header" href="#other-notes-3">Other Notes</a></h1>
 <ul>
@@ -1784,16 +1817,16 @@ for the Orin family remain in the tree, but are <strong>not usable and not suppo
 </ul>
 <h2 id="machine-changes-5"><a class="header" href="#machine-changes-5">Machine changes</a></h2>
 <p>L4T R35.3.1 adds support for the Jetson Orin Nano developer kit. Machine configurations <code>jetson-orin-nano-devkit</code> and <code>jetson-orin-nano-devkit-nvme</code> have been added to the layer to build images for use of the kit with SDcard and NVMe storage, respectively.  These configurations should also be usable as a starting point for a custom machine based on one of the Orin Nano production modules.</p>
-<h2 id="bsp-changes-12"><a class="header" href="#bsp-changes-12">BSP changes</a></h2>
+<h2 id="bsp-changes-13"><a class="header" href="#bsp-changes-13">BSP changes</a></h2>
 <p>Other than the new hardware support, no major changes to the layer for the BSP update.  The secureboot overlay that NVIDIA issued to fix problems with Orin secure boot support (specifically, using SBKPKC signing + encryption) for R35.2.1 is also applied here.</p>
-<h3 id="kernel-changes-13"><a class="header" href="#kernel-changes-13">Kernel changes</a></h3>
+<h3 id="kernel-changes-14"><a class="header" href="#kernel-changes-14">Kernel changes</a></h3>
 <p>There are no major updates to the kernel, which is still based on 5.10.104.</p>
 <p><strong>NOTE,</strong> however, that if you have a custom machine configuration based on one of the Xavier modules (tegra194), you should update your <code>KERNEL_ARGS</code> setting to add <code>video=efifb:off</code> as a kernel parameter to avoid system crashes at boot time.</p>
-<h2 id="jetpack-changes-10"><a class="header" href="#jetpack-changes-10">JetPack changes</a></h2>
+<h2 id="jetpack-changes-11"><a class="header" href="#jetpack-changes-11">JetPack changes</a></h2>
 <ul>
 <li>New versions of VPI and Nsight.</li>
 </ul>
-<h2 id="deepstream-sdk-9"><a class="header" href="#deepstream-sdk-9">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-10"><a class="header" href="#deepstream-sdk-10">DeepStream SDK</a></h2>
 <p>DeepStream SDK updates usually lag new JetPack releases.  Will update if/when a new version is released that supports JetPack 5.1.1.</p>
 <h1 id="other-notes-4"><a class="header" href="#other-notes-4">Other Notes</a></h1>
 <ul>
@@ -1817,17 +1850,17 @@ As of 16 Apr 2023, <code>master</code> and <code>kirkstone</code> have been upda
 </ul>
 <h2 id="machine-changes-6"><a class="header" href="#machine-changes-6">Machine changes</a></h2>
 <p>L4T R35.2.1 adds support for Jetson Orin NX 16GB production modules. A machine configuration for this module mounted on a Xavier NX development kit carrier board is available in the layer: <a href="https://github.com/OE4T/meta-tegra/blob/master/conf/machine/p3509-a02-p3767-0000.conf">p3509-a02-p3767-0000.conf</a>.</p>
-<h2 id="bsp-changes-13"><a class="header" href="#bsp-changes-13">BSP changes</a></h2>
+<h2 id="bsp-changes-14"><a class="header" href="#bsp-changes-14">BSP changes</a></h2>
 <p>Many of the BSP components have been updated.  The significant new feature in this release is support for <a href="release-notes/Secure-Boot-Support-in-L4T-R35.2.1-and-later.html">UEFI Secure Boot</a>.</p>
 <p>UEFI and OP-TEE are now built from source by default, rather than using the pre-built copies from the L4T package.</p>
-<h3 id="kernel-changes-14"><a class="header" href="#kernel-changes-14">Kernel changes</a></h3>
+<h3 id="kernel-changes-15"><a class="header" href="#kernel-changes-15">Kernel changes</a></h3>
 <p>No major updates to the kernel, which is still based on 5.10.104.</p>
-<h2 id="jetpack-changes-11"><a class="header" href="#jetpack-changes-11">JetPack changes</a></h2>
+<h2 id="jetpack-changes-12"><a class="header" href="#jetpack-changes-12">JetPack changes</a></h2>
 <ul>
 <li>Minor updates to CUDA packages</li>
 <li>New versions of cuDNN, TensorRT, and VPI</li>
 </ul>
-<h2 id="deepstream-sdk-10"><a class="header" href="#deepstream-sdk-10">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-11"><a class="header" href="#deepstream-sdk-11">DeepStream SDK</a></h2>
 <p>With JetPack 5.1, the DeepStream SDK has been updated to version 6.2.0-1.  The recipes in <code>meta-tegra-community</code> have
 been updated accordingly for the SDK itself and the Python bindings.</p>
 <h1 id="known-issues-1"><a class="header" href="#known-issues-1">Known Issues</a></h1>
@@ -1851,7 +1884,7 @@ been updated accordingly for the SDK itself and the Python bindings.</p>
 <li>Jetson Xavier NX series</li>
 </ul>
 <p>We also have a machine configuration for the Clara AGX development kit.</p>
-<h2 id="bsp-changes-14"><a class="header" href="#bsp-changes-14">BSP changes</a></h2>
+<h2 id="bsp-changes-15"><a class="header" href="#bsp-changes-15">BSP changes</a></h2>
 <p>This is a <strong>major</strong> update to the BSP and is not compatible with the R32.x series of releases.</p>
 <ul>
 <li>The <code>cboot</code> bootloader has been replaced by UEFI. You can use either NVIDIA’s prebuilt copy, or build it from source.</li>
@@ -1865,19 +1898,19 @@ been updated accordingly for the SDK itself and the Python bindings.</p>
 <li>Improved support for Wayland/Weston via the EGL-GBM backend interface.</li>
 <li>Container support now defaults to a smaller set of libraries passed through from the host to the container.</li>
 </ul>
-<h3 id="kernel-changes-15"><a class="header" href="#kernel-changes-15">Kernel changes</a></h3>
+<h3 id="kernel-changes-16"><a class="header" href="#kernel-changes-16">Kernel changes</a></h3>
 <p>Besides the upgrade to the Linux 5.10 LTS kernel as a base, the new default kernel configuration for Jetson devices
 builds far more features and drivers as modules, rather than building them into the kernel itself. If you have recipes
 that depend on specific kernel features/drivers, you may need to add <code>RRECOMMENDS</code> settings to ensure that the
 necessary modules get installed into your rootfs image.  The kernel configuration in the layer diverges slightly from the stock
 Jetson Linux configuration by building in a small number of drivers, rather than leaving them as modules.</p>
-<h2 id="jetpack-changes-12"><a class="header" href="#jetpack-changes-12">JetPack changes</a></h2>
+<h2 id="jetpack-changes-13"><a class="header" href="#jetpack-changes-13">JetPack changes</a></h2>
 <ul>
 <li>CUDA updated to 11.4.</li>
 <li>New versions of cuDNN, TensorRT, VPI.</li>
 <li><code>libvisionworks</code> is no longer supported.</li>
 </ul>
-<h2 id="deepstream-sdk-11"><a class="header" href="#deepstream-sdk-11">DeepStream SDK</a></h2>
+<h2 id="deepstream-sdk-12"><a class="header" href="#deepstream-sdk-12">DeepStream SDK</a></h2>
 <p>With JetPack 5.0.2 (rev. 1), the DeepStream SDK has been updated to version 6.1.1-1.  The recipes in <code>meta-tegra-community</code> have
 been updated accordingly for the SDK itself and the Python bindings.</p>
 <h1 id="known-issues-2"><a class="header" href="#known-issues-2">Known Issues</a></h1>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>JetPack-6.0-L4T-R36.3.0-Notes - OE4T Meta Tegra</title>
+        <title>JetPack-7.2.1-L4T-R39.2.1-Notes - OE4T Meta Tegra</title>
 
 
         <!-- Custom HTML head -->
@@ -144,7 +144,7 @@
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
                         </a>
-                        <a href="https://github.com/OE4T/meta-tegra/edit/master/docs/release-notes/JetPack-6.0-L4T-R36.3.0-Notes.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                        <a href="https://github.com/OE4T/meta-tegra/edit/master/docs/release-notes/JetPack-7.2.1-L4T-R39.2.1-Notes.md" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
                             <span class=fa-svg id="git-edit-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M421.7 220.3l-11.3 11.3-22.6 22.6-205 205c-6.6 6.6-14.8 11.5-23.8 14.1L30.8 511c-8.4 2.5-17.5 .2-23.7-6.1S-1.5 489.7 1 481.2L38.7 353.1c2.6-9 7.5-17.2 14.1-23.8l205-205 22.6-22.6 11.3-11.3 33.9 33.9 62.1 62.1 33.9 33.9zM96 353.9l-9.3 9.3c-.9 .9-1.6 2.1-2 3.4l-25.3 86 86-25.3c1.3-.4 2.5-1.1 3.4-2l9.3-9.3H112c-8.8 0-16-7.2-16-16V353.9zM453.3 19.3l39.4 39.4c25 25 25 65.5 0 90.5l-14.5 14.5-22.6 22.6-11.3 11.3-33.9-33.9-62.1-62.1L314.3 67.7l11.3-11.3 22.6-22.6 14.5-14.5c25-25 65.5-25 90.5 0z"/></svg></span>
                         </a>
 
@@ -178,40 +178,47 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <p>As of 01 June 2024, the <code>master</code> and <code>scarthgap</code> branches support JetPack 6.0/L4T R36.3.0.</p>
-<h1 id="changes-from-l4t-r3531jetpack-511"><a class="header" href="#changes-from-l4t-r3531jetpack-511">Changes from L4T R35.3.1/JetPack 5.1.1</a></h1>
+                        <h1 id="changes-from-l4t-r3920jetpack-72"><a class="header" href="#changes-from-l4t-r3920jetpack-72">Changes from L4T R39.2.0/JetPack 7.2</a></h1>
 <p>See the release notes in the NVIDIA documentation for this release for information on new and updated features:</p>
 <ul>
-<li><a href="https://developer.nvidia.com/embedded/jetson-linux-r363">Jetson Linux R36.3.0 page</a></li>
-<li><a href="https://developer.nvidia.com/embedded/jetpack-sdk-60">JetPack 6.0 page</a></li>
+<li><a href="https://docs.nvidia.com/jetson/archives/r39.2.1/ReleaseNotes/Jetson_Linux_Release_Notes_r39.2.1.pdf">Jetson Linux R39.2.1 release notes</a></li>
+<li><a href="https://developer.nvidia.com/embedded/jetpack/downloads/archive-7.2.1">JetPack 7.2.1 download page</a></li>
 </ul>
-<h2 id="machine-changes"><a class="header" href="#machine-changes">Machine changes</a></h2>
-<p>L4T R36.x supports <strong>only</strong> Jetson Orin modules and development kits.  Support for Jetson Xavier modules has been removed.</p>
 <h2 id="bsp-changes"><a class="header" href="#bsp-changes">BSP changes</a></h2>
-<p>Updates in this release, as they apply to OE/Yocto builds, are mainly fixes and “improvements” to the existing boot firmware and low-level libraries.  This includes new versions of the secure OS (TF-A and OP-TEE) and the UEFI bootloader.</p>
+<p>This release mainly contains bugfixes.</p>
+<p>See NVIDIA release notes for information on other changes/improvements.</p>
 <h3 id="kernel-changes"><a class="header" href="#kernel-changes">Kernel changes</a></h3>
-<p>The 5.10+Android-based kernel has been replaced with a 5.15-based kernel from Ubuntu 22.04.  Jetson-specific drivers and device trees have been moved out of the kernel source tree and are now built separately. This change allows for the replacement of the NVIDIA-provided, Ubuntu-derived base kernel with other upstream kernels; see the L4T documentation and release notes for more information.</p>
+<p>The kernel version remains at 6.8.12 for both Orin and Thor, but the out-of-tree module
+sources have moved to the <code>jetson_39.2.1</code> tag, picking up the R39.2.1 L4T patch series
+(nvgpu, nvdisplay, hwpm, and device tree sources all updated).</p>
 <h2 id="jetpack-changes"><a class="header" href="#jetpack-changes">JetPack changes</a></h2>
-<p>Many of the JetPack packages have been updated, including CUDA (to 12.2).  See the JetPack release notes for more information.</p>
+<p>No new JetPack SDK features. Some components received micro-version bumps as part of the
+R39.2.1 BSP:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Component</th><th>JetPack 7.2</th><th>JetPack 7.2.1</th></tr>
+</thead>
+<tbody>
+<tr><td>CUDA</td><td>13.2.1</td><td>13.2.2</td></tr>
+<tr><td>CUDA driver</td><td>595.58.03</td><td>595.71.05</td></tr>
+<tr><td>VPI</td><td>4.1.3</td><td>4.1.4</td></tr>
+<tr><td>PVA SDK</td><td>2.9.1</td><td>2.9.4</td></tr>
+</tbody>
+</table>
+</div>
 <h2 id="deepstream-sdk"><a class="header" href="#deepstream-sdk">DeepStream SDK</a></h2>
-<p>The DeepStream SDK has been updated to version 7.0.</p>
-<h1 id="other-notes"><a class="header" href="#other-notes">Other Notes</a></h1>
-<ul>
-<li>There are several known issues documented in the release notes, which are worth reviewing. In particular, USB connectivity during flashing can sometimes be a problem. Workarounds mentioned in the release notes include swapping cables and/or USB ports on your host PC, and rebooting your host PC if you encounter flashing failures.</li>
-<li>The NVIDIA-specific userland DRM library (<code>libdrm-nvdc</code>) has been removed in this release.</li>
-<li>Vulkan support is present, but you must manually include the <code>tegra-libraries-vulkan</code> package in your image to install the necessary configuration file for the Vulkan dispatcher. While NVIDIA now also supports VulkanSC in Jetson Linux, recipes to install those libraries are not yet available.</li>
-<li>Jetson-specific patches for wayland and weston are no longer needed.</li>
-</ul>
+<p>DeepStream 9.1 targets JetPack 7.2 GA (r39.2 BSP) and remains compatible.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../release-notes/JetPack-6.1-L4T-R36.4.0-Notes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../Release-Notes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="../release-notes/JetPack-5.1.6-L4T-R35.6.4-Notes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../release-notes/JetPack-7.2-L4T-R39.2.0-Notes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -221,11 +228,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../release-notes/JetPack-6.1-L4T-R36.4.0-Notes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../Release-Notes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="../release-notes/JetPack-5.1.6-L4T-R35.6.4-Notes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../release-notes/JetPack-7.2-L4T-R39.2.0-Notes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>
